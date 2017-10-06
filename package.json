@@ -1,0 +1,62 @@
+{
+  "name": "itertools",
+  "version": "1.0.0-alpha1",
+  "description": "A JavaScript port of Python's awesome itertools standard library",
+  "main": "lib/index.js",
+  "files": [
+    "lib/"
+  ],
+  "scripts": {
+    "build": "yarn run build:clean && yarn run build:lib && yarn run build:flow",
+    "build:clean": "rimraf lib",
+    "build:flow": "flow-copy-source -v -i '**/__tests__/**' src lib",
+    "build:lib": "babel -d lib src --ignore '**/__tests__/**'",
+    "check": "yarn run check:eslint && yarn run check:prettier && yarn run check:import-sort",
+    "check:eslint": "eslint --report-unused-disable-directives src",
+    "check:import-sort": "find src -iname '*.js' | xargs -n1 import-sort --diff",
+    "check:prettier": "prettier --list-different 'src/**/*.js'",
+    "fix:import-sort": "find src -iname '*.js' | xargs -n1 import-sort -o",
+    "fix:prettier": "prettier --write 'src/**/*.js'",
+    "prepublish": "yarn run test && yarn run check && yarn run build",
+    "test": "yarn run test:flow && yarn run test:jest && yarn run check",
+    "test:flow": "flow check",
+    "test:jest": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nvie/itertools.js.git"
+  },
+  "author": "Vincent Driessen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nvie/itertools.js/issues"
+  },
+  "homepage": "https://github.com/nvie/itertools.js#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-flow": "^6.23.0",
+    "eslint": "^4.8.0",
+    "eslint-plugin-flowtype": "^2.37.0",
+    "flow-bin": "^0.56.0",
+    "flow-copy-source": "^1.2.1",
+    "flow-typed": "^2.1.5",
+    "import-sort-cli": "^3.3.0",
+    "import-sort-parser-babylon": "^3.2.0",
+    "import-sort-style-eslint": "^3.0.0",
+    "import-sort-style-module": "^3.0.0",
+    "jest": "^21.2.1",
+    "jest-cli": "^21.2.1",
+    "prettier": "^1.7.4",
+    "rimraf": "^2.6.2"
+  },
+  "dependencies": {},
+  "importSort": {
+    ".js": {
+      "parser": "babylon",
+      "style": "module"
+    }
+  }
+}
