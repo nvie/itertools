@@ -103,14 +103,14 @@ The `itertools` package consists of a few building blocks:
 * icompress
 * ifilter
 * imap
-* izip2
+* izip
 * izip3
 * izipAll
-* izipLongest2
+* izipLongest
 * takewhile
 * zip3
 * zipAll
-* zipLongest2
+* zipLongest
 
 <a name="chain" href="#chain">#</a> <b>chain</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 ...
