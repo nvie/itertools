@@ -29,7 +29,7 @@ import {
     zip3,
     zipAll,
     zipLongest,
-} from '../itertools';
+} from '../index';
 
 const isEven = x => x % 2 === 0;
 const isPositive = x => x >= 0;

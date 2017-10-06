@@ -100,7 +100,6 @@ The `itertools` package consists of a few building blocks:
 * compress
 * contains
 * cycle
-* flatten
 * icompress
 * ifilter
 * imap
@@ -121,6 +120,7 @@ The `itertools` package consists of a few building blocks:
 
 * [chunked](#chunked)
 * first
+* flatten
 * itake
 * pairwise
 * partition
