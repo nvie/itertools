@@ -1,6 +1,9 @@
 // @flow
 
-import { chunked, first, flatten, pairwise, partition, take, uniqueEverseen, uniqueJustseen } from '../more-itertools';
+import { chunked, first, flatten, pairwise, partition, uniqueEverseen, uniqueJustseen } from '../more-itertools';
+
+const isEven = x => x % 2 === 0;
+const isPositive = x => x >= 0;
 
 describe('first', () => {
     it('returns nothing for an empty array', () => {
