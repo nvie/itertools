@@ -1,6 +1,6 @@
 // @flow
 
-import { all, any, enumerate, iter, max, min, range, sorted, sum, zip, zip3 } from '../builtins';
+import { all, any, enumerate, contains, iter, max, min, range, sorted, sum, zip, zip3 } from '../builtins';
 import { first } from '../more-itertools';
 
 describe('all', () => {
@@ -33,6 +33,30 @@ describe('any', () => {
 
     it('any is false if no elements are truthy', () => {
         expect(any([0, null, NaN, undefined])).toBe(false);
+    });
+});
+
+describe('contains', () => {
+    it('contains of empty list is false', () => {
+        expect(contains([], 0)).toBe(false);
+        expect(contains([], 1)).toBe(false);
+        expect(contains([], null)).toBe(false);
+        expect(contains([], undefined)).toBe(false);
+    });
+
+    it('contains is true iff iterable contains the given exact value', () => {
+        expect(contains([1], 1)).toBe(true);
+        expect(contains([1], 2)).toBe(false);
+        expect(contains([1, 2, 3], 1)).toBe(true);
+        expect(contains([1, 2, 3], 2)).toBe(true);
+        expect(contains([1, 2, 3], 3)).toBe(true);
+        expect(contains([1, 2, 3], 4)).toBe(false);
+    });
+
+    it('contains does not work for elements with identity equality', () => {
+        expect(contains([{}], {})).toBe(false);
+        expect(contains([{ x: 123 }], { x: 123 })).toBe(false);
+        expect(contains([[1, 2, 3]], [1, 2, 3])).toBe(false);
     });
 });
 

@@ -12,21 +12,6 @@ export function compress<T>(data: Iterable<T>, selectors: Iterable<boolean>): Ar
     return [...icompress(data, selectors)];
 }
 
-/**
- * Returns true when any of the items in the iterable are equal to the target object.
- *
- * Examples:
- *
- *     contains([], 'whatever')         // => false
- *     contains([3], 42)                // => false
- *     contains([3], 3)                 // => true
- *     contains([0, 1, 2], 2)           // => true
- *
- */
-export function contains<T>(haystack: Iterable<T>, needle: T): boolean {
-    return any(haystack, x => x === needle);
-}
-
 export function* cycle<T>(iterable: Iterable<T>): Iterable<T> {
     let saved = [...iterable];
     while (saved.length > 0) {

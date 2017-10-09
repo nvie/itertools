@@ -75,6 +75,7 @@ The `itertools` package consists of a few building blocks:
 
 * [all](#all)
 * [any](#any)
+* [contains](#contains)
 * [enumerate](#enumerate)
 * [filter](#filter)
 * [iter](#iter)
@@ -130,6 +131,21 @@ Examples with using a key function:
 ```javascript
 any([1, 4, 5], n => n % 2 === 0)  // => true
 any([{name: 'Bob'}, {name: 'Alice'}], person => person.name.startsWith('C'))  // => false
+```
+
+
+<a name="contains" href="#contains">#</a> <b>contains</b>(haystack: <i>Iterable&lt;T&gt;</i>, needle: <i>T</i>): <i>boolean</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
+
+Returns true when any of the items in the iterable are equal to the target
+object.
+
+Examples:
+
+```javascript
+contains([], 'whatever')         // => false
+contains([3], 42)                // => false
+contains([3], 3)                 // => true
+contains([0, 1, 2], 2)           // => true
 ```
 
 
@@ -227,7 +243,6 @@ which one is not defined.
 
 * [chain](#chain)
 * compress
-* contains
 * cycle
 * icompress
 * ifilter

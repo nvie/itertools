@@ -61,6 +61,21 @@ export function any<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPred
 }
 
 /**
+ * Returns true when any of the items in the iterable are equal to the target object.
+ *
+ * Examples:
+ *
+ *     contains([], 'whatever')         // => false
+ *     contains([3], 42)                // => false
+ *     contains([3], 3)                 // => true
+ *     contains([0, 1, 2], 2)           // => true
+ *
+ */
+export function contains<T>(haystack: Iterable<T>, needle: T): boolean {
+    return any(haystack, x => x === needle);
+}
+
+/**
  * Returns an iterable of enumeration pairs.  Iterable must be a sequence, an
  * iterator, or some other object which supports iteration.  The elements
  * produced by returns a tuple containing a counter value (starting from 0 by

@@ -3,7 +3,6 @@
 import {
     chunked,
     compactObject,
-    contains,
     cycle,
     first,
     flatmap,
@@ -23,30 +22,6 @@ import {
 
 const isEven = x => x % 2 === 0;
 const isPositive = x => x >= 0;
-
-describe('contains', () => {
-    it('contains of empty list is false', () => {
-        expect(contains([], 0)).toBe(false);
-        expect(contains([], 1)).toBe(false);
-        expect(contains([], null)).toBe(false);
-        expect(contains([], undefined)).toBe(false);
-    });
-
-    it('contains is true iff iterable contains the given exact value', () => {
-        expect(contains([1], 1)).toBe(true);
-        expect(contains([1], 2)).toBe(false);
-        expect(contains([1, 2, 3], 1)).toBe(true);
-        expect(contains([1, 2, 3], 2)).toBe(true);
-        expect(contains([1, 2, 3], 3)).toBe(true);
-        expect(contains([1, 2, 3], 4)).toBe(false);
-    });
-
-    it('contains does not work for elements with identity equality', () => {
-        expect(contains([{}], {})).toBe(false);
-        expect(contains([{ x: 123 }], { x: 123 })).toBe(false);
-        expect(contains([[1, 2, 3]], [1, 2, 3])).toBe(false);
-    });
-});
 
 describe('cycle', () => {
     it('cycle with empty list', () => {
