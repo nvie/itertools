@@ -297,8 +297,10 @@ have a corresponding element in selectors that evaluates to `true`.  Stops when
 either the data or selectors iterables has been exhausted.
 
 
-<a name="ifilter" href="#ifilter">#</a> <b>ifilter</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
-...
+<a name="ifilter" href="#ifilter">#</a> <b>ifilter</b>(iterable: <i>Iterable&lt;T&gt;</i>, predicate: <i>Predicate&lt;T&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Returns an iterator that filters elements from iterable returning only those
+for which the predicate is true.
 
 <a name="imap" href="#imap">#</a> <b>imap</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 ...

@@ -81,6 +81,10 @@ export function* icompress<T>(data: Iterable<T>, selectors: Iterable<boolean>): 
     }
 }
 
+/**
+ * Returns an iterator that filters elements from iterable returning only those
+ * for which the predicate is true.
+ */
 export function* ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> {
     for (let value of iterable) {
         if (predicate(value)) {
