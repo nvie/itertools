@@ -3,38 +3,7 @@
 import { ifilter, imap, izip, izip3 } from './itertools';
 import { first } from './more-itertools';
 import type { Maybe, Predicate, Primitive } from './types';
-import { primitiveIdentity } from './utils';
-
-type CmpFn<T> = (T, T) => number;
-
-function identityPredicate<T>(x: T): boolean {
-    return !!x;
-}
-
-function numberIdentity<T>(x: T): number {
-    if (typeof x !== 'number') {
-        // eslint-disable-next-line no-console
-        console.error('Inputs must be numbers, got', x);
-        throw new Error('Inputs must be numbers');
-    }
-    return x;
-}
-
-function keyToCmp<T>(keyFn: T => Primitive): CmpFn<T> {
-    return (a: T, b: T) => {
-        let ka = keyFn(a);
-        let kb = keyFn(b);
-        if (typeof ka === 'boolean' && typeof kb === 'boolean') {
-            return ka === kb ? 0 : !ka && kb ? -1 : 1;
-        } else if (typeof ka === 'number' && typeof kb === 'number') {
-            return ka - kb;
-        } else if (typeof ka === 'string' && typeof kb === 'string') {
-            return ka === kb ? 0 : ka < kb ? -1 : 1;
-        } else {
-            return -1;
-        }
-    };
-}
+import { identityPredicate, keyToCmp, numberIdentity, primitiveIdentity } from './utils';
 
 /**
  * Returns true when all of the items in iterable are truthy.  An optional key
@@ -54,8 +23,7 @@ function keyToCmp<T>(keyFn: T => Primitive): CmpFn<T> {
  *     all([2, 4, 5], n => n % 2 === 0)  // => false
  *
  */
-export function all<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): boolean {
-    keyFn = keyFn || identityPredicate;
+export function all<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
     for (let item of iterable) {
         if (!keyFn(item)) {
             return false;
@@ -82,8 +50,7 @@ export function all<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): boolean {
  *     any([{name: 'Bob'}, {name: 'Alice'}], person => person.name.startsWith('C'))  // => false
  *
  */
-export function any<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): boolean {
-    keyFn = keyFn || identityPredicate;
+export function any<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
     for (let item of iterable) {
         if (keyFn(item)) {
             return true;
@@ -151,9 +118,8 @@ export function map<T, V>(iterable: Iterable<T>, mapper: T => V): Array<V> {
  * If multiple items are maximal, the function returns either one of them, but
  * which one is not defined.
  */
-export function max<T>(iterable: Iterable<T>, keyFn?: T => number): Maybe<T> {
-    const key = keyFn || numberIdentity;
-    return reduce_(iterable, (x, y) => (key(x) > key(y) ? x : y));
+export function max<T>(iterable: Iterable<T>, keyFn: T => number = numberIdentity): Maybe<T> {
+    return reduce_(iterable, (x, y) => (keyFn(x) > keyFn(y) ? x : y));
 }
 
 /**
@@ -167,9 +133,8 @@ export function max<T>(iterable: Iterable<T>, keyFn?: T => number): Maybe<T> {
  * If multiple items are minimal, the function returns either one of them, but
  * which one is not defined.
  */
-export function min<T>(iterable: Iterable<T>, keyFn?: T => number): Maybe<T> {
-    const key = keyFn || numberIdentity;
-    return reduce_(iterable, (x, y) => (key(x) < key(y) ? x : y));
+export function min<T>(iterable: Iterable<T>, keyFn: T => number = numberIdentity): Maybe<T> {
+    return reduce_(iterable, (x, y) => (keyFn(x) < keyFn(y) ? x : y));
 }
 
 /**
