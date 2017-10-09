@@ -1,7 +1,7 @@
 // @flow
 
 import { range } from '../builtins';
-import { chain, compress, count, cycle, ifilter, imap, takewhile, zipAll, zipLongest } from '../itertools';
+import { chain, compress, count, cycle, dropwhile, ifilter, imap, takewhile, zipAll, zipLongest } from '../itertools';
 import { take } from '../more-itertools';
 
 const isEven = x => x % 2 === 0;
@@ -61,6 +61,25 @@ describe('cycle', () => {
     });
 });
 
+describe('dropwhile', () => {
+    it('dropwhile on empty list', () => {
+        expect([...dropwhile([], isEven)]).toEqual([]);
+        expect([...dropwhile([], isPositive)]).toEqual([]);
+    });
+
+    it('dropwhile on list', () => {
+        expect([...dropwhile([1], isEven)]).toEqual([1]);
+        expect([...dropwhile([1], isPositive)]).toEqual([]);
+
+        expect([...dropwhile([-1, 0, 1], isEven)]).toEqual([-1, 0, 1]);
+        expect([...dropwhile([4, -1, 0, 1], isEven)]).toEqual([-1, 0, 1]);
+        expect([...dropwhile([-1, 0, 1], isPositive)]).toEqual([-1, 0, 1]);
+        expect([...dropwhile([7, -1, 0, 1], isPositive)]).toEqual([-1, 0, 1]);
+
+        expect([...dropwhile([0, 2, 4, 6, 7, 8, 10], isEven)]).toEqual([7, 8, 10]);
+        expect([...dropwhile([0, 1, 2, -2, 3, 4, 5, 6, 7], isPositive)]).toEqual([-2, 3, 4, 5, 6, 7]);
+    });
+});
 describe('icompress', () => {
     it('icompress is tested through compress() tests', () => {
         // This is okay

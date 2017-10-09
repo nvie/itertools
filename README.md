@@ -246,6 +246,7 @@ which one is not defined.
 * [compress](#compress)
 * [count](#count)
 * [cycle](#cycle)
+* [dropwhile](#dropwhile)
 * [icompress](#icompress)
 * [ifilter](#ifilter)
 * [imap](#imap)
@@ -278,6 +279,13 @@ each.  When the iterable is exhausted, return elements from the saved copy.
 Repeats indefinitely.
 
 
+<a name="dropwhile" href="#dropwhile">#</a> <b>dropwhile</b>(iterable: <i>Iterable&lt;T&gt;</i>, predicate: <i>T =&gt; bool</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Returns an iterator that drops elements from the iterable as long as the
+predicate is true; afterwards, returns every remaining element.  **Note:** the
+iterator does not produce any output until the predicate first becomes false.
+
+
 <a name="icompress" href="#icompress">#</a> <b>icompress</b>(iterable: <i>Iterable&lt;T&gt;</i>, selectors: <i>Iterable&lt;boolean&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 
 Returns an iterator that filters elements from data returning only those that
@@ -301,8 +309,10 @@ either the data or selectors iterables has been exhausted.
 <a name="izipLongest" href="#izipLongest">#</a> <b>izipLongest</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 ...
 
-<a name="takewhile" href="takewhile">#</a> <b>takewhile</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
-...
+<a name="takewhile" href="#takewhile">#</a> <b>takewhile</b>(iterable: <i>Iterable&lt;T&gt;</i>, predicate: <i>T =&gt; bool</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Returns an iterator that produces elements from the iterable as long as the
+predicate is true.
 
 <a name="zipAll" href="zipAll">#</a> <b>zipAll</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 ...

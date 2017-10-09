@@ -43,6 +43,26 @@ export function* cycle<T>(iterable: Iterable<T>): Iterable<T> {
 }
 
 /**
+ * Returns an iterator that drops elements from the iterable as long as the
+ * predicate is true; afterwards, returns every remaining element.  Note, the
+ * iterator does not produce any output until the predicate first becomes
+ * false.
+ */
+export function* dropwhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> {
+    iterable = iter(iterable);
+    for (const value of iterable) {
+        if (!predicate(value)) {
+            yield value;
+            break;
+        }
+    }
+
+    for (const value of iterable) {
+        yield value;
+    }
+}
+
+/**
  * Returns an iterator that filters elements from data returning only those
  * that have a corresponding element in selectors that evaluates to `true`.
  * Stops when either the data or selectors iterables has been exhausted.
@@ -141,8 +161,12 @@ export function* izipLongest2<T1, T2, D>(
     }
 }
 
+/**
+ * Returns an iterator that produces elements from the iterable as long as the
+ * predicate is true.
+ */
 export function* takewhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> {
-    for (let value of iterable) {
+    for (const value of iterable) {
         if (!predicate(value)) return;
         yield value;
     }
