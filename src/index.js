@@ -1,5 +1,7 @@
 // @flow
 
+import type { Predicate, Primitive } from './types';
+
 export { all, any, enumerate, iter, map, max, min, range, reduce, sorted, sum, zip, zip3 } from './builtins';
 export {
     chain,
@@ -31,4 +33,4 @@ export {
 } from './more-itertools';
 export { compact, compactObject, flatmap, icompact } from './custom';
 
-export type { Predicate, Primitive } from './types';
+export type { Predicate, Primitive };
