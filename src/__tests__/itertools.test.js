@@ -1,24 +1,8 @@
 // @flow
 
-import {
-    chunked,
-    compactObject,
-    cycle,
-    first,
-    flatmap,
-    flatten,
-    icompact,
-    imap,
-    pairwise,
-    partition,
-    range,
-    take,
-    takewhile,
-    uniqueEverseen,
-    uniqueJustseen,
-    zipAll,
-    zipLongest,
-} from '../index';
+import { range } from '../builtins';
+import { cycle, ifilter, imap, takewhile, zipAll, zipLongest } from '../itertools';
+import { take } from '../more-itertools';
 
 const isEven = x => x % 2 === 0;
 const isPositive = x => x >= 0;
@@ -35,30 +19,16 @@ describe('cycle', () => {
     });
 });
 
-describe('ifilter', () => {});
-
-describe('first', () => {
-    it('returns nothing for an empty array', () => {
-        expect(first([])).toBeUndefined();
-        expect(first([undefined, undefined])).toBeUndefined();
+describe('ifilter', () => {
+    it('filters empty list', () => {
+        expect([...ifilter([], isEven)]).toEqual([]);
     });
 
-    it('returns the first value in the array', () => {
-        expect(first([3, 'ohai'])).toBe(3);
-        expect(first([undefined, 3, 'ohai'])).toBe(3);
-        expect(first(['ohai', 3])).toBe('ohai');
-    });
+    it('ifilter works like Array.filter, but lazy', () => {
+        expect([...ifilter([0, 1, 2, 3], isEven)]).toEqual([0, 2]);
 
-    it('first may returns falsey values too', () => {
-        expect(first([0, 1, 2])).toBe(0);
-        expect(first([false, true])).toBe(false);
-    });
-
-    it('first uses a predicate if provided', () => {
-        expect(first([0, 1, 2, 3, 4], n => !!n)).toBe(1);
-        expect(first([0, 1, 2, 3, 4], n => n > 1)).toBe(2);
-        expect(first([0, 1, 2, 3, 4], n => n < 0)).toBeUndefined();
-        expect(first([false, true], x => x)).toBe(true);
+        // ifilter can handle infinite inputs
+        expect(take(5, ifilter(range(9999), isEven))).toEqual([0, 2, 4, 6, 8]);
     });
 });
 
@@ -117,118 +87,5 @@ describe('takewhile', () => {
 
         expect([...takewhile([0, 2, 4, 6, 7, 8, 10], isEven)]).toEqual([0, 2, 4, 6]);
         expect([...takewhile([0, 1, 2, -2, 3, 4, 5, 6, 7], isPositive)]).toEqual([0, 1, 2]);
-    });
-});
-
-describe('partition', () => {
-    it('partition empty list', () => {
-        expect(partition([], isEven)).toEqual([[], []]);
-    });
-
-    it('partition splits input list into two lists', () => {
-        const values = [1, -2, 3, 4, 5, 6, 8, 8, 0, -2, -3];
-        expect(partition(values, isEven)).toEqual([[-2, 4, 6, 8, 8, 0, -2], [1, 3, 5, -3]]);
-        expect(partition(values, isPositive)).toEqual([[1, 3, 4, 5, 6, 8, 8, 0], [-2, -2, -3]]);
-    });
-});
-
-describe('uniqueJustseen', () => {
-    it('uniqueJustseen w/ empty list', () => {
-        expect([...uniqueJustseen([])]).toEqual([]);
-    });
-
-    it('uniqueJustseen', () => {
-        expect([...uniqueJustseen([1, 2, 3, 4, 5])]).toEqual([1, 2, 3, 4, 5]);
-        expect([...uniqueJustseen([1, 1, 1, 2, 2])]).toEqual([1, 2]);
-        expect([...uniqueJustseen([1, 1, 1, 2, 2, 1, 1, 1, 1])]).toEqual([1, 2, 1]);
-    });
-});
-
-describe('uniqueEverseen', () => {
-    it('uniqueEverseen w/ empty list', () => {
-        expect([...uniqueEverseen([])]).toEqual([]);
-    });
-
-    it('uniqueEverseen never emits dupes, but keeps input ordering', () => {
-        expect([...uniqueEverseen([1, 2, 3, 4, 5])]).toEqual([1, 2, 3, 4, 5]);
-        expect([...uniqueEverseen([1, 1, 1, 2, 2, 3, 1, 3, 0, 4])]).toEqual([1, 2, 3, 0, 4]);
-        expect([...uniqueEverseen([1, 1, 1, 2, 2, 1, 1, 1, 1])]).toEqual([1, 2]);
-    });
-});
-
-describe('icompact', () => {
-    it('icompact w/ empty list', () => {
-        expect([...icompact([])]).toEqual([]);
-    });
-
-    it('icompact removes undefined values', () => {
-        expect([...icompact('abc')]).toEqual(['a', 'b', 'c']);
-        expect([...icompact(['x', undefined])]).toEqual(['x']);
-        expect([...icompact([0, undefined, NaN, Infinity])]).toEqual([0, NaN, Infinity]);
-    });
-});
-
-describe('compactObject', () => {
-    it('compactObject w/ empty object', () => {
-        expect(compactObject({})).toEqual({});
-    });
-
-    it('compactObject removes undefined values', () => {
-        expect(compactObject({ a: 1, b: 'foo', c: 0 })).toEqual({ a: 1, b: 'foo', c: 0 });
-        expect(compactObject({ a: undefined, b: false, c: 0 })).toEqual({ b: false, c: 0 });
-    });
-});
-
-describe('flatten', () => {
-    it('flatten w/ empty list', () => {
-        expect([...flatten([])]).toEqual([]);
-        expect([...flatten([[], [], [], [], []])]).toEqual([]);
-    });
-
-    it('flatten works', () => {
-        expect([...flatten([[1, 2], [3, 4, 5]])]).toEqual([1, 2, 3, 4, 5]);
-        expect([...flatten(['hi', 'ha'])]).toEqual(['h', 'i', 'h', 'a']);
-    });
-});
-
-describe('flatmap', () => {
-    it('flatmap w/ empty list', () => {
-        expect([...flatmap([], x => [x])]).toEqual([]);
-    });
-
-    it('flatmap works', () => {
-        const dupeEvens = x => (x % 2 === 0 ? [x, x] : [x]);
-        const triple = x => [x, x, x];
-        const nothin = () => [];
-        expect([...flatmap([1, 2, 3, 4, 5], dupeEvens)]).toEqual([1, 2, 2, 3, 4, 4, 5]);
-        expect([...flatmap(['hi', 'ha'], triple)]).toEqual(['hi', 'hi', 'hi', 'ha', 'ha', 'ha']);
-        expect([...flatmap(['hi', 'ha'], nothin)]).toEqual([]);
-    });
-});
-
-describe('pairwise', () => {
-    it('does nothing for empty array', () => {
-        expect([...pairwise([])]).toEqual([]);
-        expect([...pairwise([1])]).toEqual([]);
-    });
-
-    it('it returns pairs of input', () => {
-        expect([...pairwise([0, 1, 2])]).toEqual([[0, 1], [1, 2]]);
-        expect([...pairwise([1, 2])]).toEqual([[1, 2]]);
-        expect([...pairwise([1, 2, 3, 4])]).toEqual([[1, 2], [2, 3], [3, 4]]);
-    });
-});
-
-describe('chunked', () => {
-    it('does nothing for empty array', () => {
-        expect([...chunked([], 3)]).toEqual([]);
-    });
-
-    it('works with array smaller than chunk size', () => {
-        expect([...chunked([1], 3)]).toEqual([[1]]);
-    });
-
-    it('works with array of values', () => {
-        expect([...chunked([1, 2, 3, 4, 5], 3)]).toEqual([[1, 2, 3], [4, 5]]);
     });
 });
