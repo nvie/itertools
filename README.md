@@ -243,46 +243,120 @@ which one is not defined.
 ### Ports of itertools
 
 * [chain](#chain)
-* compress
-* cycle
-* icompress
-* ifilter
-* imap
-* izip
-* izip3
-* izipAll
-* izipLongest
-* takewhile
-* zipAll
-* zipLongest
+* [compress](#compress)
+* [cycle](#cycle)
+* [icompress](#icompress)
+* [ifilter](#ifilter)
+* [imap](#imap)
+* [izip](#izip)
+* [izip3](#izip3)
+* [izipAll](#izipAll)
+* [izipLongest](#izipLongest)
+* [takewhile](#takewhile)
+* [zipAll](#zipAll)
+* [zipLongest](#zipLongest)
 
 <a name="chain" href="#chain">#</a> <b>chain</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+...
+
+<a name="compress" href="#compress">#</a> <b>compress</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+...
+
+<a name="cycle" href="#cycle">#</a> <b>cycle</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+...
+
+<a name="icompress" href="#icompress">#</a> <b>icompress</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+...
+
+<a name="ifilter" href="#ifilter">#</a> <b>ifilter</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+...
+
+<a name="imap" href="#imap">#</a> <b>imap</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+...
+
+<a name="izip" href="#izip">#</a> <b>izip</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+<a name="izip3" href="#izip3">#</a> <b>izip3</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+...
+
+<a name="izipAll" href="#izipAll">#</a> <b>izipAll</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+...
+
+<a name="izipLongest" href="#izipLongest">#</a> <b>izipLongest</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+...
+
+<a name="takewhile" href="takewhile">#</a> <b>takewhile</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+...
+
+<a name="zipAll" href="zipAll">#</a> <b>zipAll</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+...
+
+<a name="zipLongest" href="zipLongest">#</a> <b>zipLongest</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 ...
 
 
 ### Ports of more-itertools
 
 * [chunked](#chunked)
-* first
-* flatten
-* itake
-* pairwise
-* partition
-* take
-* uniqueEverseen
-* uniqueJustseen
+* [first](#first)
+* [flatten](#flatten)
+* [itake](#itake)
+* [pairwise](#pairwise)
+* [partition](#partition)
+* [take](#take)
+* [uniqueEverseen](#uniqueEverseen)
+* [uniqueJustseen](#uniqueJustseen)
 
 <a name="chunked" href="#chunked">#</a> <b>chunked</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
+...
+
+<a name="first" href="#first">#</a> <b>first</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
+...
+
+<a name="flatten" href="#flatten">#</a> <b>flatten</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
+...
+
+
+<a name="itake" href="#itake">#</a> <b>itake</b>(n: <i>number</i>, iterable: <i>Iterable&lt;T&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
+
+Returns an iterable containing only the first `n` elements of the given
+iterable.
+
+
+<a name="pairwise" href="#pairwise">#</a> <b>pairwise</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
+...
+
+
+<a name="partition" href="#partition">#</a> <b>partition</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
+...
+
+
+<a name="take" href="#take">#</a> <b>take</b>(n: <i>number</i>, iterable: <i>Iterable&lt;T&gt;</i>): <i>Array&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
+
+Non-lazy version of [itake](#itake).
+
+
+<a name="uniqueEverseen" href="#uniqueEverseen">#</a> <b>uniqueEverseen</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
+...
+
+<a name="uniqueJustseen" href="#uniqueJustseen">#</a> <b>uniqueJustseen</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
 ...
 
 
 ### Additions
 
 * [compact](#compact)
-* compactObject
-* flatmap
-* icompact
+* [compactObject](#compactObject)
+* [flatmap](#flatmap)
+* [icompact](#icompact)
 
 <a name="compact" href="#compact">#</a> <b>compact</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
+...
 
+<a name="compactObject" href="#compactObject">#</a> <b>compactObject</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
+...
+
+<a name="flatmap" href="#flatmap">#</a> <b>flatmap</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
+...
+
+<a name="icompact" href="#icompact">#</a> <b>icompact</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
 ...

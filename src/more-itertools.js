@@ -47,6 +47,10 @@ export function* flatten<T>(iterableOfIterables: Iterable<Iterable<T>>): Iterabl
     }
 }
 
+/**
+ * Returns an iterable containing only the first `n` elements of the given
+ * iterable.
+ */
 export function* itake<T>(n: number, iterable: Iterable<T>): Iterable<T> {
     iterable = iter(iterable);
     while (n-- > 0) {
@@ -89,6 +93,9 @@ export function partition<T>(iterable: Iterable<T>, predicate: Predicate<T>): [A
     return [gold, dust];
 }
 
+/**
+ * Non-lazy version of itake().
+ */
 export function take<T>(n: number, iterable: Iterable<T>): Array<T> {
     return [...itake(n, iterable)];
 }
