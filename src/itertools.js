@@ -9,8 +9,9 @@ export function chain<T>(...iterables: Array<Iterable<T>>): Iterable<T> {
 }
 
 /**
- * Make an iterator that counts up values starting with number `start` (default
- * 0), incrementing by `step`.  To decrement, use a negative step number.
+ * Returns an iterator that counts up values starting with number `start`
+ * (default 0), incrementing by `step`.  To decrement, use a negative step
+ * number.
  */
 export function* count(start: number = 0, step: number = 1): Iterable<number> {
     let n = start;
@@ -20,10 +21,18 @@ export function* count(start: number = 0, step: number = 1): Iterable<number> {
     }
 }
 
+/**
+ * Non-lazy version of icompress().
+ */
 export function compress<T>(data: Iterable<T>, selectors: Iterable<boolean>): Array<T> {
     return [...icompress(data, selectors)];
 }
 
+/**
+ * Returns an iterator producing elements from the iterable and saving a copy
+ * of each.  When the iterable is exhausted, return elements from the saved
+ * copy.  Repeats indefinitely.
+ */
 export function* cycle<T>(iterable: Iterable<T>): Iterable<T> {
     let saved = [...iterable];
     while (saved.length > 0) {
@@ -33,6 +42,11 @@ export function* cycle<T>(iterable: Iterable<T>): Iterable<T> {
     }
 }
 
+/**
+ * Returns an iterator that filters elements from data returning only those
+ * that have a corresponding element in selectors that evaluates to `true`.
+ * Stops when either the data or selectors iterables has been exhausted.
+ */
 export function* icompress<T>(data: Iterable<T>, selectors: Iterable<boolean>): Iterable<T> {
     for (let [d, s] of izip(data, selectors)) {
         if (s) {

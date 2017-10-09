@@ -260,20 +260,30 @@ which one is not defined.
 <a name="chain" href="#chain">#</a> <b>chain</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 ...
 
-<a name="compress" href="#compress">#</a> <b>compress</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
-...
+<a name="compress" href="#compress">#</a> <b>compress</b>(iterable: <i>Iterable&lt;T&gt;</i>, selectors: <i>Iterable&lt;boolean&gt;</i>): <i>Array&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Non-lazy version of [icompress](#icompress).
+
 
 <a name="count" href="#count">#</a> <b>count</b>(start: <i>number</i>, step: <i>number</i>): <i>Iterable&lt;number&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 
-Make an iterator that counts up values starting with number `start` (default
+Returns an iterator that counts up values starting with number `start` (default
 0), incrementing by `step`.  To decrement, use a negative step number.
 
 
-<a name="cycle" href="#cycle">#</a> <b>cycle</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
-...
+<a name="cycle" href="#cycle">#</a> <b>cycle</b>(iterable: <i>Iterable&lt;T&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 
-<a name="icompress" href="#icompress">#</a> <b>icompress</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
-...
+Returns an iterator producing elements from the iterable and saving a copy of
+each.  When the iterable is exhausted, return elements from the saved copy.
+Repeats indefinitely.
+
+
+<a name="icompress" href="#icompress">#</a> <b>icompress</b>(iterable: <i>Iterable&lt;T&gt;</i>, selectors: <i>Iterable&lt;boolean&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Returns an iterator that filters elements from data returning only those that
+have a corresponding element in selectors that evaluates to `true`.  Stops when
+either the data or selectors iterables has been exhausted.
+
 
 <a name="ifilter" href="#ifilter">#</a> <b>ifilter</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 ...
