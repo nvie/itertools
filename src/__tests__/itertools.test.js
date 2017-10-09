@@ -1,7 +1,7 @@
 // @flow
 
 import { range } from '../builtins';
-import { chain, cycle, ifilter, imap, takewhile, zipAll, zipLongest } from '../itertools';
+import { chain, compress, cycle, ifilter, imap, takewhile, zipAll, zipLongest } from '../itertools';
 import { take } from '../more-itertools';
 
 const isEven = x => x % 2 === 0;
@@ -20,8 +20,17 @@ describe('chain', () => {
     });
 });
 
-describe('TODO: compress', () => {
-    it('...', () => {});
+describe('compress', () => {
+    it('compress on empty list', () => {
+        expect(compress([], [])).toEqual([]);
+    });
+
+    it('compress removes selected items', () => {
+        expect(compress('abc', [])).toEqual([]);
+        expect(compress('abc', [true])).toEqual(['a']);
+        expect(compress('abc', [false, false, false])).toEqual([]);
+        expect(compress('abc', [true, false, true])).toEqual(['a', 'c']);
+    });
 });
 
 describe('cycle', () => {
@@ -62,20 +71,28 @@ describe('imap', () => {
     });
 });
 
-describe('TODO: izip', () => {
-    it('...', () => {});
+describe('izip', () => {
+    it('izip is tested through zip() tests (see builtins)', () => {
+        // This is okay
+    });
 });
 
-describe('TODO: izip3', () => {
-    it('...', () => {});
+describe('izip3', () => {
+    it('izip3 is tested through zip3() tests (see builtins)', () => {
+        // This is okay
+    });
 });
 
-describe('TODO: izipAll', () => {
-    it('...', () => {});
+describe('izipAll', () => {
+    it('izipAll is tested through zipAll() tests', () => {
+        // This is okay
+    });
 });
 
-describe('TODO: izipLongest', () => {
-    it('...', () => {});
+describe('izipLongest', () => {
+    it('izipLongest is tested through zipLongest() tests', () => {
+        // This is okay
+    });
 });
 
 describe('takewhile', () => {
