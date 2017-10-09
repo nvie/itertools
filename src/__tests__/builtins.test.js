@@ -1,7 +1,25 @@
 // @flow
 
-import { all, any, contains, enumerate, iter, max, min, range, sorted, sum, zip, zip3 } from '../builtins';
+import {
+    all,
+    any,
+    contains,
+    enumerate,
+    filter,
+    iter,
+    map,
+    max,
+    min,
+    range,
+    reduce,
+    sorted,
+    sum,
+    zip,
+    zip3,
+} from '../builtins';
 import { first } from '../more-itertools';
+
+const isEven = n => n % 2 === 0;
 
 describe('all', () => {
     it('all of empty list is true', () => {
@@ -76,7 +94,15 @@ describe('enumerate', () => {
     });
 });
 
-describe('TODO: filter', () => {});
+describe('filter', () => {
+    it('filters empty list', () => {
+        expect(filter([], isEven)).toEqual([]);
+    });
+
+    it('keeps values based on predicate', () => {
+        expect(filter([0, 1, 2, 3], isEven)).toEqual([0, 2]);
+    });
+});
 
 describe('iter', () => {
     it('iter makes any iterable a one-time iterable', () => {
@@ -127,7 +153,17 @@ describe('iter', () => {
     });
 });
 
-describe('TODO: map', () => {});
+describe('map', () => {
+    const firstLetter = s => s[0].toUpperCase();
+
+    it('map empty list', () => {
+        expect(map([], firstLetter)).toEqual([]);
+    });
+
+    it('map values based on transformation function', () => {
+        expect(map(['hello', 'world'], firstLetter)).toEqual(['H', 'W']);
+    });
+});
 
 describe('max', () => {
     it("can't take max of empty list", () => {
@@ -198,7 +234,24 @@ describe('range', () => {
     });
 });
 
-describe('TODO: reduce', () => {});
+describe('reduce', () => {
+    const adder = (x: number, y: number) => x + y;
+
+    it('reduce on empty list returns start value', () => {
+        expect(reduce([], adder, 0)).toEqual(0);
+        expect(reduce([], adder, 13)).toEqual(13);
+    });
+
+    it('reduce on list with only one item', () => {
+        expect(reduce([5], adder, 0)).toEqual(5);
+        expect(reduce([5], adder, 13)).toEqual(18);
+    });
+
+    it('reduce on list with multiple items', () => {
+        expect(reduce([1, 2, 3, 4], adder, 0)).toEqual(10);
+        expect(reduce([1, 2, 3, 4, 5], adder, 13)).toEqual(28);
+    });
+});
 
 describe('sorted', () => {
     it('sorted w/ empty list', () => {
