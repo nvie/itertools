@@ -1,14 +1,23 @@
 // @flow
 
 import { range } from '../builtins';
-import { cycle, ifilter, imap, takewhile, zipAll, zipLongest } from '../itertools';
+import { chain, cycle, ifilter, imap, takewhile, zipAll, zipLongest } from '../itertools';
 import { take } from '../more-itertools';
 
 const isEven = x => x % 2 === 0;
 const isPositive = x => x >= 0;
 
-describe('TODO: chain', () => {
-    it('...', () => {});
+describe('chain', () => {
+    it('chains empty iterables', () => {
+        expect([...chain([], [])]).toEqual([]);
+    });
+
+    it('chains iterables together', () => {
+        expect([...chain(['foo'], [])]).toEqual(['foo']);
+        expect([...chain([], ['bar'])]).toEqual(['bar']);
+        expect([...chain([], ['bar'], ['qux'])]).toEqual(['bar', 'qux']);
+        expect([...chain(['foo', 'bar'], ['qux'])]).toEqual(['foo', 'bar', 'qux']);
+    });
 });
 
 describe('TODO: compress', () => {
