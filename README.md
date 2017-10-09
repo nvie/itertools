@@ -302,12 +302,21 @@ either the data or selectors iterables has been exhausted.
 Returns an iterator that filters elements from iterable returning only those
 for which the predicate is true.
 
-<a name="imap" href="#imap">#</a> <b>imap</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+<a name="imap" href="#imap">#</a> <b>imap</b>(iterable: <i>Iterable&lt;T&gt;</i>, mapper: <i>T =&gt; V</i>): <i>Iterable&lt;V&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Returns an iterator that computes the given mapper function using arguments
+from each of the iterables.
+
+
+<a name="izip" href="#izip">#</a> <b>izip</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>): <i>Iterable&lt;[T1, T2]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+<a name="izip3" href="#izip3">#</a> <b>izip3</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>, zs: <i>Iterable&lt;T3&gt;</i>): <i>Iterable&lt;[T1, T2, T3]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 ...
 
-<a name="izip" href="#izip">#</a> <b>izip</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
-<a name="izip3" href="#izip3">#</a> <b>izip3</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
-...
+Returns an iterator that aggregates elements from each of the iterables.  Used
+for lock-step iteration over several iterables at a time.  When iterating over
+two iterables, use `izip2`.  When iterating over three iterables, use `izip3`,
+etc.  `izip` is an alias for `izip2`.
+
 
 <a name="izipAll" href="#izipAll">#</a> <b>izipAll</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 ...

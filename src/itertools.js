@@ -93,12 +93,22 @@ export function* ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Ite
     }
 }
 
+/**
+ * Returns an iterator that computes the given mapper function using arguments
+ * from each of the iterables.
+ */
 export function* imap<T, V>(iterable: Iterable<T>, mapper: T => V): Iterable<V> {
     for (let value of iterable) {
         yield mapper(value);
     }
 }
 
+/**
+ * Returns an iterator that aggregates elements from each of the iterables.
+ * Used for lock-step iteration over several iterables at a time.  When
+ * iterating over two iterables, use `izip2`.  When iterating over three
+ * iterables, use `izip3`, etc.  `izip` is an alias for `izip2`.
+ */
 export function* izip2<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): Iterable<[T1, T2]> {
     xs = iter(xs);
     ys = iter(ys);
@@ -114,6 +124,9 @@ export function* izip2<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): Iterable<[T1
     }
 }
 
+/**
+ * Like izip2, but for three input iterables.
+ */
 export function* izip3<T1, T2, T3>(xs: Iterable<T1>, ys: Iterable<T2>, zs: Iterable<T3>): Iterable<[T1, T2, T3]> {
     xs = iter(xs);
     ys = iter(ys);
