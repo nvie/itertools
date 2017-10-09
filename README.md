@@ -258,8 +258,12 @@ which one is not defined.
 * [zipAll](#zipAll)
 * [zipLongest](#zipLongest)
 
-<a name="chain" href="#chain">#</a> <b>chain</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
-...
+<a name="chain" href="#chain">#</a> <b>chain</b>(...iterables: <i>Array&lt;Iterable&lt;T&gt;&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Returns an iterator that returns elements from the first iterable until it is
+exhausted, then proceeds to the next iterable, until all of the iterables are
+exhausted.  Used for treating consecutive sequences as a single sequence.
+
 
 <a name="compress" href="#compress">#</a> <b>compress</b>(iterable: <i>Iterable&lt;T&gt;</i>, selectors: <i>Iterable&lt;boolean&gt;</i>): <i>Array&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 
