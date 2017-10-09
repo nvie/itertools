@@ -1,6 +1,6 @@
 // @flow
 
-import { all, any, enumerate, contains, iter, max, min, range, sorted, sum, zip, zip3 } from '../builtins';
+import { all, any, contains, enumerate, iter, max, min, range, sorted, sum, zip, zip3 } from '../builtins';
 import { first } from '../more-itertools';
 
 describe('all', () => {

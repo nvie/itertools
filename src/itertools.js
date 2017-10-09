@@ -1,6 +1,6 @@
 // @flow
 
-import { all, any, iter } from './builtins';
+import { all, iter } from './builtins';
 import { flatten } from './more-itertools';
 import type { Maybe, Predicate } from './types';
 
