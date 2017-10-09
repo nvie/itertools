@@ -43,6 +43,7 @@
     "babel-eslint": "^8.0.1",
     "babel-preset-env": "^1.6.0",
     "babel-preset-flow": "^6.23.0",
+    "coveralls": "^3.0.0",
     "eslint": "^4.8.0",
     "eslint-plugin-flowtype": "^2.37.0",
     "flow-bin": "^0.56.0",
