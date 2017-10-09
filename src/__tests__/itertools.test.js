@@ -1,7 +1,7 @@
 // @flow
 
 import { range } from '../builtins';
-import { chain, compress, cycle, ifilter, imap, takewhile, zipAll, zipLongest } from '../itertools';
+import { chain, compress, count, cycle, ifilter, imap, takewhile, zipAll, zipLongest } from '../itertools';
 import { take } from '../more-itertools';
 
 const isEven = x => x % 2 === 0;
@@ -30,6 +30,22 @@ describe('compress', () => {
         expect(compress('abc', [true])).toEqual(['a']);
         expect(compress('abc', [false, false, false])).toEqual([]);
         expect(compress('abc', [true, false, true])).toEqual(['a', 'c']);
+    });
+});
+
+describe('count', () => {
+    it('default counter', () => {
+        expect(take(6, count())).toEqual([0, 1, 2, 3, 4, 5]);
+    });
+
+    it('counter from different start value', () => {
+        expect(take(6, count(1))).toEqual([1, 2, 3, 4, 5, 6]);
+        expect(take(6, count(-3))).toEqual([-3, -2, -1, 0, 1, 2]);
+    });
+
+    it('counter backwards', () => {
+        expect(take(6, count(4, -1))).toEqual([4, 3, 2, 1, 0, -1]);
+        expect(take(5, count(-3, -2))).toEqual([-3, -5, -7, -9, -11]);
     });
 });
 

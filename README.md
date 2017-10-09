@@ -244,6 +244,7 @@ which one is not defined.
 
 * [chain](#chain)
 * [compress](#compress)
+* [count](#count)
 * [cycle](#cycle)
 * [icompress](#icompress)
 * [ifilter](#ifilter)
@@ -261,6 +262,12 @@ which one is not defined.
 
 <a name="compress" href="#compress">#</a> <b>compress</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 ...
+
+<a name="count" href="#count">#</a> <b>count</b>(start: <i>number</i>, step: <i>number</i>): <i>Iterable&lt;number&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Make an iterator that counts up values starting with number `start` (default
+0), incrementing by `step`.  To decrement, use a negative step number.
+
 
 <a name="cycle" href="#cycle">#</a> <b>cycle</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 ...

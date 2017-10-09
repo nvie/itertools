@@ -8,6 +8,18 @@ export function chain<T>(...iterables: Array<Iterable<T>>): Iterable<T> {
     return flatten(iterables);
 }
 
+/**
+ * Make an iterator that counts up values starting with number `start` (default
+ * 0), incrementing by `step`.  To decrement, use a negative step number.
+ */
+export function* count(start: number = 0, step: number = 1): Iterable<number> {
+    let n = start;
+    for (;;) {
+        yield n;
+        n += step;
+    }
+}
+
 export function compress<T>(data: Iterable<T>, selectors: Iterable<boolean>): Array<T> {
     return [...icompress(data, selectors)];
 }
