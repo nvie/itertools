@@ -76,7 +76,7 @@ The `itertools` package consists of a few building blocks:
 
 * [all](#all)
 * [any](#any)
-* enumerate
+* [enumerate](#enumerate)
 * [iter](#iter)
 * map
 * max
@@ -86,9 +86,11 @@ The `itertools` package consists of a few building blocks:
 * sorted
 * sum
 * zip
+* zip3
 
 <a name="all" href="#all">#</a> <b>all</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 <a name="any" href="#any">#</a> <b>any</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
+<a name="enumerate" href="#enumerate">#</a> <b>enumerate</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 <a name="iter" href="#iter">#</a> <b>iter</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 
 ...
@@ -108,7 +110,6 @@ The `itertools` package consists of a few building blocks:
 * izipAll
 * izipLongest
 * takewhile
-* zip3
 * zipAll
 * zipLongest
 
@@ -138,8 +139,6 @@ The `itertools` package consists of a few building blocks:
 * compactObject
 * flatmap
 * icompact
-* identity
-* primitiveIdentity
 
 <a name="compact" href="#compact">#</a> <b>compact</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
 
