@@ -22,7 +22,7 @@
     "check:prettier": "prettier --list-different 'src/**/*.js'",
     "fix:import-sort": "find src -iname '*.js' | xargs -n1 import-sort -o",
     "fix:prettier": "prettier --write 'src/**/*.js'",
-    "prepublish": "in-publish && yarn run test && yarn run check && yarn run build",
+    "prepublish": "yarn run --silent in-publish && yarn run test && yarn run check && yarn run build",
     "test": "yarn run test:flow && yarn run test:jest && yarn run check",
     "test:flow": "flow check",
     "test:jest": "jest --coverage"
