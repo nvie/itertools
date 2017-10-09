@@ -25,7 +25,7 @@
     "prepublish": "yarn run test && yarn run check && yarn run build",
     "test": "yarn run test:flow && yarn run test:jest && yarn run check",
     "test:flow": "flow check",
-    "test:jest": "jest"
+    "test:jest": "jest --coverage"
   },
   "repository": {
     "type": "git",
