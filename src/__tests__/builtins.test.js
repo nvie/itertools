@@ -266,7 +266,7 @@ describe('sorted', () => {
         // Explicitly test numeral ordering... in plain JS the following is true:
         // [4, 44, 100, 80, 9].sort()  ~~>  [100, 4, 44, 80, 9]
         expect(sorted([4, 44, 100, 80, 9])).toEqual([4, 9, 44, 80, 100]);
-        expect(sorted(['4', '44', '100', '80', '9'])).toEqual(['100', '4', '44', '80', '9']);
+        expect(sorted(['4', '44', '100', '80', '44', '9'])).toEqual(['100', '4', '44', '44', '80', '9']);
         expect(sorted([false, true, true, false])).toEqual([false, false, true, true]);
     });
 
@@ -278,6 +278,10 @@ describe('sorted', () => {
 
     it('sorted in reverse', () => {
         expect(sorted([2, 1, 3, 4, 5], undefined, true)).toEqual([5, 4, 3, 2, 1]);
+    });
+
+    it('sorted has undefined behaviour with non-homogeneous primitive types', () => {
+        expect(sorted([1, true, 'one'])).toEqual([1, true, 'one']);
     });
 });
 
