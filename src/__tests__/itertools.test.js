@@ -7,6 +7,14 @@ import { take } from '../more-itertools';
 const isEven = x => x % 2 === 0;
 const isPositive = x => x >= 0;
 
+describe('TODO: chain', () => {
+    it('...', () => {});
+});
+
+describe('TODO: compress', () => {
+    it('...', () => {});
+});
+
 describe('cycle', () => {
     it('cycle with empty list', () => {
         expect([...cycle([])]).toEqual([]);
@@ -19,31 +27,63 @@ describe('cycle', () => {
     });
 });
 
+describe('icompress', () => {
+    it('icompress is tested through compress() tests', () => {
+        // This is okay
+    });
+});
+
 describe('ifilter', () => {
-    it('filters empty list', () => {
-        expect([...ifilter([], isEven)]).toEqual([]);
+    it('ifilter is tested through filter() tests (see builtins)', () => {
+        // This is okay
     });
 
-    it('ifilter works like Array.filter, but lazy', () => {
-        expect([...ifilter([0, 1, 2, 3], isEven)]).toEqual([0, 2]);
-
-        // ifilter can handle infinite inputs
+    it('ifilter can handle infinite inputs', () => {
         expect(take(5, ifilter(range(9999), isEven))).toEqual([0, 2, 4, 6, 8]);
     });
 });
 
 describe('imap', () => {
-    it('imap on empty iterable', () => {
-        expect([...imap([], x => x)]).toEqual([]);
+    it('imap is tested through map() tests (see builtins)', () => {
+        // This is okay
     });
 
-    it('imap works like Array.map, but lazy', () => {
-        expect([...imap([1, 2, 3], x => x)]).toEqual([1, 2, 3]);
-        expect([...imap([1, 2, 3], x => 2 * x)]).toEqual([2, 4, 6]);
-        expect([...imap([1, 2, 3], x => x.toString())]).toEqual(['1', '2', '3']);
-
-        // imap can handle infinite inputs
+    it('...but imap can handle infinite inputs', () => {
         expect(take(3, imap(range(9999), x => -x))).toEqual([-0, -1, -2]);
+    });
+});
+
+describe('TODO: izip', () => {
+    it('...', () => {});
+});
+
+describe('TODO: izip3', () => {
+    it('...', () => {});
+});
+
+describe('TODO: izipAll', () => {
+    it('...', () => {});
+});
+
+describe('TODO: izipLongest', () => {
+    it('...', () => {});
+});
+
+describe('takewhile', () => {
+    it('takewhile on empty list', () => {
+        expect([...takewhile([], isEven)]).toEqual([]);
+        expect([...takewhile([], isPositive)]).toEqual([]);
+    });
+
+    it('takewhile on list', () => {
+        expect([...takewhile([1], isEven)]).toEqual([]);
+        expect([...takewhile([1], isPositive)]).toEqual([1]);
+
+        expect([...takewhile([-1, 0, 1], isEven)]).toEqual([]);
+        expect([...takewhile([-1, 0, 1], isPositive)]).toEqual([]);
+
+        expect([...takewhile([0, 2, 4, 6, 7, 8, 10], isEven)]).toEqual([0, 2, 4, 6]);
+        expect([...takewhile([0, 1, 2, -2, 3, 4, 5, 6, 7], isPositive)]).toEqual([0, 1, 2]);
     });
 });
 
@@ -69,23 +109,5 @@ describe('zipLongest', () => {
         expect(zipLongest('abc', '')).toEqual([['a', undefined], ['b', undefined], ['c', undefined]]);
         expect(zipLongest('x', 'abc')).toEqual([['x', 'a'], [undefined, 'b'], [undefined, 'c']]);
         expect(zipLongest('x', 'abc', /* filler */ 0)).toEqual([['x', 'a'], [0, 'b'], [0, 'c']]);
-    });
-});
-
-describe('takewhile', () => {
-    it('takewhile on empty list', () => {
-        expect([...takewhile([], isEven)]).toEqual([]);
-        expect([...takewhile([], isPositive)]).toEqual([]);
-    });
-
-    it('takewhile on list', () => {
-        expect([...takewhile([1], isEven)]).toEqual([]);
-        expect([...takewhile([1], isPositive)]).toEqual([1]);
-
-        expect([...takewhile([-1, 0, 1], isEven)]).toEqual([]);
-        expect([...takewhile([-1, 0, 1], isPositive)]).toEqual([]);
-
-        expect([...takewhile([0, 2, 4, 6, 7, 8, 10], isEven)]).toEqual([0, 2, 4, 6]);
-        expect([...takewhile([0, 1, 2, -2, 3, 4, 5, 6, 7], isPositive)]).toEqual([0, 1, 2]);
     });
 });

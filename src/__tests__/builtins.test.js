@@ -99,7 +99,7 @@ describe('filter', () => {
         expect(filter([], isEven)).toEqual([]);
     });
 
-    it('keeps values based on predicate', () => {
+    it('ifilter works like Array.filter, but lazy', () => {
         expect(filter([0, 1, 2, 3], isEven)).toEqual([0, 2]);
     });
 });
@@ -154,14 +154,14 @@ describe('iter', () => {
 });
 
 describe('map', () => {
-    const firstLetter = s => s[0].toUpperCase();
-
-    it('map empty list', () => {
-        expect(map([], firstLetter)).toEqual([]);
+    it('map on empty iterable', () => {
+        expect(map([], x => x)).toEqual([]);
     });
 
-    it('map values based on transformation function', () => {
-        expect(map(['hello', 'world'], firstLetter)).toEqual(['H', 'W']);
+    it('imap works like Array.map, but lazy', () => {
+        expect(map([1, 2, 3], x => x)).toEqual([1, 2, 3]);
+        expect(map([1, 2, 3], x => 2 * x)).toEqual([2, 4, 6]);
+        expect(map([1, 2, 3], x => x.toString())).toEqual(['1', '2', '3']);
     });
 });
 
