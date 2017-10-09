@@ -22,7 +22,7 @@ script:
 
 after_success:
   # Publish the coverage report to Coveralls
-  - cat coverage/lcov.info | yarn run coveralls --verbose
+  - cat coverage/lcov.info | node_modules/.bin/coveralls
 
 notifications:
   email: false
