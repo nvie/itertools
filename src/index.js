@@ -30,3 +30,5 @@ export {
     uniqueJustseen,
 } from './more-itertools';
 export { compact, compactObject, flatmap, icompact } from './custom';
+
+export type { Predicate, Primitive } from './types';
