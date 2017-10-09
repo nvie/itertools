@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/nvie/itertools.js.svg?branch=master)](https://travis-ci.org/nvie/itertools.js)
-[![Coverage Status](https://coveralls.io/repos/github/nvie/itertools.js/badge.svg?branch=master)](https://coveralls.io/github/nvie/itertools.js?branch=master)
+[![Build Status](https://img.shields.io/travis/nvie/itertools.js.svg)](https://travis-ci.org/nvie/itertools.js)
+[![Coverage Status](https://img.shields.io/coveralls/nvie/itertools.js.svg)](https://coveralls.io/github/nvie/itertools.js?branch=master)
 
 A JavaScript port of Python's awesome
 [itertools](https://docs.python.org/library/itertools.html) standard library.
