@@ -230,14 +230,10 @@ which one is not defined.
 ...
 
 
-<a name="zip" href="#zip">#</a> <b>zip</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
+<a name="zip" href="#zip">#</a> <b>zip</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>): <i>Array&lt;[T1, T2]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")<br />
+<a name="zip3" href="#zip3">#</a> <b>zip3</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>, zs: <i>Iterable&lt;T3&gt;</i>): <i>Array&lt;[T1, T2, T3]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 
-...
-
-
-<a name="zip3" href="#zip3">#</a> <b>zip3</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
-
-...
+Non-lazy version of [izip](#izip) / [izip3](#izip3).
 
 
 ### Ports of itertools
@@ -308,7 +304,7 @@ Returns an iterator that computes the given mapper function using arguments
 from each of the iterables.
 
 
-<a name="izip" href="#izip">#</a> <b>izip</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>): <i>Iterable&lt;[T1, T2]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+<a name="izip" href="#izip">#</a> <b>izip</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>): <i>Iterable&lt;[T1, T2]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")<br />
 <a name="izip3" href="#izip3">#</a> <b>izip3</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>, zs: <i>Iterable&lt;T3&gt;</i>): <i>Iterable&lt;[T1, T2, T3]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 ...
 
