@@ -2,7 +2,7 @@
 
 import { iter } from './builtins';
 import type { Maybe, Predicate, Primitive } from './types';
-import { identity, primitiveIdentity } from './utils';
+import { primitiveIdentity } from './utils';
 
 function isDefined<T>(x: T): boolean {
     return x !== undefined;
@@ -94,7 +94,6 @@ export function take<T>(n: number, iterable: Iterable<T>): Array<T> {
 }
 
 export function* uniqueEverseen<T>(iterable: Iterable<T>, keyFn: T => Primitive = primitiveIdentity): Iterable<T> {
-    keyFn = keyFn || identity;
     let seen = new Set();
     for (let item of iterable) {
         let key = keyFn(item);
@@ -106,7 +105,6 @@ export function* uniqueEverseen<T>(iterable: Iterable<T>, keyFn: T => Primitive 
 }
 
 export function* uniqueJustseen<T>(iterable: Iterable<T>, keyFn: T => Primitive = primitiveIdentity): Iterable<T> {
-    keyFn = keyFn || identity;
     let last = undefined;
     for (let item of iterable) {
         let key = keyFn(item);

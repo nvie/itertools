@@ -19,10 +19,6 @@ export function keyToCmp<T>(keyFn: T => Primitive): CmpFn<T> {
     };
 }
 
-export function identity<T>(x: T): T {
-    return x;
-}
-
 export function identityPredicate<T>(x: T): boolean {
     return !!x;
 }
