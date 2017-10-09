@@ -1,6 +1,6 @@
 // @flow
 
-import { imap, izip, izip3 } from './itertools';
+import { ifilter, imap, izip, izip3 } from './itertools';
 import { first } from './more-itertools';
 import type { Maybe, Predicate, Primitive } from './types';
 import { primitiveIdentity } from './utils';
@@ -97,6 +97,10 @@ export function* enumerate<T>(iterable: Iterable<T>, start: number = 0): Iterabl
     for (let value of iterable) {
         yield [index++, value];
     }
+}
+
+export function filter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Array<T> {
+    return [...ifilter(iterable, predicate)];
 }
 
 /**
