@@ -1,10 +1,8 @@
 // @flow
 
-import { iter } from './builtins';
 import { imap } from './itertools';
 import { flatten } from './more-itertools';
-import type { Maybe, Predicate, Primitive } from './types';
-import { identity, primitiveIdentity } from './utils';
+import type { Maybe } from './types';
 
 export function* icompact<T>(iterable: Iterable<T>): Iterable<$NonMaybeType<T>> {
     for (let item of iterable) {

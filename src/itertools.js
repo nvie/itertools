@@ -2,8 +2,7 @@
 
 import { all, any, iter } from './builtins';
 import { flatten } from './more-itertools';
-import type { Maybe, Predicate, Primitive } from './types';
-import { identity, primitiveIdentity } from './utils';
+import type { Maybe, Predicate } from './types';
 
 export function chain<T>(...iterables: Array<Iterable<T>>): Iterable<T> {
     return flatten(iterables);
