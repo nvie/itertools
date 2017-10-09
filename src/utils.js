@@ -24,6 +24,7 @@ export function identityPredicate<T>(x: T): boolean {
 }
 
 export function numberIdentity<T>(x: T): number {
+    /* istanbul ignore if */
     if (typeof x !== 'number') {
         // eslint-disable-next-line no-console
         console.error('Inputs must be numbers, got', x);
@@ -33,6 +34,7 @@ export function numberIdentity<T>(x: T): number {
 }
 
 export function primitiveIdentity<T>(x: T): Primitive {
+    /* istanbul ignore if */
     if (typeof x !== 'string' && typeof x !== 'number' && typeof x !== 'boolean') {
         throw new Error('Please provide a key function that can establish object identity');
     }
