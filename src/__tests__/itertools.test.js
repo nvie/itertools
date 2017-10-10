@@ -1,7 +1,19 @@
 // @flow
 
 import { range } from '../builtins';
-import { chain, compress, count, cycle, dropwhile, ifilter, imap, takewhile, zipAll, zipLongest } from '../itertools';
+import {
+    chain,
+    compress,
+    count,
+    cycle,
+    islice,
+    dropwhile,
+    ifilter,
+    imap,
+    takewhile,
+    zipAll,
+    zipLongest,
+} from '../itertools';
 import { take } from '../more-itertools';
 
 const isEven = x => x % 2 === 0;
@@ -103,6 +115,20 @@ describe('imap', () => {
 
     it('...but imap can handle infinite inputs', () => {
         expect(take(3, imap(range(9999), x => -x))).toEqual([-0, -1, -2]);
+    });
+});
+
+describe('islice', () => {
+    it('islice an empty iterable', () => {
+        expect([...islice([], 2)]).toEqual([]);
+    });
+
+    it('islice with arguments', () => {
+        expect([...islice('ABCDEFG', /*stop*/ 2)]).toEqual(['A', 'B']);
+        expect([...islice('ABCDEFG', 2, 4)]).toEqual(['C', 'D']);
+        expect([...islice('ABCDEFG', /*start*/ 2, /*stop*/ null)]).toEqual(['C', 'D', 'E', 'F', 'G']);
+        expect([...islice('ABCDEFG', /*start*/ 0, /*stop*/ null, /*step*/ 2)]).toEqual(['A', 'C', 'E', 'G']);
+        expect([...islice('ABCDEFG', /*start*/ 1, /*stop*/ null, /*step*/ 2)]).toEqual(['B', 'D', 'F']);
     });
 });
 

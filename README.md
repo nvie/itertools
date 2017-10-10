@@ -246,10 +246,11 @@ Non-lazy version of [izip](#izip) / [izip3](#izip3).
 * [icompress](#icompress)
 * [ifilter](#ifilter)
 * [imap](#imap)
-* [izip](#izip)
+* [islice](#islice)
 * [izip3](#izip3)
 * [izipAll](#izipAll)
 * [izipLongest](#izipLongest)
+* [izip](#izip)
 * [takewhile](#takewhile)
 * [zipAll](#zipAll)
 * [zipLongest](#zipLongest)
@@ -302,6 +303,17 @@ for which the predicate is true.
 
 Returns an iterator that computes the given mapper function using arguments
 from each of the iterables.
+
+
+<a name="islice" href="#islice">#</a> <b>islice</b>(iterable: <i>Iterable&lt;T&gt;</i>[, start: <i>number</i>], stop: <i>number</i>[, step: <i>number</i>]): <i>Iterable&lt;V&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Returns an iterator that returns selected elements from the iterable.  If
+`start` is non-zero, then elements from the iterable are skipped until start is
+reached.  Then, elements are returned by making steps of `step` (defaults to
+1).  If set to higher than 1, items will be skipped.  If `stop` is provided,
+then iteration continues until the iterator reached that index, otherwise, the
+iterable will be fully exhausted.  `islice()` does not support negative values
+for `start`, `stop`, or `step`.
 
 
 <a name="izip" href="#izip">#</a> <b>izip</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>): <i>Iterable&lt;[T1, T2]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")<br />

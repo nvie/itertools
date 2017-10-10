@@ -1,8 +1,32 @@
 // @flow
 
-import { all, iter } from './builtins';
+import { all, enumerate, iter } from './builtins';
 import { flatten } from './more-itertools';
 import type { Maybe, Predicate } from './types';
+
+function composeAnd(f1: number => boolean, f2: number => boolean): number => boolean {
+    return (n: number) => f1(n) && f2(n);
+}
+
+function slicePredicate(start: number, stop: ?number, step: number) {
+    // If stop is not provided (= undefined), then interpret the start value as the stop value
+    if (stop === undefined) {
+        [start, stop] = [0, start];
+    }
+
+    let pred = (n: number) => n >= start;
+
+    if (stop !== null) {
+        const stopNotNull = stop;
+        pred = composeAnd(pred, (n: number) => n < stopNotNull);
+    }
+
+    if (step > 1) {
+        pred = composeAnd(pred, (n: number) => (n - start) % step === 0);
+    }
+
+    return pred;
+}
 
 /**
  * Returns an iterator that returns elements from the first iterable until it
@@ -100,6 +124,31 @@ export function* ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Ite
 export function* imap<T, V>(iterable: Iterable<T>, mapper: T => V): Iterable<V> {
     for (let value of iterable) {
         yield mapper(value);
+    }
+}
+
+/**
+ * Returns an iterator that returns selected elements from the iterable.  If
+ * `start` is non-zero, then elements from the iterable are skipped until start
+ * is reached.  Then, elements are returned by making steps of `step` (defaults
+ * to 1).  If set to higher than 1, items will be skipped.  If `stop` is
+ * provided, then iteration continues until the iterator reached that index,
+ * otherwise, the iterable will be fully exhausted.  `islice()` does not
+ * support negative values for `start`, `stop`, or `step`.
+ */
+export function* islice<T>(iterable: Iterable<T>, start: number, stop: ?number, step: number = 1): Iterable<T> {
+    /* istanbul ignore if */
+    if (start < 0) throw new Error('start cannot be negative');
+    /* istanbul ignore if */
+    if (typeof stop === 'number' && stop < 0) throw new Error('stop cannot be negative');
+    /* istanbul ignore if */
+    if (step < 0) throw new Error('step cannot be negative');
+
+    const pred = slicePredicate(start, stop, step);
+    for (const [i, value] of enumerate(iterable)) {
+        if (pred(i)) {
+            yield value;
+        }
     }
 }
 
