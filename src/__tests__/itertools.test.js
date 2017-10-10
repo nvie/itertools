@@ -6,10 +6,11 @@ import {
     compress,
     count,
     cycle,
-    islice,
     dropwhile,
     ifilter,
     imap,
+    islice,
+    permutations,
     takewhile,
     zipAll,
     zipLongest,
@@ -153,6 +154,46 @@ describe('izipAll', () => {
 describe('izipLongest', () => {
     it('izipLongest is tested through zipLongest() tests', () => {
         // This is okay
+    });
+});
+
+describe('permutations', () => {
+    it('permutations of empty list', () => {
+        expect([...permutations([])]).toEqual([[]]);
+    });
+
+    it('permutations of unique values', () => {
+        expect([...permutations([1, 2])]).toEqual([[1, 2], [2, 1]]);
+
+        expect([...permutations([1, 2, 3])]).toEqual([
+            [1, 2, 3],
+            [1, 3, 2],
+            [2, 1, 3],
+            [2, 3, 1],
+            [3, 1, 2],
+            [3, 2, 1],
+        ]);
+
+        // Duplicates have no effect on the results
+        expect([...permutations([2, 2, 3])]).toEqual([
+            [2, 2, 3],
+            [2, 3, 2],
+            [2, 2, 3],
+            [2, 3, 2],
+            [3, 2, 2],
+            [3, 2, 2],
+        ]);
+    });
+
+    it('permutations with r param', () => {
+        // r too big
+        expect([...permutations([1, 2], 5)]).toEqual([]);
+
+        // prettier-ignore
+        expect([...permutations(range(4), 2)]).toEqual([
+            [0, 1], [0, 2], [0, 3], [1, 0], [1, 2], [1, 3],
+            [2, 0], [2, 1], [2, 3], [3, 0], [3, 1], [3, 2],
+        ]);
     });
 });
 

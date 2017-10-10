@@ -1,6 +1,6 @@
 // @flow
 
-import { all, enumerate, iter } from './builtins';
+import { all, enumerate, iter, range } from './builtins';
 import { flatten } from './more-itertools';
 import type { Maybe, Predicate } from './types';
 
@@ -229,6 +229,62 @@ export function* izipLongest2<T1, T2, D>(
             return;
         } else {
             yield [!x.done ? x.value : filler, !y.done ? y.value : filler];
+        }
+    }
+}
+
+/**
+ * Return successive `r`-length permutations of elements in the iterable.
+ *
+ * If `r` is not specified, then `r` defaults to the length of the iterable and
+ * all possible full-length permutations are generated.
+ *
+ * Permutations are emitted in lexicographic sort order.  So, if the input
+ * iterable is sorted, the permutation tuples will be produced in sorted order.
+ *
+ * Elements are treated as unique based on their position, not on their value.
+ * So if the input elements are unique, there will be no repeat values in each
+ * permutation.
+ */
+export function* permutations<T>(iterable: Iterable<T>, r: Maybe<number>): Iterable<Array<T>> {
+    let pool = [...iterable];
+    let n = pool.length;
+    r = r === undefined ? n : r;
+
+    if (r > n) {
+        return;
+    }
+
+    let indices: Array<number> = [...range(n)];
+    let cycles: Array<number> = [...range(n, n - r, -1)];
+    let poolgetter = i => pool[i];
+
+    yield indices.slice(0, r).map(poolgetter);
+
+    while (n > 0) {
+        let cleanExit: boolean = true;
+        for (let i of range(r - 1, -1, -1)) {
+            cycles[i] -= 1;
+            if (cycles[i] === 0) {
+                indices = indices
+                    .slice(0, i)
+                    .concat(indices.slice(i + 1))
+                    .concat(indices.slice(i, i + 1));
+                cycles[i] = n - i;
+            } else {
+                let j: number = cycles[i];
+
+                let [p, q] = [indices[indices.length - j], indices[i]];
+                indices[i] = p;
+                indices[indices.length - j] = q;
+                yield indices.slice(0, r).map(poolgetter);
+                cleanExit = false;
+                break;
+            }
+        }
+
+        if (cleanExit) {
+            return;
         }
     }
 }

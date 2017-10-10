@@ -251,6 +251,7 @@ Non-lazy version of [izip](#izip) / [izip3](#izip3).
 * [izipAll](#izipAll)
 * [izipLongest](#izipLongest)
 * [izip](#izip)
+* [permutations](#permutations)
 * [takewhile](#takewhile)
 * [zipAll](#zipAll)
 * [zipLongest](#zipLongest)
@@ -305,7 +306,7 @@ Returns an iterator that computes the given mapper function using arguments
 from each of the iterables.
 
 
-<a name="islice" href="#islice">#</a> <b>islice</b>(iterable: <i>Iterable&lt;T&gt;</i>[, start: <i>number</i>], stop: <i>number</i>[, step: <i>number</i>]): <i>Iterable&lt;V&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+<a name="islice" href="#islice">#</a> <b>islice</b>(iterable: <i>Iterable&lt;T&gt;</i>[, start: <i>number</i>], stop: <i>number</i>[, step: <i>number</i>]): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 
 Returns an iterator that returns selected elements from the iterable.  If
 `start` is non-zero, then elements from the iterable are skipped until start is
@@ -331,6 +332,22 @@ etc.  `izip` is an alias for `izip2`.
 
 <a name="izipLongest" href="#izipLongest">#</a> <b>izipLongest</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 ...
+
+
+<a name="permutations" href="#permutations">#</a> <b>permutations</b>(iterable: <i>Iterable&lt;T&gt;</i>, r: number = undefined): <i>Iterable&lt;Array<T>&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Return successive `r`-length permutations of elements in the iterable.
+
+If `r` is not specified, then `r` defaults to the length of the iterable and
+all possible full-length permutations are generated.
+
+Permutations are emitted in lexicographic sort order.  So, if the input
+iterable is sorted, the permutation tuples will be produced in sorted order.
+
+Elements are treated as unique based on their position, not on their value.  So
+if the input elements are unique, there will be no repeat values in each
+permutation.
+
 
 <a name="takewhile" href="#takewhile">#</a> <b>takewhile</b>(iterable: <i>Iterable&lt;T&gt;</i>, predicate: <i>T =&gt; bool</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 
