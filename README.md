@@ -15,14 +15,12 @@ const ys = ['hello', 'there'];
 for (const [x, y] of izip(xs, cycle(ys))) {
     console.log(x, y);
 }
+
+// 1 'hello'
+// 2 'there'
+// 3 'hello'
+// 4 'there'
 ```
-
-Will log out:
-
-    1, 'hello'
-    2, 'there'
-    3, 'hello'
-    4, 'there'
 
 
 ## About argument order
