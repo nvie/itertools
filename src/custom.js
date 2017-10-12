@@ -8,6 +8,14 @@ function isDefined<T>(x: T): boolean {
     return x !== undefined;
 }
 
+/**
+ * Returns an iterable, filtering out any `undefined` values from the input
+ * iterable.  This function is useful to convert a list of `Maybe<T>`'s to
+ * a list of `T`'s, discarding all the undefined values:
+ *
+ *     >>> compact([1, 2, undefined, 3])
+ *     [1, 2, 3]
+ */
 export function* icompact<T>(iterable: Iterable<T>): Iterable<$NonMaybeType<T>> {
     for (let item of iterable) {
         if (typeof item !== 'undefined') {
@@ -16,6 +24,9 @@ export function* icompact<T>(iterable: Iterable<T>): Iterable<$NonMaybeType<T>> 
     }
 }
 
+/**
+ * See icompact().
+ */
 export function compact<T>(iterable: Iterable<T>): Array<$NonMaybeType<T>> {
     return [...icompact(iterable)];
 }

@@ -529,8 +529,10 @@ Yields elements in order, ignoring serial duplicates.
 * [flatmap](#flatmap)
 * [icompact](#icompact)
 
-<a name="compact" href="#compact">#</a> <b>compact</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
-...
+<a name="compact" href="#compact">#</a> <b>compact</b>(iterable: <i>Iterable&lt;T&gt;</i>): <i>Array&lt;$NonMaybeType&lt;T&gt;&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
+
+Non-lazy version of [icompact](#icompact).
+
 
 <a name="compactObject" href="#compactObject">#</a> <b>compactObject</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
 ...
@@ -546,5 +548,12 @@ defined value.
 <a name="flatmap" href="#flatmap">#</a> <b>flatmap</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
 ...
 
-<a name="icompact" href="#icompact">#</a> <b>icompact</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
-...
+<a name="icompact" href="#icompact">#</a> <b>icompact</b>(iterable: <i>Iterable&lt;T&gt;</i>): <i>Iterable&lt;$NonMaybeType&lt;T&gt;&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
+
+Returns an iterable, filtering out any `undefined` values from the input
+iterable.  This function is useful to convert a list of `Maybe<T>`'s to a list
+of `T`'s, discarding all the undefined values:
+
+    >>> compact([1, 2, undefined, 3])
+    [1, 2, 3]
+
