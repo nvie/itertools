@@ -128,6 +128,15 @@ export function take<T>(n: number, iterable: Iterable<T>): Array<T> {
     return [...itake(n, iterable)];
 }
 
+/**
+ * Yield unique elements, preserving order.
+ *
+ *     >>> [...uniqueEverseen('AAAABBBCCDAABBB')]
+ *     ['A', 'B', 'C', 'D']
+ *     >>> [...uniqueEverseen('AbBCcAB', s => s.toLowerCase())]
+ *     ['A', 'b', 'C']
+ *
+ */
 export function* uniqueEverseen<T>(iterable: Iterable<T>, keyFn: T => Primitive = primitiveIdentity): Iterable<T> {
     let seen = new Set();
     for (let item of iterable) {
@@ -139,6 +148,15 @@ export function* uniqueEverseen<T>(iterable: Iterable<T>, keyFn: T => Primitive 
     }
 }
 
+/**
+ * Yields elements in order, ignoring serial duplicates.
+ *
+ *     >>> [...uniqueJustseen('AAAABBBCCDAABBB')]
+ *     ['A', 'B', 'C', 'D', 'A', 'B']
+ *     >>> [...uniqueJustseen('AbBCcAB', s => s.toLowerCase())]
+ *     ['A', 'b', 'C', 'A', 'B']
+ *
+ */
 export function* uniqueJustseen<T>(iterable: Iterable<T>, keyFn: T => Primitive = primitiveIdentity): Iterable<T> {
     let last = undefined;
     for (let item of iterable) {

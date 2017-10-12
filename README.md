@@ -501,11 +501,24 @@ array contains all items that match the predicate, the second the rest:
 Non-lazy version of [itake](#itake).
 
 
-<a name="uniqueEverseen" href="#uniqueEverseen">#</a> <b>uniqueEverseen</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
-...
+<a name="uniqueEverseen" href="#uniqueEverseen">#</a> <b>uniqueEverseen</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>T =&gt; Primitive</i></i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
 
-<a name="uniqueJustseen" href="#uniqueJustseen">#</a> <b>uniqueJustseen</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
-...
+Yield unique elements, preserving order.
+
+    >>> [...uniqueEverseen('AAAABBBCCDAABBB')]
+    ['A', 'B', 'C', 'D']
+    >>> [...uniqueEverseen('AbBCcAB', s => s.toLowerCase())]
+    ['A', 'b', 'C']
+
+
+<a name="uniqueJustseen" href="#uniqueJustseen">#</a> <b>uniqueJustseen</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>T =&gt; Primitive</i></i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
+
+Yields elements in order, ignoring serial duplicates.
+
+    >>> [...uniqueJustseen('AAAABBBCCDAABBB')]
+    ['A', 'B', 'C', 'D', 'A', 'B']
+    >>> [...uniqueJustseen('AbBCcAB', s => s.toLowerCase())]
+    ['A', 'b', 'C', 'A', 'B']
 
 
 ### Additions
