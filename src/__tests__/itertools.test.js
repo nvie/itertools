@@ -1,6 +1,6 @@
 // @flow
 
-import { range } from '../builtins';
+import { all, range } from '../builtins';
 import {
     chain,
     compress,
@@ -11,6 +11,7 @@ import {
     imap,
     islice,
     permutations,
+    repeat,
     takewhile,
     zipAll,
     zipLongest,
@@ -194,6 +195,22 @@ describe('permutations', () => {
             [0, 1], [0, 2], [0, 3], [1, 0], [1, 2], [1, 3],
             [2, 0], [2, 1], [2, 3], [3, 0], [3, 1], [3, 2],
         ]);
+    });
+});
+
+describe('repeat', () => {
+    it('repeat indefinitely', () => {
+        // practically limit it to something (in this case 99)
+        let items = take(99, repeat(123));
+        expect(all(items, n => n === 123)).toEqual(true);
+
+        items = take(99, repeat('foo'));
+        expect(all(items, n => n === 'foo')).toEqual(true);
+    });
+
+    it('repeat a fixed number of times', () => {
+        const items = repeat('foo', 100);
+        expect(all(items, n => n === 'foo')).toEqual(true);
     });
 });
 

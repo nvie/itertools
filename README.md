@@ -251,6 +251,7 @@ Non-lazy version of [izip](#izip) / [izip3](#izip3).
 * [izipLongest](#izipLongest)
 * [izip](#izip)
 * [permutations](#permutations)
+* [repeat](#repeat)
 * [takewhile](#takewhile)
 * [zipAll](#zipAll)
 * [zipLongest](#zipLongest)
@@ -346,6 +347,12 @@ iterable is sorted, the permutation tuples will be produced in sorted order.
 Elements are treated as unique based on their position, not on their value.  So
 if the input elements are unique, there will be no repeat values in each
 permutation.
+
+
+<a name="repeat" href="#repeat">#</a> <b>repeat</b>(thing: <i>T</i>, times: number = undefined): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Returns an iterator that produces values over and over again.  Runs
+indefinitely unless the times argument is specified.
 
 
 <a name="takewhile" href="#takewhile">#</a> <b>takewhile</b>(iterable: <i>Iterable&lt;T&gt;</i>, predicate: <i>T =&gt; bool</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")

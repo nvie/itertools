@@ -290,6 +290,23 @@ export function* permutations<T>(iterable: Iterable<T>, r: Maybe<number>): Itera
 }
 
 /**
+ * Returns an iterator that produces values over and over again.  Runs
+ * indefinitely unless the times argument is specified.
+ */
+export function* repeat<T>(thing: T, times?: number): Iterable<T> {
+    if (times === undefined) {
+        for (;;) {
+            yield thing;
+        }
+    } else {
+        // eslint-disable-next-line no-unused-vars
+        for (const i of range(times)) {
+            yield thing;
+        }
+    }
+}
+
+/**
  * Returns an iterator that produces elements from the iterable as long as the
  * predicate is true.
  */
