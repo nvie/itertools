@@ -254,9 +254,10 @@ Has two optional arguments:
   as if each comparison were reversed.
 
 
-<a name="sum" href="#sum">#</a> <b>sum</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
+<a name="sum" href="#sum">#</a> <b>sum</b>(iterable: <i>Iterable&lt;number&gt;</i>): <i>number</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 
-...
+Sums the items of an iterable from left to right and returns the total.  The
+sum will defaults to 0 if the iterable is empty.
 
 
 <a name="zip" href="#zip">#</a> <b>zip</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>): <i>Array&lt;[T1, T2]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")<br />

@@ -253,7 +253,8 @@ export function sorted<T>(
 }
 
 /**
- * TODO
+ * Sums the items of an iterable from left to right and returns the total.  The
+ * sum will defaults to 0 if the iterable is empty.
  */
 export function sum(iterable: Iterable<number>): number {
     return reduce(iterable, (x, y) => x + y, 0);
