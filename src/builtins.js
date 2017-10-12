@@ -225,7 +225,17 @@ export function reduce_<T>(iterable: Iterable<T>, reducer: (T, T, number) => T):
 }
 
 /**
- * TODO
+ * Return a new sorted list from the items in iterable.
+ *
+ * Has two optional arguments:
+ *
+ * * `keyFn` specifies a function of one argument providing a primitive
+ *   identity for each element in the iterable.  that will be used to compare.
+ *   The default value is to use a default identity function that is only
+ *   defined for primitive types.
+ *
+ * * `reverse` is a boolean value.  If `true`, then the list elements are
+ *   sorted as if each comparison were reversed.
  */
 export function sorted<T>(
     iterable: Iterable<T>,

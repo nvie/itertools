@@ -239,9 +239,19 @@ calculation, and serves as a default when the sequence is empty.  When using
 derived and `undefined` will be returned.
 
 
-<a name="sorted" href="#sorted">#</a> <b>sorted</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
+<a name="sorted" href="#sorted">#</a> <b>sorted</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>T =&gt; Primitive</i></i>, reverse?: <i>boolean</i>): <i>Array&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 
-...
+Return a new sorted list from the items in iterable.
+
+Has two optional arguments:
+
+* `keyFn` specifies a function of one argument providing a primitive identity
+  for each element in the iterable.  that will be used to compare.  The default
+  value is to use a default identity function that is only defined for
+  primitive types.
+
+* `reverse` is a boolean value.  If `true`, then the list elements are sorted
+  as if each comparison were reversed.
 
 
 <a name="sum" href="#sum">#</a> <b>sum</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
