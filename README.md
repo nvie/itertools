@@ -84,6 +84,7 @@ The `itertools` package consists of a few building blocks:
 * [min](#min)
 * [range](#range)
 * [reduce](#reduce)
+* [reduce\_](#reduce_)
 * [sorted](#sorted)
 * [sum](#sum)
 * [zip](#zip)
@@ -214,9 +215,28 @@ which one is not defined.
 ...
 
 
-<a name="reduce" href="#reduce">#</a> <b>reduce</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
+<a name="reduce" href="#reduce">#</a> <b>reduce</b>(iterable: <i>Iterable&lt;T&gt;</i>, reducer: <i>(O, T, number) =&gt; O</i>, start: <i>O</i>): <i>O</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
+<a name="reduce_" href="#reduce_">#</a> <b>reduce\_</b>(iterable: <i>Iterable&lt;T&gt;</i>, reducer: <i>(T, T, number) =&gt; T</i>): <i>Maybe&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 
-...
+Apply function of two arguments cumulatively to the items of sequence, from
+left to right, so as to reduce the sequence to a single value.  For example:
+
+    reduce([1, 2, 3, 4, 5], (x, y) => x + y, 0)
+
+calculates
+
+    (((((0+1)+2)+3)+4)+5)
+
+The left argument, `x`, is the accumulated value and the right argument, `y`,
+is the update value from the sequence.
+
+**Difference between `reduce()` and `reduce\_()`**:  `reduce()` requires an
+explicit initializer, whereas `reduce_()` will automatically use the first item
+in the given iterable as the initializer.  When using `reduce()`, the
+initializer value is placed before the items of the sequence in the
+calculation, and serves as a default when the sequence is empty.  When using
+`reduce_()`, and the given iterable is empty, then no default value can be
+derived and `undefined` will be returned.
 
 
 <a name="sorted" href="#sorted">#</a> <b>sorted</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")

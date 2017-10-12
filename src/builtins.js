@@ -182,7 +182,25 @@ export function* range(a: number, b?: number, step?: number): Iterable<number> {
 }
 
 /**
- * TODO: Reducer function with a start value.
+ * Apply function of two arguments cumulatively to the items of sequence, from
+ * left to right, so as to reduce the sequence to a single value.  For example:
+ *
+ *     reduce([1, 2, 3, 4, 5], (x, y) => x + y, 0)
+ *
+ * calculates
+ *
+ *     (((((0+1)+2)+3)+4)+5)
+ *
+ * The left argument, `x`, is the accumulated value and the right argument,
+ * `y`, is the update value from the sequence.
+ *
+ * **Difference between `reduce()` and `reduce\_()`**:  `reduce()` requires an
+ * explicit initializer, whereas `reduce_()` will automatically use the first
+ * item in the given iterable as the initializer.  When using `reduce()`, the
+ * initializer value is placed before the items of the sequence in the
+ * calculation, and serves as a default when the sequence is empty.  When using
+ * `reduce_()`, and the given iterable is empty, then no default value can be
+ * derived and `undefined` will be returned.
  */
 export function reduce<T, O>(iterable: Iterable<T>, reducer: (O, T, number) => O, start: O): O {
     iterable = iter(iterable);
@@ -194,10 +212,7 @@ export function reduce<T, O>(iterable: Iterable<T>, reducer: (O, T, number) => O
 }
 
 /**
- * TODO: Document
- * Reducer function without a start value.  The start value will be the first item in
- * the input iterable.  For this reason, the function may not necessarily return anything
- * (i.e. if the input is empty), and the inputs and the outputs must be of homogeneous types.
+ * See reduce().
  */
 export function reduce_<T>(iterable: Iterable<T>, reducer: (T, T, number) => T): Maybe<T> {
     iterable = iter(iterable);
