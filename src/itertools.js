@@ -193,29 +193,6 @@ export function* izip3<T1, T2, T3>(xs: Iterable<T1>, ys: Iterable<T2>, zs: Itera
     }
 }
 
-/**
- * Like the other izips (`izip`, `izip3`, etc), but generalized to take an
- * unlimited amount of input iterables.  Think `izip(*iterables)` in Python.
- *
- * **Note:** Due to Flow type system limitations, you can only "generially" zip
- * iterables with homogeneous types, so you cannot mix types like <A, B> like
- * you can with izip2().
- */
-export function* izipAll<T>(...iters: Array<Iterable<T>>): Iterable<Array<T>> {
-    // Make them all iterables
-    const iterables = iters.map(iter);
-
-    for (;;) {
-        const heads: Array<IteratorResult<T, any>> = iterables.map(xs => xs.next());
-        if (all(heads, h => !h.done)) {
-            yield heads.map(h => ((h.value: any): T));
-        } else {
-            // One of the iterables exhausted
-            return;
-        }
-    }
-}
-
 export const izip = izip2;
 
 export function* izipLongest2<T1, T2, D>(
@@ -233,6 +210,29 @@ export function* izipLongest2<T1, T2, D>(
             return;
         } else {
             yield [!x.done ? x.value : filler, !y.done ? y.value : filler];
+        }
+    }
+}
+
+/**
+ * Like the other izips (`izip`, `izip3`, etc), but generalized to take an
+ * unlimited amount of input iterables.  Think `izip(*iterables)` in Python.
+ *
+ * **Note:** Due to Flow type system limitations, you can only "generially" zip
+ * iterables with homogeneous types, so you cannot mix types like <A, B> like
+ * you can with izip2().
+ */
+export function* izipMany<T>(...iters: Array<Iterable<T>>): Iterable<Array<T>> {
+    // Make them all iterables
+    const iterables = iters.map(iter);
+
+    for (;;) {
+        const heads: Array<IteratorResult<T, any>> = iterables.map(xs => xs.next());
+        if (all(heads, h => !h.done)) {
+            yield heads.map(h => ((h.value: any): T));
+        } else {
+            // One of the iterables exhausted
+            return;
         }
     }
 }
@@ -321,10 +321,6 @@ export function* takewhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): I
     }
 }
 
-export function zipAll<T>(...iters: Array<Iterable<T>>): Array<Array<T>> {
-    return [...izipAll(...iters)];
-}
-
 export function zipLongest2<T1, T2, D>(
     xs: Iterable<T1>,
     ys: Iterable<T2>,
@@ -335,3 +331,7 @@ export function zipLongest2<T1, T2, D>(
 
 export const izipLongest = izipLongest2;
 export const zipLongest = zipLongest2;
+
+export function zipMany<T>(...iters: Array<Iterable<T>>): Array<Array<T>> {
+    return [...izipMany(...iters)];
+}

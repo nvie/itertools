@@ -13,11 +13,11 @@ export {
     izip,
     izip2,
     izip3,
-    izipAll,
+    izipMany,
     izipLongest,
     takewhile,
-    zipAll,
     zipLongest,
+    zipMany,
 } from './itertools';
 export {
     chunked,

@@ -299,15 +299,15 @@ Non-lazy version of [izip](#izip) / [izip3](#izip3).
 * [ifilter](#ifilter)
 * [imap](#imap)
 * [islice](#islice)
-* [izip3](#izip3)
-* [izipAll](#izipAll)
-* [izipLongest](#izipLongest)
 * [izip](#izip)
+* [izip3](#izip3)
+* [izipLongest](#izipLongest)
+* [izipMany](#izipMany)
 * [permutations](#permutations)
 * [repeat](#repeat)
 * [takewhile](#takewhile)
-* [zipAll](#zipAll)
 * [zipLongest](#zipLongest)
+* [zipMany](#zipMany)
 
 <a name="chain" href="#chain">#</a> <b>chain</b>(...iterables: <i>Array&lt;Iterable&lt;T&gt;&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 
@@ -380,7 +380,12 @@ two iterables, use `izip2`.  When iterating over three iterables, use `izip3`,
 etc.  `izip` is an alias for `izip2`.
 
 
-<a name="izipAll" href="#izipAll">#</a> <b>izipAll</b>(...iters: <i>Array&lt;Iterable&lt;T&gt;&gt;</i>): <i>Iterable&lt;Array&lt;T&gt;&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+<a name="izipLongest" href="#izipLongest">#</a> <b>izipLongest</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+...
+
+
+<a name="izipMany" href="#izipMany">#</a> <b>izipMany</b>(...iters: <i>Array&lt;Iterable&lt;T&gt;&gt;</i>): <i>Iterable&lt;Array&lt;T&gt;&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 
 Like the other izips (`izip`, `izip3`, etc), but generalized to take an
 unlimited amount of input iterables.  Think `izip(*iterables)` in Python.
@@ -388,11 +393,6 @@ unlimited amount of input iterables.  Think `izip(*iterables)` in Python.
 **Note:** Due to Flow type system limitations, you can only "generially" zip
 iterables with homogeneous types, so you cannot mix types like `<A, B>` like
 you can with `izip`().
-
-
-<a name="izipLongest" href="#izipLongest">#</a> <b>izipLongest</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
-
-...
 
 
 <a name="permutations" href="#permutations">#</a> <b>permutations</b>(iterable: <i>Iterable&lt;T&gt;</i>, r: number = undefined): <i>Iterable&lt;Array<T>&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
@@ -421,11 +421,12 @@ indefinitely unless the times argument is specified.
 Returns an iterator that produces elements from the iterable as long as the
 predicate is true.
 
-<a name="zipAll" href="zipAll">#</a> <b>zipAll</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
-...
-
 <a name="zipLongest" href="zipLongest">#</a> <b>zipLongest</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 ...
+
+<a name="zipMany" href="#zipMany">#</a> <b>zipMany</b>(...iters: <i>Array&lt;Iterable&lt;T&gt;&gt;</i>): <i>Array&lt;Array&lt;T&gt;&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Non-lazy version of [izipMany](#izipMany).
 
 
 ### Ports of more-itertools

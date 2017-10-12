@@ -13,8 +13,8 @@ import {
     permutations,
     repeat,
     takewhile,
-    zipAll,
     zipLongest,
+    zipMany,
 } from '../itertools';
 import { take } from '../more-itertools';
 
@@ -146,8 +146,8 @@ describe('izip3', () => {
     });
 });
 
-describe('izipAll', () => {
-    it('izipAll is tested through zipAll() tests', () => {
+describe('izipMany', () => {
+    it('izipMany is tested through zipMany() tests', () => {
         // This is okay
     });
 });
@@ -232,15 +232,15 @@ describe('takewhile', () => {
     });
 });
 
-describe('zipAll', () => {
-    it('zipAll with empty iterable', () => {
-        expect(zipAll([])).toEqual([]);
-        expect(zipAll([], [])).toEqual([]);
+describe('zipMany', () => {
+    it('zipMany with empty iterable', () => {
+        expect(zipMany([])).toEqual([]);
+        expect(zipMany([], [])).toEqual([]);
     });
 
-    it('zipAll takes any number of (homogenous) iterables', () => {
-        expect(zipAll('abc', 'ABC')).toEqual([['a', 'A'], ['b', 'B'], ['c', 'C']]);
-        expect(zipAll('abc', 'ABC', 'pqrs', 'xyz')).toEqual([
+    it('zipMany takes any number of (homogenous) iterables', () => {
+        expect(zipMany('abc', 'ABC')).toEqual([['a', 'A'], ['b', 'B'], ['c', 'C']]);
+        expect(zipMany('abc', 'ABC', 'pqrs', 'xyz')).toEqual([
             ['a', 'A', 'p', 'x'],
             ['b', 'B', 'q', 'y'],
             ['c', 'C', 'r', 'z'],
