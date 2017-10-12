@@ -41,6 +41,11 @@ export function* chunked<T>(iterable: Iterable<T>, size: number): Iterable<Array
     yield chunk;
 }
 
+/**
+ * Returns the first item in the iterable for which the predicate holds, if
+ * any.  If no such item exists, `undefined` is returned.  The default
+ * predicate is any defined value.
+ */
 export function first<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): Maybe<T> {
     keyFn = keyFn || isDefined;
     for (let value of iterable) {
