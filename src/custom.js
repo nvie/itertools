@@ -64,12 +64,17 @@ export function first<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): Maybe<T> 
 }
 
 /**
- * Returns 0 or more values for every value in the given iterable
+ * Returns 0 or more values for every value in the given iterable.
+ * Technically, it's just calling map(), followed by flatten(), but it's a very
+ * useful operation if you want to map over a structure, but not have a 1:1
+ * input-output mapping.  Instead, if you want to potentially return 0 or more
+ * values per input element, use flatmap():
  *
- * Examples:
+ * For example, to return all numbers `n` in the input iterable `n` times:
  *
- *      Get Ids for an Author and its aliases
- *      flatmap(author => [author.id, ...author.aliases.map(a => a.id)], authors)
+ *     >>> const repeatN = n => repeat(n, n);
+ *     >>> [...flatmap([0, 1, 2, 3, 4], repeatN)]
+ *     [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]  // note: no 0
  *
  */
 export function flatmap<T, S>(iterable: Iterable<T>, mapper: T => Iterable<S>): Iterable<S> {

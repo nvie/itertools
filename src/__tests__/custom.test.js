@@ -1,6 +1,7 @@
 // @flow
 
 import { compact, compactObject, flatmap } from '../custom';
+import { repeat } from '../itertools';
 
 describe('compact', () => {
     it('compact w/ empty list', () => {
@@ -37,5 +38,10 @@ describe('flatmap', () => {
         expect([...flatmap([1, 2, 3, 4, 5], dupeEvens)]).toEqual([1, 2, 2, 3, 4, 4, 5]);
         expect([...flatmap(['hi', 'ha'], triple)]).toEqual(['hi', 'hi', 'hi', 'ha', 'ha', 'ha']);
         expect([...flatmap(['hi', 'ha'], nothin)]).toEqual([]);
+    });
+
+    it('flatmap example', () => {
+        const repeatN = n => repeat(n, n);
+        expect([...flatmap([0, 1, 2, 3, 4], repeatN)]).toEqual([1, 2, 2, 3, 3, 3, 4, 4, 4, 4]);
     });
 });

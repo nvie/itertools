@@ -551,8 +551,20 @@ If no such item exists, `undefined` is returned.  The default predicate is any
 defined value.
 
 
-<a name="flatmap" href="#flatmap">#</a> <b>flatmap</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
-...
+<a name="flatmap" href="#flatmap">#</a> <b>flatmap</b>(iterable: <i>Iterable&lt;T&gt;</i>, mapper: <i>T =&gt; Iterable&lt;S&gt;</i>): <i>Iterable&lt;S&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
+
+Returns 0 or more values for every value in the given iterable.  Technically,
+it's just calling map(), followed by flatten(), but it's a very useful
+operation if you want to map over a structure, but not have a 1:1 input-output
+mapping.  Instead, if you want to potentially return 0 or more values per input
+element, use flatmap():
+
+For example, to return all numbers `n` in the input iterable `n` times:
+
+    >>> const repeatN = n => repeat(n, n);
+    >>> [...flatmap([0, 1, 2, 3, 4], repeatN)]
+    [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]  // note: no 0
+
 
 <a name="icompact" href="#icompact">#</a> <b>icompact</b>(iterable: <i>Iterable&lt;T&gt;</i>): <i>Iterable&lt;$NonMaybeType&lt;T&gt;&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
 
