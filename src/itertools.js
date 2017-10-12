@@ -194,8 +194,12 @@ export function* izip3<T1, T2, T3>(xs: Iterable<T1>, ys: Iterable<T2>, zs: Itera
 }
 
 /**
- * Like the other izip's, but generalized.  Due to type system limitations, you can only "generially"
- * zip iterables with homogeneous types, so you cannot mix types like <A, B> like you can with izip2()
+ * Like the other izips (`izip`, `izip3`, etc), but generalized to take an
+ * unlimited amount of input iterables.  Think `izip(*iterables)` in Python.
+ *
+ * **Note:** Due to Flow type system limitations, you can only "generially" zip
+ * iterables with homogeneous types, so you cannot mix types like <A, B> like
+ * you can with izip2().
  */
 export function* izipAll<T>(...iters: Array<Iterable<T>>): Iterable<Array<T>> {
     // Make them all iterables

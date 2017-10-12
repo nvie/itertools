@@ -371,7 +371,7 @@ for `start`, `stop`, or `step`.
 
 
 <a name="izip" href="#izip">#</a> <b>izip</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>): <i>Iterable&lt;[T1, T2]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")<br />
-<a name="izip3" href="#izip3">#</a> <b>izip3</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>, zs: <i>Iterable&lt;T3&gt;</i>): <i>Iterable&lt;[T1, T2, T3]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+<a name="izip3" href="#izip3">#</a> <b>izip3</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>, zs: <i>Iterable&lt;T3&gt;</i>): <i>Iterable&lt;[T1, T2, T3]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")<br />
 ...
 
 Returns an iterator that aggregates elements from each of the iterables.  Used
@@ -380,10 +380,18 @@ two iterables, use `izip2`.  When iterating over three iterables, use `izip3`,
 etc.  `izip` is an alias for `izip2`.
 
 
-<a name="izipAll" href="#izipAll">#</a> <b>izipAll</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
-...
+<a name="izipAll" href="#izipAll">#</a> <b>izipAll</b>(...iters: <i>Array&lt;Iterable&lt;T&gt;&gt;</i>): <i>Iterable&lt;Array&lt;T&gt;&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Like the other izips (`izip`, `izip3`, etc), but generalized to take an
+unlimited amount of input iterables.  Think `izip(*iterables)` in Python.
+
+**Note:** Due to Flow type system limitations, you can only "generially" zip
+iterables with homogeneous types, so you cannot mix types like `<A, B>` like
+you can with `izip`().
+
 
 <a name="izipLongest" href="#izipLongest">#</a> <b>izipLongest</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
 ...
 
 
