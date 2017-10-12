@@ -166,7 +166,7 @@ console.log([...enumerate(['hello', 'world'])]);
 // [0, 'hello'], [1, 'world']]
 ```
 
-<a name="filter" href="#filter">#</a> <b>filter</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
+<a name="filter" href="#filter">#</a> <b>filter</b>(iterable: <i>Iterable&lt;T&gt;</i>, predicate: <i>Predicate&lt;T&gt;</i>): <i>Array&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 
 Non-lazy version of [ifilter](#ifilter).
 
