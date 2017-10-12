@@ -445,8 +445,19 @@ Non-lazy version of [izipMany](#izipMany).
 * [uniqueEverseen](#uniqueEverseen)
 * [uniqueJustseen](#uniqueJustseen)
 
-<a name="chunked" href="#chunked">#</a> <b>chunked</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
-...
+<a name="chunked" href="#chunked">#</a> <b>chunked</b>(iterable: <i>Iterable&lt;T&gt;</i>, size: <i>number</i>): <i>Iterable&lt;Array&lt;T&gt;&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
+
+Break iterable into lists of length `size`:
+
+    [...chunked([1, 2, 3, 4, 5, 6], 3)]
+    // [[1, 2, 3], [4, 5, 6]]
+
+If the length of iterable is not evenly divisible by `size`, the last returned
+list will be shorter:
+
+    [...chunked([1, 2, 3, 4, 5, 6, 7, 8], 3)]
+    // [[1, 2, 3], [4, 5, 6], [7, 8]]
+
 
 <a name="first" href="#first">#</a> <b>first</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
 ...

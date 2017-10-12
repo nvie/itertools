@@ -8,7 +8,19 @@ function isDefined<T>(x: T): boolean {
     return x !== undefined;
 }
 
-export function* chunked<T>(iterable: Iterable<T>, chunkSize: number): Iterable<Array<T>> {
+/**
+ * Break iterable into lists of length `size`:
+ *
+ *     [...chunked([1, 2, 3, 4, 5, 6], 3)]
+ *     // [[1, 2, 3], [4, 5, 6]]
+ *
+ * If the length of iterable is not evenly divisible by `size`, the last returned
+ * list will be shorter:
+ *
+ *     [...chunked([1, 2, 3, 4, 5, 6, 7, 8], 3)]
+ *     // [[1, 2, 3], [4, 5, 6], [7, 8]]
+ */
+export function* chunked<T>(iterable: Iterable<T>, size: number): Iterable<Array<T>> {
     iterable = iter(iterable);
     let r1 = iterable.next();
     if (r1.done) {
@@ -20,7 +32,7 @@ export function* chunked<T>(iterable: Iterable<T>, chunkSize: number): Iterable<
     for (const item of iterable) {
         chunk.push(item);
 
-        if (chunk.length === chunkSize) {
+        if (chunk.length === size) {
             yield chunk;
             chunk = [];
         }
