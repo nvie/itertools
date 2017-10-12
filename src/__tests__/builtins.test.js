@@ -232,7 +232,7 @@ describe('range', () => {
         expect([...range(3, 9, 3)]).toEqual([3, 6]);
         expect([...range(3, 10, 3)]).toEqual([3, 6, 9]);
         expect([...range(5, 1, -1)]).toEqual([5, 4, 3, 2]);
-        expect([...range(5,-3, -2)]).toEqual([5, 3, 1,-1]);
+        expect([...range(5, -3, -2)]).toEqual([5, 3, 1, -1]);
     });
 });
 
