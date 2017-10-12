@@ -56,6 +56,13 @@ export function first<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): Maybe<T> 
     return undefined;
 }
 
+/**
+ * Return an iterator flattening one level of nesting in a list of lists:
+ *
+ *     [...flatten([[0, 1], [2, 3]])]
+ *     // [0, 1, 2, 3]
+ *
+ */
 export function* flatten<T>(iterableOfIterables: Iterable<Iterable<T>>): Iterable<T> {
     for (let iterable of iterableOfIterables) {
         for (let item of iterable) {

@@ -465,8 +465,12 @@ Returns the first item in the iterable for which the predicate holds, if any.
 If no such item exists, `undefined` is returned.  The default predicate is any
 defined value.
 
-<a name="flatten" href="#flatten">#</a> <b>flatten</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
-...
+<a name="flatten" href="#flatten">#</a> <b>flatten</b>(iterableOfIterables: <i>Iterable&lt;Iterable&lt;T&gt;&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
+
+Return an iterator flattening one level of nesting in a list of lists:
+
+    [...flatten([[0, 1], [2, 3]])]
+    // [0, 1, 2, 3]
 
 
 <a name="itake" href="#itake">#</a> <b>itake</b>(n: <i>number</i>, iterable: <i>Iterable&lt;T&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
