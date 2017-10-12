@@ -210,9 +210,31 @@ If multiple items are minimal, the function returns either one of them, but
 which one is not defined.
 
 
-<a name="range" href="#range">#</a> <b>range</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
+<a name="range" href="#range">#</a> <b>range</b>(start: <i>number</i>): <i>Iterable&lt;number&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
+<a name="range" href="#range">#</a> <b>range</b>(start: <i>number</i>, stop: <i>number</i>, step: <i>number</i> = 1): <i>Iterable&lt;number&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 
-...
+Returns an iterator producing all the numbers in the given range one by one,
+starting from `start` (default 0), as long as `i < stop`, in increments of
+`step` (default 1).
+
+`range(a)` is a convenient shorthand for `range(0, a)`.
+
+Various valid invocations:
+
+    range(5)           // [0, 1, 2, 3, 4]
+    range(0, 5)        // [0, 1, 2, 3, 4]
+    range(0, 5, 2)     // [0, 2, 4]
+    range(5, 0, -1)    // [5, 4, 3, 2, 1]
+    range(-3)          // []
+
+For a positive `step`, the iterator will keep producing values `n` as long as
+the stop condition `n < stop` is satisfied.
+
+For a negative `step`, the iterator will keep producing values `n` as long as
+the stop condition `n > stop` is satisfied.
+
+The produced range will be empty if the first value to produce already does not
+meet the value constraint.
 
 
 <a name="reduce" href="#reduce">#</a> <b>reduce</b>(iterable: <i>Iterable&lt;T&gt;</i>, reducer: <i>(O, T, number) =&gt; O</i>, start: <i>O</i>): <i>O</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")

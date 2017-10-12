@@ -1,6 +1,6 @@
 // @flow
 
-import { ifilter, imap, izip, izip3 } from './itertools';
+import { count, ifilter, imap, izip, izip3, takewhile } from './itertools';
 import { first } from './more-itertools';
 import type { Maybe, Predicate, Primitive } from './types';
 import { identityPredicate, keyToCmp, numberIdentity, primitiveIdentity } from './utils';
@@ -153,31 +153,50 @@ export function min<T>(iterable: Iterable<T>, keyFn: T => number = numberIdentit
 }
 
 /**
- * TODO
+ * Internal helper for the range function
  */
-export function* range(a: number, b?: number, step?: number): Iterable<number> {
-    let start: number, stop: number;
-    step = step || 1;
-    (step: number);
+function _range(start: number, stop: number, step: number): Iterable<number> {
+    const counter = count(start, step);
+    const pred = step >= 0 ? n => n < stop : n => n > stop;
+    return takewhile(counter, pred);
+}
 
-    // range(a) means range(0, a)
-    if (typeof b === 'undefined' || b === null) {
-        [start, stop] = [0, a];
-    } else {
-        [start, stop] = [a, b];
-    }
-
-    let pred: Predicate<number>;
-    if (step >= 0) {
-        pred = curr => curr < stop;
-    } else {
-        pred = curr => curr > stop; // with negative step
-    }
-
-    let curr: number = start;
-    while (pred(curr)) {
-        yield curr;
-        curr += step;
+/**
+ * Returns an iterator producing all the numbers in the given range one by one,
+ * starting from `start` (default 0), as long as `i < stop`, in increments of
+ * `step` (default 1).
+ *
+ * `range(a)` is a convenient shorthand for `range(0, a)`.
+ *
+ * Various valid invocations: 
+ *
+ *     range(5)           // [0, 1, 2, 3, 4]
+ *     range(2, 5)        // [2, 3, 4]
+ *     range(0, 5, 2)     // [0, 2, 4]
+ *     range(5, 0, -1)    // [5, 4, 3, 2, 1]
+ *     range(-3)          // []
+ *
+ * For a positive `step`, the iterator will keep producing values `n` as long
+ * as the stop condition `n < stop` is satisfied.
+ *
+ * For a negative `step`, the iterator will keep producing values `n` as long
+ * as the stop condition `n > stop` is satisfied.
+ *
+ * The produced range will be empty if the first value to produce already does
+ * not meet the value constraint.
+ */
+export function range(a: number, ...args: Array<number>): Iterable<number> {
+    args = [a, ...args]; // "a" was only used by Flow to make at least one value mandatory
+    switch (args.length) {
+        case 1:
+            return _range(0, args[0], 1);
+        case 2:
+            return _range(args[0], args[1], 1);
+        case 3:
+            return _range(args[0], args[1], args[2]);
+        /* istanbul ignore next */
+        default:
+            throw new Error('invalid number of arguments');
     }
 }
 
