@@ -481,8 +481,19 @@ have `n - 1` items.
     [(8, 2), (2, 0), (0, 7)]
 
 
-<a name="partition" href="#partition">#</a> <b>partition</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
-...
+<a name="partition" href="#partition">#</a> <b>partition</b>(iterable: <i>Iterable&lt;T&gt;</i>, predicate: <i>Predicate&lt;T&gt;</i>): <i>[Array&lt;T&gt;, Array&lt;T&gt;]</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
+
+Returns a 2-tuple of arrays.  Splits the elements in the input iterable into
+either of the two arrays.  Will fully exhaust the input iterable.  The first
+array contains all items that match the predicate, the second the rest:
+
+    >>> const isOdd = x => x % 2 !== 0;
+    >>> const iterable = range(10);
+    >>> const [odds, evens] = partition(iterable, isOdd);
+    >>> odds
+    [1, 3, 5, 7, 9]
+    >>> evens
+    [0, 2, 4, 6, 8]
 
 
 <a name="take" href="#take">#</a> <b>take</b>(n: <i>number</i>, iterable: <i>Iterable&lt;T&gt;</i>): <i>Array&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")

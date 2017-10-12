@@ -92,19 +92,33 @@ export function* pairwise<T>(iterable: Iterable<T>): Iterable<[T, T]> {
     }
 }
 
+/**
+ * Returns a 2-tuple of arrays.  Splits the elements in the input iterable into
+ * either of the two arrays.  Will fully exhaust the input iterable.  The first
+ * array contains all items that match the predicate, the second the rest:
+ *
+ *     >>> const isOdd = x => x % 2 !== 0;
+ *     >>> const iterable = range(10);
+ *     >>> const [odds, evens] = partition(iterable, isOdd);
+ *     >>> odds
+ *     [1, 3, 5, 7, 9]
+ *     >>> evens
+ *     [0, 2, 4, 6, 8]
+ *
+ */
 export function partition<T>(iterable: Iterable<T>, predicate: Predicate<T>): [Array<T>, Array<T>] {
-    let gold = [];
-    let dust = [];
+    let good = [];
+    let bad = [];
 
     for (let item of iterable) {
         if (predicate(item)) {
-            gold.push(item);
+            good.push(item);
         } else {
-            dust.push(item);
+            bad.push(item);
         }
     }
 
-    return [gold, dust];
+    return [good, bad];
 }
 
 /**
