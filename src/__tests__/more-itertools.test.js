@@ -117,6 +117,10 @@ describe('uniqueJustseen', () => {
         expect([...uniqueJustseen([1, 1, 1, 2, 2])]).toEqual([1, 2]);
         expect([...uniqueJustseen([1, 1, 1, 2, 2, 1, 1, 1, 1])]).toEqual([1, 2, 1]);
     });
+
+    it('uniqueEverseen with key function', () => {
+        expect([...uniqueJustseen('AaABbBCcaABBb', s => s.toLowerCase())]).toEqual(['A', 'B', 'C', 'a', 'B']);
+    });
 });
 
 describe('uniqueEverseen', () => {
@@ -128,5 +132,11 @@ describe('uniqueEverseen', () => {
         expect([...uniqueEverseen([1, 2, 3, 4, 5])]).toEqual([1, 2, 3, 4, 5]);
         expect([...uniqueEverseen([1, 1, 1, 2, 2, 3, 1, 3, 0, 4])]).toEqual([1, 2, 3, 0, 4]);
         expect([...uniqueEverseen([1, 1, 1, 2, 2, 1, 1, 1, 1])]).toEqual([1, 2]);
+    });
+
+    it('uniqueEverseen with key function', () => {
+        expect([...uniqueEverseen('AAAABBBCCDAABBB')]).toEqual(['A', 'B', 'C', 'D']);
+        expect([...uniqueEverseen('ABCcAb', s => s.toLowerCase())]).toEqual(['A', 'B', 'C']);
+        expect([...uniqueEverseen('AbCBBcAb', s => s.toLowerCase())]).toEqual(['A', 'b', 'C']);
     });
 });
