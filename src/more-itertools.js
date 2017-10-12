@@ -69,6 +69,15 @@ export function* itake<T>(n: number, iterable: Iterable<T>): Iterable<T> {
     }
 }
 
+/**
+ * Returns an iterator of paired items, overlapping, from the original.  When
+ * the input iterable has a finite number of items `n`, the outputted iterable
+ * will have `n - 1` items.
+ *
+ *     >>> pairwise([8, 2, 0, 7])
+ *     [(8, 2), (2, 0), (0, 7)]
+ *
+ */
 export function* pairwise<T>(iterable: Iterable<T>): Iterable<[T, T]> {
     iterable = iter(iterable);
     let r1 = iterable.next();

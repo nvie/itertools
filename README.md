@@ -472,8 +472,14 @@ Returns an iterable containing only the first `n` elements of the given
 iterable.
 
 
-<a name="pairwise" href="#pairwise">#</a> <b>pairwise</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
-...
+<a name="pairwise" href="#pairwise">#</a> <b>pairwise</b>(iterable: <i>Iterable&lt;T&gt;</i>): <i>Iterable&lt;[T, T]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
+
+Returns an iterator of paired items, overlapping, from the original.  When the
+input iterable has a finite number of items `n`, the outputted iterable will
+have `n - 1` items.
+
+    >>> pairwise([8, 2, 0, 7])
+    [(8, 2), (2, 0), (0, 7)]
 
 
 <a name="partition" href="#partition">#</a> <b>partition</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
