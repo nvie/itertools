@@ -1,7 +1,7 @@
 // @flow
 
+import { first } from './custom';
 import { count, ifilter, imap, izip, izip3, takewhile } from './itertools';
-import { first } from './more-itertools';
 import type { Maybe, Predicate, Primitive } from './types';
 import { identityPredicate, keyToCmp, numberIdentity, primitiveIdentity } from './utils';
 

@@ -2,7 +2,11 @@
 
 import { imap } from './itertools';
 import { flatten } from './more-itertools';
-import type { Maybe } from './types';
+import type { Maybe, Predicate } from './types';
+
+function isDefined<T>(x: T): boolean {
+    return x !== undefined;
+}
 
 export function* icompact<T>(iterable: Iterable<T>): Iterable<$NonMaybeType<T>> {
     for (let item of iterable) {
@@ -31,6 +35,21 @@ export function compactObject<O: { [key: string]: any }>(obj: O): $ObjMap<O, <T>
         }
     }
     return result;
+}
+
+/**
+ * Returns the first item in the iterable for which the predicate holds, if
+ * any.  If no such item exists, `undefined` is returned.  The default
+ * predicate is any defined value.
+ */
+export function first<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): Maybe<T> {
+    keyFn = keyFn || isDefined;
+    for (let value of iterable) {
+        if (keyFn(value)) {
+            return value;
+        }
+    }
+    return undefined;
 }
 
 /**

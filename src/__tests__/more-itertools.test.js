@@ -1,7 +1,8 @@
 // @flow
 
 import { range } from '../builtins';
-import { chunked, first, flatten, pairwise, partition, take, uniqueEverseen, uniqueJustseen } from '../more-itertools';
+import { first } from '../custom';
+import { chunked, flatten, pairwise, partition, take, uniqueEverseen, uniqueJustseen } from '../more-itertools';
 
 const isEven = x => x % 2 === 0;
 const isPositive = x => x >= 0;

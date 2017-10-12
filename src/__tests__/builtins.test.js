@@ -17,7 +17,7 @@ import {
     zip,
     zip3,
 } from '../builtins';
-import { first } from '../more-itertools';
+import { first } from '../custom';
 
 const isEven = n => n % 2 === 0;
 

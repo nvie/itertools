@@ -436,7 +436,6 @@ Non-lazy version of [izipMany](#izipMany).
 ### Ports of more-itertools
 
 * [chunked](#chunked)
-* [first](#first)
 * [flatten](#flatten)
 * [itake](#itake)
 * [pairwise](#pairwise)
@@ -458,12 +457,6 @@ list will be shorter:
     [...chunked([1, 2, 3, 4, 5, 6, 7, 8], 3)]
     // [[1, 2, 3], [4, 5, 6], [7, 8]]
 
-
-<a name="first" href="#first">#</a> <b>first</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>Maybe&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
-
-Returns the first item in the iterable for which the predicate holds, if any.
-If no such item exists, `undefined` is returned.  The default predicate is any
-defined value.
 
 <a name="flatten" href="#flatten">#</a> <b>flatten</b>(iterableOfIterables: <i>Iterable&lt;Iterable&lt;T&gt;&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
 
@@ -503,6 +496,7 @@ Non-lazy version of [itake](#itake).
 
 * [compact](#compact)
 * [compactObject](#compactObject)
+* [first](#first)
 * [flatmap](#flatmap)
 * [icompact](#icompact)
 
@@ -511,6 +505,14 @@ Non-lazy version of [itake](#itake).
 
 <a name="compactObject" href="#compactObject">#</a> <b>compactObject</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
 ...
+
+
+<a name="first" href="#first">#</a> <b>first</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>Maybe&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
+
+Returns the first item in the iterable for which the predicate holds, if any.
+If no such item exists, `undefined` is returned.  The default predicate is any
+defined value.
+
 
 <a name="flatmap" href="#flatmap">#</a> <b>flatmap</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
 ...
