@@ -280,14 +280,14 @@ export function sum(iterable: Iterable<number>): number {
 }
 
 /**
- * TODO
+ * See izip.
  */
 export function zip<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): Array<[T1, T2]> {
     return [...izip(xs, ys)];
 }
 
 /**
- * TODO
+ * See izip3.
  */
 export function zip3<T1, T2, T3>(xs: Iterable<T1>, ys: Iterable<T2>, zs: Iterable<T3>): Array<[T1, T2, T3]> {
     return [...izip3(xs, ys, zs)];
