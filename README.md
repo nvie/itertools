@@ -8,18 +8,17 @@ A JavaScript port of Python's awesome
 Usage example:
 
 ```javascript
-import { izip, cycle } from 'itertools';
-
-const xs = [1, 2, 3, 4];
-const ys = ['hello', 'there'];
-for (const [x, y] of izip(xs, cycle(ys))) {
-    console.log(x, y);
-}
-
-// 1 'hello'
-// 2 'there'
-// 3 'hello'
-// 4 'there'
+>>> import { izip, cycle } from 'itertools';
+>>>
+>>> const xs = [1, 2, 3, 4];
+>>> const ys = ['hello', 'there'];
+>>> for (const [x, y] of izip(xs, cycle(ys))) {
+>>>     console.log(x, y);
+>>> }
+1 'hello'
+2 'there'
+3 'hello'
+4 'there'
 ```
 
 
@@ -448,22 +447,22 @@ Non-lazy version of [izipMany](#izipMany).
 
 Break iterable into lists of length `size`:
 
-    [...chunked([1, 2, 3, 4, 5, 6], 3)]
-    // [[1, 2, 3], [4, 5, 6]]
+    >>> [...chunked([1, 2, 3, 4, 5, 6], 3)]
+    [[1, 2, 3], [4, 5, 6]]
 
 If the length of iterable is not evenly divisible by `size`, the last returned
 list will be shorter:
 
-    [...chunked([1, 2, 3, 4, 5, 6, 7, 8], 3)]
-    // [[1, 2, 3], [4, 5, 6], [7, 8]]
+    >>> [...chunked([1, 2, 3, 4, 5, 6, 7, 8], 3)]
+    [[1, 2, 3], [4, 5, 6], [7, 8]]
 
 
 <a name="flatten" href="#flatten">#</a> <b>flatten</b>(iterableOfIterables: <i>Iterable&lt;Iterable&lt;T&gt;&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
 
 Return an iterator flattening one level of nesting in a list of lists:
 
-    [...flatten([[0, 1], [2, 3]])]
-    // [0, 1, 2, 3]
+    >>> [...flatten([[0, 1], [2, 3]])]
+    [0, 1, 2, 3]
 
 
 <a name="itake" href="#itake">#</a> <b>itake</b>(n: <i>number</i>, iterable: <i>Iterable&lt;T&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
