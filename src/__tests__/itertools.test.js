@@ -14,6 +14,7 @@ import {
     repeat,
     takewhile,
     zipLongest,
+    zipLongest3,
     zipMany,
 } from '../itertools';
 import { take } from '../more-itertools';
@@ -249,10 +250,29 @@ describe('zipMany', () => {
 });
 
 describe('zipLongest', () => {
-    it('zip with empty iterable', () => {
+    it('zipLongest with empty iterable', () => {
         expect(zipLongest([], [])).toEqual([]);
+    });
+
+    it('zipLongest with two iterables', () => {
         expect(zipLongest('abc', '')).toEqual([['a', undefined], ['b', undefined], ['c', undefined]]);
         expect(zipLongest('x', 'abc')).toEqual([['x', 'a'], [undefined, 'b'], [undefined, 'c']]);
         expect(zipLongest('x', 'abc', /* filler */ 0)).toEqual([['x', 'a'], [0, 'b'], [0, 'c']]);
+    });
+});
+
+describe('zipLongest3', () => {
+    it('zipLongest3 with empty iterable', () => {
+        expect(zipLongest3([], [], [])).toEqual([]);
+    });
+
+    it('zipLongest3 with two iterables', () => {
+        expect(zipLongest3('abc', '', [1, 2, 3])).toEqual([
+            ['a', undefined, 1],
+            ['b', undefined, 2],
+            ['c', undefined, 3],
+        ]);
+        expect(zipLongest3('x', 'abc', [1, 2, 3])).toEqual([['x', 'a', 1], [undefined, 'b', 2], [undefined, 'c', 3]]);
+        expect(zipLongest3('x', 'abc', [1, 2], /* filler */ 0)).toEqual([['x', 'a', 1], [0, 'b', 2], [0, 'c', 0]]);
     });
 });

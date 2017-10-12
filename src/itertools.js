@@ -195,6 +195,11 @@ export function* izip3<T1, T2, T3>(xs: Iterable<T1>, ys: Iterable<T2>, zs: Itera
 
 export const izip = izip2;
 
+/**
+ * Returns an iterator that aggregates elements from each of the iterables.  If
+ * the iterables are of uneven length, missing values are filled-in with
+ * fillvalue.  Iteration continues until the longest iterable is exhausted.
+ */
 export function* izipLongest2<T1, T2, D>(
     xs: Iterable<T1>,
     ys: Iterable<T2>,
@@ -210,6 +215,31 @@ export function* izipLongest2<T1, T2, D>(
             return;
         } else {
             yield [!x.done ? x.value : filler, !y.done ? y.value : filler];
+        }
+    }
+}
+
+/**
+ * See izipLongest2, but for three.
+ */
+export function* izipLongest3<T1, T2, T3, D>(
+    xs: Iterable<T1>,
+    ys: Iterable<T2>,
+    zs: Iterable<T3>,
+    filler: Maybe<D> = undefined
+): Iterable<[T1 | D, T2 | D, T3 | D]> {
+    xs = iter(xs);
+    ys = iter(ys);
+    zs = iter(zs);
+    for (;;) {
+        const x = xs.next();
+        const y = ys.next();
+        const z = zs.next();
+        if (x.done && y.done && z.done) {
+            // All iterables exhausted
+            return;
+        } else {
+            yield [!x.done ? x.value : filler, !y.done ? y.value : filler, !z.done ? z.value : filler];
         }
     }
 }
@@ -327,6 +357,15 @@ export function zipLongest2<T1, T2, D>(
     filler: Maybe<D> = undefined
 ): Array<[T1 | D, T2 | D]> {
     return [...izipLongest2(xs, ys, filler)];
+}
+
+export function zipLongest3<T1, T2, T3, D>(
+    xs: Iterable<T1>,
+    ys: Iterable<T2>,
+    zs: Iterable<T3>,
+    filler: Maybe<D> = undefined
+): Array<[T1 | D, T2 | D, T3 | D]> {
+    return [...izipLongest3(xs, ys, zs, filler)];
 }
 
 export const izipLongest = izipLongest2;
