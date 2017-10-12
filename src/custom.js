@@ -32,11 +32,11 @@ export function compact<T>(iterable: Iterable<T>): Array<$NonMaybeType<T>> {
 }
 
 /**
- * Removes all undefined values from the given object. Returns a new object.
+ * Removes all undefined values from the given object.  Returns a new object.
  *
- * Examples:
- *   compactObject({ a: 1, b: undefined, c: 0 })
- *       // ==> { a: 1, c: 0 }
+ *     >>> compactObject({ a: 1, b: undefined, c: 0 })
+ *     { a: 1, c: 0 }
+ *
  */
 export function compactObject<O: { [key: string]: any }>(obj: O): $ObjMap<O, <T>(Maybe<T>) => T> {
     let result = {};

@@ -534,8 +534,14 @@ Yields elements in order, ignoring serial duplicates.
 Non-lazy version of [icompact](#icompact).
 
 
-<a name="compactObject" href="#compactObject">#</a> <b>compactObject</b>(): <i>TODO</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
-...
+<a name="compactObject" href="#compactObject">#</a> <b>compactObject</b><i>&lt;O: { [key: string]: any }&gt;</i>(obj: <i>O</i>): <i>$ObjMap&lt;O, &lt;T&gt;(Maybe&lt;T&gt;) =&gt; T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
+
+> **NOTE:** 🙀 OMG, that type signature! **Don't panic.** Just look at the example :)
+
+Removes all undefined values from the given object.  Returns a new object.
+
+    >>> compactObject({ a: 1, b: undefined, c: 0 })
+    { a: 1, c: 0 }
 
 
 <a name="first" href="#first">#</a> <b>first</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>Maybe&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
