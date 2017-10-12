@@ -372,7 +372,6 @@ for `start`, `stop`, or `step`.
 
 <a name="izip" href="#izip">#</a> <b>izip</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>): <i>Iterable&lt;[T1, T2]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")<br />
 <a name="izip3" href="#izip3">#</a> <b>izip3</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>, zs: <i>Iterable&lt;T3&gt;</i>): <i>Iterable&lt;[T1, T2, T3]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")<br />
-...
 
 Returns an iterator that aggregates elements from each of the iterables.  Used
 for lock-step iteration over several iterables at a time.  When iterating over
@@ -382,7 +381,6 @@ etc.  `izip` is an alias for `izip2`.
 
 <a name="izipLongest" href="izipLongest">#</a> <b>izipLongest</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>, filler?: <i>D</i>): <i>Iterable&lt;[T1 | D, T2 | D]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")<br />
 <a name="izipLongest3" href="izipLongest3">#</a> <b>izipLongest3</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>, zs: <i>Iterable&lt;T3&gt;</i>, filler?: <i>D</i>): <i>Iterable&lt;[T1 | D, T2 | D, T3 | D]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")<br />
-...
 
 Returns an iterator that aggregates elements from each of the iterables.  If the
 iterables are of uneven length, missing values are filled-in with fillvalue.
@@ -427,7 +425,6 @@ predicate is true.
 
 <a name="zipLongest" href="zipLongest">#</a> <b>zipLongest</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>, filler?: <i>D</i>): <i>Array&lt;[T1 | D, T2 | D]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")<br />
 <a name="zipLongest3" href="zipLongest3">#</a> <b>zipLongest3</b>(xs: <i>Iterable&lt;T1&gt;</i>, ys: <i>Iterable&lt;T2&gt;</i>, zs: <i>Iterable&lt;T3&gt;</i>, filler?: <i>D</i>): <i>Array&lt;[T1 | D, T2 | D, T3 | D]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")<br />
-...
 
 Non-lazy version of [izipLongest](#izipLongest) and friends.
 
