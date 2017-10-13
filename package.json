@@ -1,6 +1,6 @@
 {
   "name": "itertools",
-  "version": "1.0.0-alpha4",
+  "version": "1.0.0-alpha5",
   "description": "A JavaScript port of Python's awesome itertools standard library",
   "main": "lib/index.js",
   "keywords": [
