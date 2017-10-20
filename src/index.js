@@ -7,6 +7,7 @@ export {
     chain,
     compress,
     cycle,
+    dropwhile,
     icompress,
     ifilter,
     imap,
