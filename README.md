@@ -436,6 +436,7 @@ Non-lazy version of [izipMany](#izipMany).
 
 * [chunked](#chunked)
 * [flatten](#flatten)
+* [intersperse](#intersperse)
 * [itake](#itake)
 * [pairwise](#pairwise)
 * [partition](#partition)
@@ -464,6 +465,14 @@ Return an iterator flattening one level of nesting in a list of lists:
 
     >>> [...flatten([[0, 1], [2, 3]])]
     [0, 1, 2, 3]
+
+
+<a name="intersperse" href="#intersperse">#</a> <b>intersperse</b>(value: T, iterable: <i>Iterable&lt;T&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
+
+Intersperse filler element `value` among the items in `iterable`.
+
+    >>> [...intersperse(-1, range(1, 5))]
+    [1, -1, 2, -1, 3, -1, 4]
 
 
 <a name="itake" href="#itake">#</a> <b>itake</b>(n: <i>number</i>, iterable: <i>Iterable&lt;T&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")

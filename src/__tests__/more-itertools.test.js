@@ -5,6 +5,7 @@ import { first } from '../custom';
 import {
     chunked,
     flatten,
+    intersperse,
     pairwise,
     partition,
     roundrobin,
@@ -64,6 +65,18 @@ describe('flatten', () => {
     it('flatten works', () => {
         expect([...flatten([[1, 2], [3, 4, 5]])]).toEqual([1, 2, 3, 4, 5]);
         expect([...flatten(['hi', 'ha'])]).toEqual(['h', 'i', 'h', 'a']);
+    });
+});
+
+describe('intersperse', () => {
+    it('intersperse on empty sequence', () => {
+        expect([...intersperse(0, [])]).toEqual([]);
+    });
+
+    it('intersperse', () => {
+        expect([...intersperse(-1, [13])]).toEqual([13]);
+        expect([...intersperse(null, [13, 14])]).toEqual([13, null, 14]);
+        expect([...intersperse('foo', [1, 2, 3, 4])]).toEqual([1, 'foo', 2, 'foo', 3, 'foo', 4]);
     });
 });
 

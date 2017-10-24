@@ -1,6 +1,7 @@
 // @flow
 
 import { iter, map } from './builtins';
+import { izip, repeat } from './itertools';
 import type { Predicate, Primitive } from './types';
 import { primitiveIdentity } from './utils';
 
@@ -50,6 +51,19 @@ export function* flatten<T>(iterableOfIterables: Iterable<Iterable<T>>): Iterabl
             yield item;
         }
     }
+}
+
+/**
+ * Intersperse filler element `value` among the items in `iterable`.
+ *
+ *     >>> [...intersperse(-1, range(1, 5))]
+ *     [1, -1, 2, -1, 3, -1, 4]
+ *
+ */
+export function intersperse<T>(value: T, iterable: Iterable<T>): Iterable<T> {
+    const stream = flatten(izip(repeat(value), iterable));
+    take(1, stream); // eat away and discard the first value from the output
+    return stream;
 }
 
 /**
