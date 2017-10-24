@@ -2,7 +2,16 @@
 
 import { range } from '../builtins';
 import { first } from '../custom';
-import { chunked, flatten, pairwise, partition, take, uniqueEverseen, uniqueJustseen } from '../more-itertools';
+import {
+    chunked,
+    flatten,
+    pairwise,
+    partition,
+    roundrobin,
+    take,
+    uniqueEverseen,
+    uniqueJustseen,
+} from '../more-itertools';
 
 const isEven = x => x % 2 === 0;
 const isPositive = x => x >= 0;
@@ -86,6 +95,28 @@ describe('partition', () => {
         const values = [1, -2, 3, 4, 5, 6, 8, 8, 0, -2, -3];
         expect(partition(values, isEven)).toEqual([[-2, 4, 6, 8, 8, 0, -2], [1, 3, 5, -3]]);
         expect(partition(values, isPositive)).toEqual([[1, 3, 4, 5, 6, 8, 8, 0], [-2, -2, -3]]);
+    });
+});
+
+describe('roundrobin', () => {
+    it('roundrobin on empty list', () => {
+        expect([...roundrobin()]).toEqual([]);
+        expect([...roundrobin([])]).toEqual([]);
+        expect([...roundrobin([], [])]).toEqual([]);
+        expect([...roundrobin([], [], [])]).toEqual([]);
+        expect([...roundrobin([], [], [], [])]).toEqual([]);
+    });
+
+    it('roundrobin on equally sized lists', () => {
+        expect([...roundrobin([1], [2], [3])]).toEqual([1, 2, 3]);
+        expect([...roundrobin([1, 2], [3, 4])]).toEqual([1, 3, 2, 4]);
+        expect([...roundrobin('foo', 'bar')].join('')).toEqual('fboaor');
+    });
+
+    it('roundrobin on unequally sized lists', () => {
+        expect([...roundrobin([1], [], [2, 3, 4])]).toEqual([1, 2, 3, 4]);
+        expect([...roundrobin([1, 2, 3, 4, 5], [6, 7])]).toEqual([1, 6, 2, 7, 3, 4, 5]);
+        expect([...roundrobin([1, 2, 3], [4], [5, 6, 7, 8])]).toEqual([1, 4, 5, 2, 6, 3, 7, 8]);
     });
 });
 

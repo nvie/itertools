@@ -439,6 +439,7 @@ Non-lazy version of [izipMany](#izipMany).
 * [itake](#itake)
 * [pairwise](#pairwise)
 * [partition](#partition)
+* [roundrobin](#roundrobin)
 * [take](#take)
 * [uniqueEverseen](#uniqueEverseen)
 * [uniqueJustseen](#uniqueJustseen)
@@ -494,6 +495,15 @@ array contains all items that match the predicate, the second the rest:
     [1, 3, 5, 7, 9]
     >>> evens
     [0, 2, 4, 6, 8]
+
+
+<a name="roundrobin" href="#roundrobin">#</a> <b>roundrobin</b>(...iterables: <i>Array&lt;Iterable&lt;T&gt;&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
+
+Yields the next item from each iterable in turn, alternating between them.
+Continues until all items are exhausted.
+
+    >>> [...roundrobin([1, 2, 3], [4], [5, 6, 7, 8])]
+    [1, 4, 5, 2, 6, 3, 7, 8]
 
 
 <a name="take" href="#take">#</a> <b>take</b>(n: <i>number</i>, iterable: <i>Iterable&lt;T&gt;</i>): <i>Array&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
