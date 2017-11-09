@@ -168,7 +168,7 @@ function _range(start: number, stop: number, step: number): Iterable<number> {
  *
  * `range(a)` is a convenient shorthand for `range(0, a)`.
  *
- * Various valid invocations: 
+ * Various valid invocations:
  *
  *     range(5)           // [0, 1, 2, 3, 4]
  *     range(2, 5)        // [2, 3, 4]
