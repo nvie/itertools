@@ -1,6 +1,7 @@
 [![npm](https://img.shields.io/npm/v/itertools.svg)](https://www.npmjs.com/package/itertools)
 [![Build Status](https://img.shields.io/travis/nvie/itertools.js/master.svg)](https://travis-ci.org/nvie/itertools.js)
 [![Coverage Status](https://img.shields.io/coveralls/nvie/itertools.js/master.svg)](https://coveralls.io/github/nvie/itertools.js?branch=master)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fnvie%2Fitertools.js.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fnvie%2Fitertools.js?ref=badge_shield)
 
 A JavaScript port of Python's awesome
 [itertools](https://docs.python.org/library/itertools.html) standard library.
@@ -594,3 +595,7 @@ of `T`'s, discarding all the undefined values:
     >>> compact([1, 2, undefined, 3])
     [1, 2, 3]
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fnvie%2Fitertools.js.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fnvie%2Fitertools.js?ref=badge_large)
