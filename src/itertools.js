@@ -257,8 +257,9 @@ export function* izipMany<T>(...iters: Array<Iterable<T>>): Iterable<Array<T>> {
     const iterables = iters.map(iter);
 
     for (;;) {
-        const heads: Array<IteratorResult<T, any>> = iterables.map(xs => xs.next());
+        const heads: Array<IteratorResult<T, *>> = iterables.map(xs => xs.next());
         if (all(heads, h => !h.done)) {
+            // $FlowFixMe
             yield heads.map(h => ((h.value: any): T));
         } else {
             // One of the iterables exhausted
