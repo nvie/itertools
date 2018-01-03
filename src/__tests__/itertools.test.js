@@ -74,6 +74,11 @@ describe('cycle', () => {
         expect(take(3, cycle(['x']))).toEqual(['x', 'x', 'x']);
         expect(take(5, cycle(['even', 'odd']))).toEqual(['even', 'odd', 'even', 'odd', 'even']);
     });
+
+    it('cycles with infinite iterable', () => {
+        // Function `cycle` should properly work with infinite iterators (`repeat('x')` in this case)
+        expect(take(3, cycle(repeat('x')))).toEqual(['x', 'x', 'x']);
+    });
 });
 
 describe('dropwhile', () => {

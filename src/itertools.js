@@ -64,9 +64,14 @@ export function compress<T>(data: Iterable<T>, selectors: Iterable<boolean>): Ar
  * copy.  Repeats indefinitely.
  */
 export function* cycle<T>(iterable: Iterable<T>): Iterable<T> {
-    let saved = [...iterable];
+    const saved = [];
+    for (const element of iterable) {
+        yield element;
+        saved.push(element);
+    }
+
     while (saved.length > 0) {
-        for (let element of saved) {
+        for (const element of saved) {
             yield element;
         }
     }
