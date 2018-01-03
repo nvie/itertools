@@ -2,6 +2,9 @@
 
 [include]
 
+[libs]
+flow-typed/
+
 [lints]
 all=error
 sketchy-null-bool=off
