@@ -1,3 +1,7 @@
+v1.1.3
+------
+* Lower required version of `regenerator-runtime`
+
 v1.1.2
 ------
 * Properly declare dependency on `regenerator-runtime`
