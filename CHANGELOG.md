@@ -1,3 +1,7 @@
+v1.1.5
+------
+* Include regenerator runtime via babel-runtime
+
 v1.1.4
 ------
 * Make `regenerator-runtime` a normal runtime dependency
