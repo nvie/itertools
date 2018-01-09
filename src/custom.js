@@ -1,5 +1,8 @@
 // @flow
 
+// eslint-disable-next-line no-unused-vars
+import regeneratorRuntime from 'regenerator-runtime';
+
 import { imap } from './itertools';
 import { flatten } from './more-itertools';
 import type { Maybe, Predicate } from './types';

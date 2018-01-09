@@ -1,5 +1,8 @@
 // @flow
 
+// eslint-disable-next-line no-unused-vars
+import regeneratorRuntime from 'regenerator-runtime';
+
 import { iter, map } from './builtins';
 import { izip, repeat } from './itertools';
 import type { Predicate, Primitive } from './types';
