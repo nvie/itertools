@@ -1,3 +1,7 @@
+v1.1.4
+------
+* Make `regenerator-runtime` a normal runtime dependency
+
 v1.1.3
 ------
 * Lower required version of `regenerator-runtime`

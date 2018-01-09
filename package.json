@@ -58,11 +58,9 @@
     "jest": "^22.0.4",
     "jest-cli": "^22.0.4",
     "prettier": "^1.9.2",
-    "regenerator-runtime": "^0.11.1",
     "rimraf": "^2.6.2"
   },
-  "dependencies": {},
-  "peerDependencies": {
-    "regenerator-runtime": "^0.10.0"
+  "dependencies": {
+    "regenerator-runtime": "^0.11.1"
   }
 }
