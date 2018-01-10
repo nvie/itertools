@@ -559,8 +559,8 @@ Non-lazy version of [icompact](#icompact).
 
 Removes all undefined values from the given object.  Returns a new object.
 
-    >>> compactObject({ a: 1, b: undefined, c: 0 })
-    { a: 1, c: 0 }
+    >>> compactObject({ a: 1, b: undefined, c: 0, d: null })
+    { a: 1, c: 0, d: null }
 
 
 <a name="first" href="#first">#</a> <b>first</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>Maybe&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
