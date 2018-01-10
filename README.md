@@ -553,7 +553,7 @@ Yields elements in order, ignoring serial duplicates.
 Non-lazy version of [icompact](#icompact).
 
 
-<a name="compactObject" href="#compactObject">#</a> <b>compactObject</b><i>&lt;O: { [key: string]: any }&gt;</i>(obj: <i>O</i>): <i>$ObjMap&lt;O, &lt;T&gt;(Maybe&lt;T&gt;) =&gt; T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
+<a name="compactObject" href="#compactObject">#</a> <b>compactObject</b><i>&lt;O: { [key: string]: * }&gt;</i>(obj: <i>O</i>): <i>$ObjMap&lt;O, &lt;T&gt;(T) =&gt; $NonMaybeType&lt;T&gt;&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
 
 > **NOTE:** 🙀 OMG, that type signature! **Don't panic.** Just look at the example :)
 
