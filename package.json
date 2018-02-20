@@ -39,6 +39,7 @@
     "url": "https://github.com/nvie/itertools.js/issues"
   },
   "homepage": "https://github.com/nvie/itertools.js#readme",
+  "sideEffects": false,
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
