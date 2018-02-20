@@ -1,3 +1,7 @@
+v1.1.6
+------
+* declare library to be side effect free (to help optimize webpack v4 builds)
+
 v1.1.5
 ------
 * Include regenerator runtime via babel-runtime
