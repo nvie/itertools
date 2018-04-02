@@ -8,6 +8,7 @@ export {
     compress,
     cycle,
     dropwhile,
+    groupby,
     icompress,
     ifilter,
     imap,
