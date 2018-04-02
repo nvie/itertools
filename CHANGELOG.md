@@ -1,3 +1,7 @@
+v1.2.0
+------
+* Add port of `groupby()` function (see #87, thanks @sgenoud!)
+
 v1.1.6
 ------
 * declare library to be side effect free (to help optimize webpack v4 builds)
