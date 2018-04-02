@@ -294,6 +294,7 @@ Non-lazy version of [izip](#izip) / [izip3](#izip3).
 * [count](#count)
 * [cycle](#cycle)
 * [dropwhile](#dropwhile)
+* [groupby](#groupby)
 * [icompress](#icompress)
 * [ifilter](#ifilter)
 * [imap](#imap)
@@ -338,6 +339,24 @@ Repeats indefinitely.
 Returns an iterator that drops elements from the iterable as long as the
 predicate is true; afterwards, returns every remaining element.  **Note:** the
 iterator does not produce any output until the predicate first becomes false.
+
+<a name="groupby" href="#groupby">#</a> <b>groupby</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFcn: <i>T =&gt; mixed</i>): <i>Iterable&lt;[mixed, &lt;IterableT&gt;]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Make an Iterable that returns consecutive keys and groups from the iterable.
+The key is a function computing a key value for each element. If not specified,
+key defaults to an identity function and returns the element unchanged.
+Generally, the iterable needs to already be sorted on the same key function.
+
+The operation of `groupby()` is similar to the `uniq` filter in Unix. It
+generates a break or new group every time the value of the key function changes
+(which is why it is usually necessary to have sorted the data using the same
+key function). That behavior differs from `SQL`’s `GROUP BY` which aggregates
+common elements regardless of their input order.
+
+The returned group is itself an iterator that shares the underlying iterable
+with `groupby()`. Because the source is shared, when the `groupby()` object is
+advanced, the previous group is no longer visible. So, if that data is needed
+later, it should be stored as an Array.
 
 
 <a name="icompress" href="#icompress">#</a> <b>icompress</b>(iterable: <i>Iterable&lt;T&gt;</i>, selectors: <i>Iterable&lt;boolean&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
