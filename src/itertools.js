@@ -5,7 +5,8 @@ import regeneratorRuntime from 'regenerator-runtime';
 
 import { all, enumerate, iter, range } from './builtins';
 import { flatten } from './more-itertools';
-import type { Maybe, Predicate } from './types';
+import type { Maybe, Predicate, Primitive } from './types';
+import { primitiveIdentity } from './utils';
 
 function composeAnd(f1: number => boolean, f2: number => boolean): number => boolean {
     return (n: number) => f1(n) && f2(n);
@@ -100,11 +101,15 @@ export function* dropwhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): I
     }
 }
 
-export function* groupby<T>(iterable: Iterable<T>, keyFcn: T => mixed = x => x): Iterable<[mixed, Iterable<T>]> {
+export function* groupby<T>(
+    iterable: Iterable<T>,
+    keyFn: T => Primitive = primitiveIdentity
+): Iterable<[Primitive, Iterable<T>]> {
+    const SENTINEL = '__groupby_SENTINEL__';
     const it = iter(iterable);
 
     let currentValue;
-    let currentKey = {};
+    let currentKey = SENTINEL;
     let targetKey = currentKey;
 
     const grouper = function* grouper(tgtKey) {
@@ -114,7 +119,7 @@ export function* groupby<T>(iterable: Iterable<T>, keyFcn: T => mixed = x => x):
             const nextVal = it.next();
             if (nextVal.done) return;
             currentValue = nextVal.value;
-            currentKey = keyFcn(currentValue);
+            currentKey = keyFn(currentValue);
         }
     };
 
@@ -122,11 +127,11 @@ export function* groupby<T>(iterable: Iterable<T>, keyFcn: T => mixed = x => x):
         while (currentKey === targetKey) {
             const nextVal = it.next();
             if (nextVal.done) {
-                currentKey = {};
+                currentKey = SENTINEL;
                 return;
             }
             currentValue = nextVal.value;
-            currentKey = keyFcn(currentValue);
+            currentKey = keyFn(currentValue);
         }
 
         targetKey = currentKey;
