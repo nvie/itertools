@@ -8,6 +8,8 @@ import { flatten } from './more-itertools';
 import type { Maybe, Predicate, Primitive } from './types';
 import { primitiveIdentity } from './utils';
 
+const SENTINEL = Symbol();
+
 function composeAnd(f1: number => boolean, f2: number => boolean): number => boolean {
     return (n: number) => f1(n) && f2(n);
 }
@@ -105,11 +107,11 @@ export function* groupby<T>(
     iterable: Iterable<T>,
     keyFn: T => Primitive = primitiveIdentity
 ): Iterable<[Primitive, Iterable<T>]> {
-    const SENTINEL = '__groupby_SENTINEL__';
     const it = iter(iterable);
 
     let currentValue;
-    let currentKey = SENTINEL;
+    // $FlowFixMe - deliberate use of the SENTINEL symbol
+    let currentKey: Primitive = SENTINEL;
     let targetKey = currentKey;
 
     const grouper = function* grouper(tgtKey) {
@@ -127,6 +129,7 @@ export function* groupby<T>(
         while (currentKey === targetKey) {
             const nextVal = it.next();
             if (nextVal.done) {
+                // $FlowFixMe - deliberate use of the SENTINEL symbol
                 currentKey = SENTINEL;
                 return;
             }
