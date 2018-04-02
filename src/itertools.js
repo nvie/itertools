@@ -100,6 +100,40 @@ export function* dropwhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): I
     }
 }
 
+export function* groupby<T>(iterable: Iterable<T>, keyFcn: T => mixed = x => x): Iterable<[mixed, Iterable<T>]> {
+    const it = iter(iterable);
+
+    let currentValue;
+    let currentKey = {};
+    let targetKey = currentKey;
+
+    const grouper = function* grouper(tgtKey) {
+        while (currentKey === tgtKey) {
+            yield currentValue;
+
+            const nextVal = it.next();
+            if (nextVal.done) return;
+            currentValue = nextVal.value;
+            currentKey = keyFcn(currentValue);
+        }
+    };
+
+    for (;;) {
+        while (currentKey === targetKey) {
+            const nextVal = it.next();
+            if (nextVal.done) {
+                currentKey = {};
+                return;
+            }
+            currentValue = nextVal.value;
+            currentKey = keyFcn(currentValue);
+        }
+
+        targetKey = currentKey;
+        yield [currentKey, grouper(targetKey)];
+    }
+}
+
 /**
  * Returns an iterator that filters elements from data returning only those
  * that have a corresponding element in selectors that evaluates to `true`.

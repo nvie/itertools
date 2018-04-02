@@ -7,6 +7,7 @@ import {
     count,
     cycle,
     dropwhile,
+    groupby,
     ifilter,
     imap,
     islice,
@@ -100,6 +101,48 @@ describe('dropwhile', () => {
         expect([...dropwhile([0, 1, 2, -2, 3, 4, 5, 6, 7], isPositive)]).toEqual([-2, 3, 4, 5, 6, 7]);
     });
 });
+
+describe('groupby', () => {
+    const countValues = grouped => [...imap(grouped, ([k, v]) => [k, [...v].length])];
+
+    it('groupby with empty list', () => {
+        expect([...groupby([])]).toEqual([]);
+    });
+
+    it('groups elements', () => {
+        expect(countValues(groupby('aaabbbbcddddaa'))).toEqual([['a', 3], ['b', 4], ['c', 1], ['d', 4], ['a', 2]]);
+    });
+
+    it('groups element with key function', () => {
+        expect(countValues(groupby('aaaAbb'))).toEqual([['a', 3], ['A', 1], ['b', 2]]);
+        expect(countValues(groupby('aaaAbb', val => val.toUpperCase()))).toEqual([['A', 4], ['B', 2]]);
+    });
+
+    it('handles not using the inner iterator', () => {
+        expect([...imap(groupby('aaabbbbcddddaa'), ([k]) => k)]).toEqual(['a', 'b', 'c', 'd', 'a']);
+    });
+
+    it('handles using the inner iterator after the iteration has advanced', () => {
+        expect([...groupby('aaabb')].map(([, v]) => [...v])).toEqual([[], []]);
+        const it = groupby('aaabbccc');
+        // Flow does not like that I use next on an iterable (it is actually
+        // a generator but the Generator type is awful.
+
+        // $FlowFixMe
+        const [, v1] = it.next().value;
+        // $FlowFixMe
+        const [, v2] = it.next().value;
+        // $FlowFixMe
+        const [, v3] = it.next().value;
+
+        expect([...v1]).toEqual([]);
+        expect([...v2]).toEqual([]);
+        expect(v3.next().value).toEqual('c');
+        [...it]; // exhaust the groupby iterator
+        expect([...v3]).toEqual([]);
+    });
+});
+
 describe('icompress', () => {
     it('icompress is tested through compress() tests', () => {
         // This is okay
