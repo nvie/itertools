@@ -340,7 +340,7 @@ Returns an iterator that drops elements from the iterable as long as the
 predicate is true; afterwards, returns every remaining element.  **Note:** the
 iterator does not produce any output until the predicate first becomes false.
 
-<a name="groupby" href="#groupby">#</a> <b>groupby</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFcn: <i>T =&gt; mixed</i>): <i>Iterable&lt;[mixed, &lt;IterableT&gt;]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+<a name="groupby" href="#groupby">#</a> <b>groupby</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFcn: <i>T =&gt; Primitive</i>): <i>Iterable&lt;[Primitive, Iterable&lt;T&gt;]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 
 Make an Iterable that returns consecutive keys and groups from the iterable.
 The key is a function computing a key value for each element. If not specified,
