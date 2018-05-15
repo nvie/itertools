@@ -1,3 +1,7 @@
+v1.2.1
+------
+* Export `permutations()` at the top-level
+
 v1.2.0
 ------
 * Add port of `groupby()` function (see #87, thanks @sgenoud!)
