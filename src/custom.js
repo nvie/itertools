@@ -41,7 +41,7 @@ export function compact<T>(iterable: Iterable<T>): Array<$NonMaybeType<T>> {
  *     { a: 1, c: 0 }
  *
  */
-export function compactObject<O: { [key: string]: * }>(obj: O): $ObjMap<O, <T>(T) => $NonMaybeType<T>> {
+export function compactObject<O: { +[key: string]: mixed }>(obj: O): $ObjMap<O, <T>(T) => $NonMaybeType<T>> {
     let result = {};
     for (const [key, value] of Object.entries(obj)) {
         if (typeof value !== 'undefined') {
