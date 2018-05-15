@@ -17,6 +17,7 @@ export {
     izip3,
     izipMany,
     izipLongest,
+    permutations,
     takewhile,
     zipLongest,
     zipMany,
