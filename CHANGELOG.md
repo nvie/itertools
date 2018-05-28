@@ -1,3 +1,7 @@
+v1.2.2
+------
+* Make itertools.js fully [Flow Strict](https://flow.org/en/docs/strict/)
+
 v1.2.1
 ------
 * Export `permutations()` at the top-level
