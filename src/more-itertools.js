@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 // eslint-disable-next-line no-unused-vars
 import regeneratorRuntime from 'regenerator-runtime';
@@ -21,15 +21,15 @@ import { primitiveIdentity } from './utils';
  *     // [[1, 2, 3], [4, 5, 6], [7, 8]]
  */
 export function* chunked<T>(iterable: Iterable<T>, size: number): Iterable<Array<T>> {
-    iterable = iter(iterable);
-    let r1 = iterable.next();
+    const it = iter(iterable);
+    let r1 = it.next();
     if (r1.done) {
         return;
     }
 
     let chunk = [r1.value];
 
-    for (const item of iterable) {
+    for (const item of it) {
         chunk.push(item);
 
         if (chunk.length === size) {
@@ -74,9 +74,10 @@ export function intersperse<T>(value: T, iterable: Iterable<T>): Iterable<T> {
  * iterable.
  */
 export function* itake<T>(n: number, iterable: Iterable<T>): Iterable<T> {
-    iterable = iter(iterable);
-    while (n-- > 0) {
-        let s = iterable.next();
+    const it = iter(iterable);
+    let count = n;
+    while (count-- > 0) {
+        let s = it.next();
         if (!s.done) {
             yield s.value;
         } else {
@@ -96,14 +97,14 @@ export function* itake<T>(n: number, iterable: Iterable<T>): Iterable<T> {
  *
  */
 export function* pairwise<T>(iterable: Iterable<T>): Iterable<[T, T]> {
-    iterable = iter(iterable);
-    let r1 = iterable.next();
+    const it = iter(iterable);
+    let r1 = it.next();
     if (r1.done) {
         return;
     }
 
     r1 = r1.value;
-    for (const r2 of iterable) {
+    for (const r2 of it) {
         yield [r1, r2];
         r1 = r2;
     }

@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 import { compact, compactObject, flatmap } from '../custom';
 import { repeat } from '../itertools';

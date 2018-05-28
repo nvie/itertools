@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 // eslint-disable-next-line no-unused-vars
 import regeneratorRuntime from 'regenerator-runtime';
@@ -16,19 +16,22 @@ function composeAnd(f1: number => boolean, f2: number => boolean): number => boo
 
 function slicePredicate(start: number, stop: ?number, step: number) {
     // If stop is not provided (= undefined), then interpret the start value as the stop value
-    if (stop === undefined) {
-        [start, stop] = [0, start];
+    let _start = start,
+        _stop = stop,
+        _step = step;
+    if (_stop === undefined) {
+        [_start, _stop] = [0, _start];
     }
 
-    let pred = (n: number) => n >= start;
+    let pred = (n: number) => n >= _start;
 
-    if (stop !== null) {
-        const stopNotNull = stop;
+    if (_stop !== null) {
+        const stopNotNull = _stop;
         pred = composeAnd(pred, (n: number) => n < stopNotNull);
     }
 
-    if (step > 1) {
-        pred = composeAnd(pred, (n: number) => (n - start) % step === 0);
+    if (_step > 1) {
+        pred = composeAnd(pred, (n: number) => (n - _start) % _step === 0);
     }
 
     return pred;
@@ -90,15 +93,15 @@ export function* cycle<T>(iterable: Iterable<T>): Iterable<T> {
  * false.
  */
 export function* dropwhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> {
-    iterable = iter(iterable);
-    for (const value of iterable) {
+    const it = iter(iterable);
+    for (const value of it) {
         if (!predicate(value)) {
             yield value;
             break;
         }
     }
 
-    for (const value of iterable) {
+    for (const value of it) {
         yield value;
     }
 }
@@ -209,11 +212,11 @@ export function* islice<T>(iterable: Iterable<T>, start: number, stop: ?number, 
  * iterables, use `izip3`, etc.  `izip` is an alias for `izip2`.
  */
 export function* izip2<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): Iterable<[T1, T2]> {
-    xs = iter(xs);
-    ys = iter(ys);
+    const ixs = iter(xs);
+    const iys = iter(ys);
     for (;;) {
-        const x = xs.next();
-        const y = ys.next();
+        const x = ixs.next();
+        const y = iys.next();
         if (!x.done && !y.done) {
             yield [x.value, y.value];
         } else {
@@ -227,13 +230,13 @@ export function* izip2<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): Iterable<[T1
  * Like izip2, but for three input iterables.
  */
 export function* izip3<T1, T2, T3>(xs: Iterable<T1>, ys: Iterable<T2>, zs: Iterable<T3>): Iterable<[T1, T2, T3]> {
-    xs = iter(xs);
-    ys = iter(ys);
-    zs = iter(zs);
+    const ixs = iter(xs);
+    const iys = iter(ys);
+    const izs = iter(zs);
     for (;;) {
-        const x = xs.next();
-        const y = ys.next();
-        const z = zs.next();
+        const x = ixs.next();
+        const y = iys.next();
+        const z = izs.next();
         if (!x.done && !y.done && !z.done) {
             yield [x.value, y.value, z.value];
         } else {
@@ -255,11 +258,11 @@ export function* izipLongest2<T1, T2, D>(
     ys: Iterable<T2>,
     filler: Maybe<D> = undefined
 ): Iterable<[T1 | D, T2 | D]> {
-    xs = iter(xs);
-    ys = iter(ys);
+    const ixs = iter(xs);
+    const iys = iter(ys);
     for (;;) {
-        const x = xs.next();
-        const y = ys.next();
+        const x = ixs.next();
+        const y = iys.next();
         if (x.done && y.done) {
             // All iterables exhausted
             return;
@@ -278,13 +281,13 @@ export function* izipLongest3<T1, T2, T3, D>(
     zs: Iterable<T3>,
     filler: Maybe<D> = undefined
 ): Iterable<[T1 | D, T2 | D, T3 | D]> {
-    xs = iter(xs);
-    ys = iter(ys);
-    zs = iter(zs);
+    const ixs = iter(xs);
+    const iys = iter(ys);
+    const izs = iter(zs);
     for (;;) {
-        const x = xs.next();
-        const y = ys.next();
-        const z = zs.next();
+        const x = ixs.next();
+        const y = iys.next();
+        const z = izs.next();
         if (x.done && y.done && z.done) {
             // All iterables exhausted
             return;
@@ -334,21 +337,21 @@ export function* izipMany<T>(...iters: Array<Iterable<T>>): Iterable<Array<T>> {
 export function* permutations<T>(iterable: Iterable<T>, r: Maybe<number>): Iterable<Array<T>> {
     let pool = [...iterable];
     let n = pool.length;
-    r = r === undefined ? n : r;
+    let x = r === undefined ? n : r;
 
-    if (r > n) {
+    if (x > n) {
         return;
     }
 
     let indices: Array<number> = [...range(n)];
-    let cycles: Array<number> = [...range(n, n - r, -1)];
+    let cycles: Array<number> = [...range(n, n - x, -1)];
     let poolgetter = i => pool[i];
 
-    yield indices.slice(0, r).map(poolgetter);
+    yield indices.slice(0, x).map(poolgetter);
 
     while (n > 0) {
         let cleanExit: boolean = true;
-        for (let i of range(r - 1, -1, -1)) {
+        for (let i of range(x - 1, -1, -1)) {
             cycles[i] -= 1;
             if (cycles[i] === 0) {
                 indices = indices
@@ -362,7 +365,7 @@ export function* permutations<T>(iterable: Iterable<T>, r: Maybe<number>): Itera
                 let [p, q] = [indices[indices.length - j], indices[i]];
                 indices[i] = p;
                 indices[indices.length - j] = q;
-                yield indices.slice(0, r).map(poolgetter);
+                yield indices.slice(0, x).map(poolgetter);
                 cleanExit = false;
                 break;
             }

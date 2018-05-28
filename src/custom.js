@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 // eslint-disable-next-line no-unused-vars
 import regeneratorRuntime from 'regenerator-runtime';
@@ -57,9 +57,9 @@ export function compactObject<O: { +[key: string]: mixed }>(obj: O): $ObjMap<O, 
  * predicate is any defined value.
  */
 export function first<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): Maybe<T> {
-    keyFn = keyFn || isDefined;
+    const fn = keyFn || isDefined;
     for (let value of iterable) {
-        if (keyFn(value)) {
+        if (fn(value)) {
             return value;
         }
     }

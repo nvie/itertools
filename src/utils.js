@@ -1,4 +1,5 @@
-// @flow
+// @flow strict
+
 import type { Primitive } from './types';
 
 type CmpFn<T> = (T, T) => number;

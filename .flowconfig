@@ -13,3 +13,10 @@ sketchy-null-string=off
 
 [options]
 include_warnings=true
+
+[strict]
+nonstrict-import
+unclear-type
+unsafe-getters-setters
+untyped-import
+untyped-type-import

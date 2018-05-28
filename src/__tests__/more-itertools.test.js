@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 import { range } from '../builtins';
 import { first } from '../custom';

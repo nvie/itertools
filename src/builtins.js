@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 // eslint-disable-next-line no-unused-vars
 import regeneratorRuntime from 'regenerator-runtime';
@@ -188,8 +188,8 @@ function _range(start: number, stop: number, step: number): Iterable<number> {
  * The produced range will be empty if the first value to produce already does
  * not meet the value constraint.
  */
-export function range(a: number, ...args: Array<number>): Iterable<number> {
-    args = [a, ...args]; // "a" was only used by Flow to make at least one value mandatory
+export function range(a: number, ...rest: Array<number>): Iterable<number> {
+    const args = [a, ...rest]; // "a" was only used by Flow to make at least one value mandatory
     switch (args.length) {
         case 1:
             return _range(0, args[0], 1);
@@ -225,9 +225,9 @@ export function range(a: number, ...args: Array<number>): Iterable<number> {
  * derived and `undefined` will be returned.
  */
 export function reduce<T, O>(iterable: Iterable<T>, reducer: (O, T, number) => O, start: O): O {
-    iterable = iter(iterable);
+    const it = iter(iterable);
     let output = start;
-    for (const [index, item] of enumerate(iterable)) {
+    for (const [index, item] of enumerate(it)) {
         output = reducer(output, item, index);
     }
     return output;
@@ -237,12 +237,12 @@ export function reduce<T, O>(iterable: Iterable<T>, reducer: (O, T, number) => O
  * See reduce().
  */
 export function reduce_<T>(iterable: Iterable<T>, reducer: (T, T, number) => T): Maybe<T> {
-    iterable = iter(iterable);
-    const start = first(iterable);
+    const it = iter(iterable);
+    const start = first(it);
     if (start === undefined) {
         return undefined;
     } else {
-        return reduce(iterable, reducer, start);
+        return reduce(it, reducer, start);
     }
 }
 
