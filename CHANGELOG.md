@@ -1,3 +1,7 @@
+v1.3.0
+------
+* Drop support for Node 7
+
 v1.2.2
 ------
 * Make itertools.js fully [Flow Strict](https://flow.org/en/docs/strict/)
