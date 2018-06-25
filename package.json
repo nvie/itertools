@@ -55,7 +55,7 @@
     "flow-typed": "^2.3.0",
     "import-sort-cli": "^4.2.0",
     "import-sort-parser-babylon": "^4.2.0",
-    "import-sort-style-module": "^4.2.0",
+    "import-sort-style-module": "^5.0.0",
     "in-publish": "^2.0.0",
     "jest": "^23.0.0",
     "jest-cli": "^23.0.0",
