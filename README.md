@@ -1,6 +1,7 @@
 [![npm](https://img.shields.io/npm/v/itertools.svg)](https://www.npmjs.com/package/itertools)
 [![Build Status](https://img.shields.io/travis/nvie/itertools.js/master.svg)](https://travis-ci.org/nvie/itertools.js)
 [![Coverage Status](https://img.shields.io/coveralls/nvie/itertools.js/master.svg)](https://coveralls.io/github/nvie/itertools.js?branch=master)
+[![Minified Size](https://badgen.net/bundlephobia/minzip/itertools)](https://bundlephobia.com/result?p=itertools)
 
 A JavaScript port of Python's awesome
 [itertools](https://docs.python.org/library/itertools.html) standard library.
