@@ -8,6 +8,7 @@ export function keyToCmp<T>(keyFn: T => Primitive): CmpFn<T> {
     return (a: T, b: T) => {
         let ka = keyFn(a);
         let kb = keyFn(b);
+        // istanbul ignore else
         if (typeof ka === 'boolean' && typeof kb === 'boolean') {
             return ka === kb ? 0 : !ka && kb ? -1 : 1;
         } else if (typeof ka === 'number' && typeof kb === 'number') {

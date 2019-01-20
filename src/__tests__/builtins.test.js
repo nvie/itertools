@@ -281,10 +281,6 @@ describe('sorted', () => {
     it('sorted in reverse', () => {
         expect(sorted([2, 1, 3, 4, 5], undefined, true)).toEqual([5, 4, 3, 2, 1]);
     });
-
-    it('sorted has undefined behaviour with non-homogeneous primitive types', () => {
-        expect(sorted([1, true, 'one'])).toEqual([1, true, 'one']);
-    });
 });
 
 describe('sum', () => {
