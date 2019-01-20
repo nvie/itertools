@@ -1,3 +1,8 @@
+v1.3.1
+------
+* New build system
+* Cleaner NPM package contents
+
 v1.3.0
 ------
 * Drop support for Node 7
