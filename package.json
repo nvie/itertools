@@ -1,21 +1,16 @@
+
 {
   "name": "itertools",
   "version": "1.3.0",
   "description": "A JavaScript port of Python's awesome itertools standard library",
-  "main": "lib/index.js",
-  "keywords": [
-    "itertool",
-    "itertools",
-    "node-itertools"
-  ],
+  "githubUrl": "https://github.com/nvie/itertools.js",
+  "main": "./dist/index.js",
   "files": [
-    "lib/"
+    "dist/"
   ],
   "scripts": {
-    "build": "yarn run build:clean && yarn run build:lib && yarn run build:flow",
-    "build:clean": "rimraf lib",
-    "build:flow": "flow-copy-source -v -i '**/__tests__/**' src lib",
-    "build:lib": "babel -d lib src --ignore '**/__tests__/**'",
+    "clean": "rimraf dist",
+    "build": "./bin/build.sh",
     "check": "yarn run check:eslint && yarn run check:prettier && yarn run check:import-sort",
     "check:eslint": "$(yarn bin)/eslint --report-unused-disable-directives src",
     "check:import-sort": "$(yarn bin)/import-sort --list-different 'src/**/*.js'",
@@ -24,7 +19,7 @@
     "fix:import-sort": "$(yarn bin)/import-sort --write 'src/**/*.js'",
     "fix:prettier": "$(yarn bin)/prettier --write 'src/**/*.js'",
     "prepublish": "in-publish && yarn run actually-prepublish || not-in-publish",
-    "actually-prepublish": "yarn build:clean && yarn run test && yarn run build",
+    "actually-prepublish": "echo \"\\n\\nPlease run \\`bin/publish.sh <options>\\` instead.\\n\\n\" && exit 2",
     "test": "yarn run test:flow && yarn run test:jest && yarn run check",
     "test:flow": "$(yarn bin)/flow check",
     "test:jest": "$(yarn bin)/jest --coverage"
@@ -35,6 +30,11 @@
   },
   "author": "Vincent Driessen",
   "license": "MIT",
+  "keywords": [
+    "itertool",
+    "itertools",
+    "node-itertools"
+  ],
   "bugs": {
     "url": "https://github.com/nvie/itertools.js/issues"
   },
