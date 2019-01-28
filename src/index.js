@@ -2,7 +2,23 @@
 
 import type { Predicate, Primitive } from './types';
 
-export { all, any, contains, enumerate, iter, map, max, min, range, reduce, sorted, sum, zip, zip3 } from './builtins';
+export {
+    all,
+    any,
+    contains,
+    enumerate,
+    filter,
+    iter,
+    map,
+    max,
+    min,
+    range,
+    reduce,
+    sorted,
+    sum,
+    zip,
+    zip3,
+} from './builtins';
 export {
     chain,
     compress,
