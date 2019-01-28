@@ -1,3 +1,7 @@
+v1.3.2
+------
+* Export `filter` at the top level
+
 v1.3.1
 ------
 * New build system
