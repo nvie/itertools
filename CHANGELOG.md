@@ -1,3 +1,7 @@
+v1.4.0
+------
+* Switch to Babel 7
+
 v1.3.2
 ------
 * Export `filter` at the top level
