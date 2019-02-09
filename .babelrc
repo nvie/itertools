@@ -1,9 +1,8 @@
 {
-  "presets": ["env", "flow"],
+  "presets": ["@babel/preset-env", "@babel/preset-flow"],
   "plugins": [
-    ["transform-runtime", {
+    ["@babel/plugin-transform-runtime", {
       "helpers": false,
-      "polyfill": false,
       "regenerator": true
     }]
   ]
