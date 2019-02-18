@@ -55,7 +55,7 @@
     "import-sort-cli": "^5.0.0",
     "import-sort-parser-babylon": "^5.0.0",
     "import-sort-style-eslint": "^5.0.0",
-    "import-sort-style-module": "^5.0.0",
+    "import-sort-style-module": "^6.0.0",
     "in-publish": "^2.0.0",
     "jest": "^24.1.0",
     "jest-cli": "^24.1.0",
