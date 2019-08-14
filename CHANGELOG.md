@@ -1,3 +1,8 @@
+v1.5.0-alpha0
+-------------
+* Remove direct code dependency on `regenerator-runtime` (let `@babel/runtime`
+  manage it)
+
 v1.4.0
 ------
 * Switch to Babel 7
