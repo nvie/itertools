@@ -1,8 +1,5 @@
 // @flow strict
 
-// eslint-disable-next-line no-unused-vars
-import regeneratorRuntime from 'regenerator-runtime';
-
 import { first } from './custom';
 import { count, ifilter, imap, izip, izip3, takewhile } from './itertools';
 import type { Maybe, Predicate, Primitive } from './types';
