@@ -1,6 +1,6 @@
 {
   "name": "itertools",
-  "version": "1.5.0-alpha0",
+  "version": "1.5.0",
   "description": "A JavaScript port of Python's awesome itertools standard library",
   "githubUrl": "https://github.com/nvie/itertools.js",
   "main": "./dist/index.js",
