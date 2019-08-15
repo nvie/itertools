@@ -1,5 +1,5 @@
-v1.5.0-alpha0
--------------
+v1.5.0
+------
 * Remove direct code dependency on `regenerator-runtime` (let `@babel/runtime`
   manage it)
 
