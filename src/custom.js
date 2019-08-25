@@ -28,7 +28,7 @@ export function* icompact<T>(iterable: Iterable<T>): Iterable<$NonMaybeType<T>> 
  * See icompact().
  */
 export function compact<T>(iterable: Iterable<T>): Array<$NonMaybeType<T>> {
-    return [...icompact(iterable)];
+    return Array.from(icompact(iterable));
 }
 
 /**

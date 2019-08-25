@@ -19,15 +19,15 @@ const isPositive = x => x >= 0;
 
 describe('chunked', () => {
     it('does nothing for empty array', () => {
-        expect([...chunked([], 3)]).toEqual([]);
+        expect(Array.from(chunked([], 3))).toEqual([]);
     });
 
     it('works with array smaller than chunk size', () => {
-        expect([...chunked([1], 3)]).toEqual([[1]]);
+        expect(Array.from(chunked([1], 3))).toEqual([[1]]);
     });
 
     it('works with array of values', () => {
-        expect([...chunked([1, 2, 3, 4, 5], 3)]).toEqual([[1, 2, 3], [4, 5]]);
+        expect(Array.from(chunked([1, 2, 3, 4, 5], 3))).toEqual([[1, 2, 3], [4, 5]]);
     });
 });
 
@@ -58,25 +58,25 @@ describe('first', () => {
 
 describe('flatten', () => {
     it('flatten w/ empty list', () => {
-        expect([...flatten([])]).toEqual([]);
-        expect([...flatten([[], [], [], [], []])]).toEqual([]);
+        expect(Array.from(flatten([]))).toEqual([]);
+        expect(Array.from(flatten([[], [], [], [], []]))).toEqual([]);
     });
 
     it('flatten works', () => {
-        expect([...flatten([[1, 2], [3, 4, 5]])]).toEqual([1, 2, 3, 4, 5]);
-        expect([...flatten(['hi', 'ha'])]).toEqual(['h', 'i', 'h', 'a']);
+        expect(Array.from(flatten([[1, 2], [3, 4, 5]]))).toEqual([1, 2, 3, 4, 5]);
+        expect(Array.from(flatten(['hi', 'ha']))).toEqual(['h', 'i', 'h', 'a']);
     });
 });
 
 describe('intersperse', () => {
     it('intersperse on empty sequence', () => {
-        expect([...intersperse(0, [])]).toEqual([]);
+        expect(Array.from(intersperse(0, []))).toEqual([]);
     });
 
     it('intersperse', () => {
-        expect([...intersperse(-1, [13])]).toEqual([13]);
-        expect([...intersperse(null, [13, 14])]).toEqual([13, null, 14]);
-        expect([...intersperse('foo', [1, 2, 3, 4])]).toEqual([1, 'foo', 2, 'foo', 3, 'foo', 4]);
+        expect(Array.from(intersperse(-1, [13]))).toEqual([13]);
+        expect(Array.from(intersperse(null, [13, 14]))).toEqual([13, null, 14]);
+        expect(Array.from(intersperse('foo', [1, 2, 3, 4]))).toEqual([1, 'foo', 2, 'foo', 3, 'foo', 4]);
     });
 });
 
@@ -88,14 +88,14 @@ describe('itake', () => {
 
 describe('pairwise', () => {
     it('does nothing for empty array', () => {
-        expect([...pairwise([])]).toEqual([]);
-        expect([...pairwise([1])]).toEqual([]);
+        expect(Array.from(pairwise([]))).toEqual([]);
+        expect(Array.from(pairwise([1]))).toEqual([]);
     });
 
     it('it returns pairs of input', () => {
-        expect([...pairwise([0, 1, 2])]).toEqual([[0, 1], [1, 2]]);
-        expect([...pairwise([1, 2])]).toEqual([[1, 2]]);
-        expect([...pairwise([1, 2, 3, 4])]).toEqual([[1, 2], [2, 3], [3, 4]]);
+        expect(Array.from(pairwise([0, 1, 2]))).toEqual([[0, 1], [1, 2]]);
+        expect(Array.from(pairwise([1, 2]))).toEqual([[1, 2]]);
+        expect(Array.from(pairwise([1, 2, 3, 4]))).toEqual([[1, 2], [2, 3], [3, 4]]);
     });
 });
 
@@ -113,23 +113,23 @@ describe('partition', () => {
 
 describe('roundrobin', () => {
     it('roundrobin on empty list', () => {
-        expect([...roundrobin()]).toEqual([]);
-        expect([...roundrobin([])]).toEqual([]);
-        expect([...roundrobin([], [])]).toEqual([]);
-        expect([...roundrobin([], [], [])]).toEqual([]);
-        expect([...roundrobin([], [], [], [])]).toEqual([]);
+        expect(Array.from(roundrobin())).toEqual([]);
+        expect(Array.from(roundrobin([]))).toEqual([]);
+        expect(Array.from(roundrobin([], []))).toEqual([]);
+        expect(Array.from(roundrobin([], [], []))).toEqual([]);
+        expect(Array.from(roundrobin([], [], [], []))).toEqual([]);
     });
 
     it('roundrobin on equally sized lists', () => {
-        expect([...roundrobin([1], [2], [3])]).toEqual([1, 2, 3]);
-        expect([...roundrobin([1, 2], [3, 4])]).toEqual([1, 3, 2, 4]);
-        expect([...roundrobin('foo', 'bar')].join('')).toEqual('fboaor');
+        expect(Array.from(roundrobin([1], [2], [3]))).toEqual([1, 2, 3]);
+        expect(Array.from(roundrobin([1, 2], [3, 4]))).toEqual([1, 3, 2, 4]);
+        expect(Array.from(roundrobin('foo', 'bar')).join('')).toEqual('fboaor');
     });
 
     it('roundrobin on unequally sized lists', () => {
-        expect([...roundrobin([1], [], [2, 3, 4])]).toEqual([1, 2, 3, 4]);
-        expect([...roundrobin([1, 2, 3, 4, 5], [6, 7])]).toEqual([1, 6, 2, 7, 3, 4, 5]);
-        expect([...roundrobin([1, 2, 3], [4], [5, 6, 7, 8])]).toEqual([1, 4, 5, 2, 6, 3, 7, 8]);
+        expect(Array.from(roundrobin([1], [], [2, 3, 4]))).toEqual([1, 2, 3, 4]);
+        expect(Array.from(roundrobin([1, 2, 3, 4, 5], [6, 7]))).toEqual([1, 6, 2, 7, 3, 4, 5]);
+        expect(Array.from(roundrobin([1, 2, 3], [4], [5, 6, 7, 8]))).toEqual([1, 4, 5, 2, 6, 3, 7, 8]);
     });
 });
 
@@ -153,34 +153,34 @@ describe('take', () => {
 
 describe('uniqueJustseen', () => {
     it('uniqueJustseen w/ empty list', () => {
-        expect([...uniqueJustseen([])]).toEqual([]);
+        expect(Array.from(uniqueJustseen([]))).toEqual([]);
     });
 
     it('uniqueJustseen', () => {
-        expect([...uniqueJustseen([1, 2, 3, 4, 5])]).toEqual([1, 2, 3, 4, 5]);
-        expect([...uniqueJustseen([1, 1, 1, 2, 2])]).toEqual([1, 2]);
-        expect([...uniqueJustseen([1, 1, 1, 2, 2, 1, 1, 1, 1])]).toEqual([1, 2, 1]);
+        expect(Array.from(uniqueJustseen([1, 2, 3, 4, 5]))).toEqual([1, 2, 3, 4, 5]);
+        expect(Array.from(uniqueJustseen([1, 1, 1, 2, 2]))).toEqual([1, 2]);
+        expect(Array.from(uniqueJustseen([1, 1, 1, 2, 2, 1, 1, 1, 1]))).toEqual([1, 2, 1]);
     });
 
     it('uniqueEverseen with key function', () => {
-        expect([...uniqueJustseen('AaABbBCcaABBb', s => s.toLowerCase())]).toEqual(['A', 'B', 'C', 'a', 'B']);
+        expect(Array.from(uniqueJustseen('AaABbBCcaABBb', s => s.toLowerCase()))).toEqual(['A', 'B', 'C', 'a', 'B']);
     });
 });
 
 describe('uniqueEverseen', () => {
     it('uniqueEverseen w/ empty list', () => {
-        expect([...uniqueEverseen([])]).toEqual([]);
+        expect(Array.from(uniqueEverseen([]))).toEqual([]);
     });
 
     it('uniqueEverseen never emits dupes, but keeps input ordering', () => {
-        expect([...uniqueEverseen([1, 2, 3, 4, 5])]).toEqual([1, 2, 3, 4, 5]);
-        expect([...uniqueEverseen([1, 1, 1, 2, 2, 3, 1, 3, 0, 4])]).toEqual([1, 2, 3, 0, 4]);
-        expect([...uniqueEverseen([1, 1, 1, 2, 2, 1, 1, 1, 1])]).toEqual([1, 2]);
+        expect(Array.from(uniqueEverseen([1, 2, 3, 4, 5]))).toEqual([1, 2, 3, 4, 5]);
+        expect(Array.from(uniqueEverseen([1, 1, 1, 2, 2, 3, 1, 3, 0, 4]))).toEqual([1, 2, 3, 0, 4]);
+        expect(Array.from(uniqueEverseen([1, 1, 1, 2, 2, 1, 1, 1, 1]))).toEqual([1, 2]);
     });
 
     it('uniqueEverseen with key function', () => {
-        expect([...uniqueEverseen('AAAABBBCCDAABBB')]).toEqual(['A', 'B', 'C', 'D']);
-        expect([...uniqueEverseen('ABCcAb', s => s.toLowerCase())]).toEqual(['A', 'B', 'C']);
-        expect([...uniqueEverseen('AbCBBcAb', s => s.toLowerCase())]).toEqual(['A', 'b', 'C']);
+        expect(Array.from(uniqueEverseen('AAAABBBCCDAABBB'))).toEqual(['A', 'B', 'C', 'D']);
+        expect(Array.from(uniqueEverseen('ABCcAb', s => s.toLowerCase()))).toEqual(['A', 'B', 'C']);
+        expect(Array.from(uniqueEverseen('AbCBBcAb', s => s.toLowerCase()))).toEqual(['A', 'b', 'C']);
     });
 });

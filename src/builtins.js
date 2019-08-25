@@ -99,7 +99,7 @@ export function* enumerate<T>(iterable: Iterable<T>, start: number = 0): Iterabl
  * Non-lazy version of ifilter().
  */
 export function filter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Array<T> {
-    return [...ifilter(iterable, predicate)];
+    return Array.from(ifilter(iterable, predicate));
 }
 
 /**
@@ -119,7 +119,7 @@ export function iter<T>(iterable: Iterable<T>): Iterator<T> {
  * Non-lazy version of imap().
  */
 export function map<T, V>(iterable: Iterable<T>, mapper: T => V): Array<V> {
-    return [...imap(iterable, mapper)];
+    return Array.from(imap(iterable, mapper));
 }
 
 /**
@@ -261,7 +261,7 @@ export function sorted<T>(
     keyFn: T => Primitive = primitiveIdentity,
     reverse: boolean = false
 ): Array<T> {
-    const result = [...iterable];
+    const result = Array.from(iterable);
     result.sort(keyToCmp(keyFn)); // sort in-place
 
     if (reverse) {
@@ -283,12 +283,12 @@ export function sum(iterable: Iterable<number>): number {
  * See izip.
  */
 export function zip<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): Array<[T1, T2]> {
-    return [...izip(xs, ys)];
+    return Array.from(izip(xs, ys));
 }
 
 /**
  * See izip3.
  */
 export function zip3<T1, T2, T3>(xs: Iterable<T1>, ys: Iterable<T2>, zs: Iterable<T3>): Array<[T1, T2, T3]> {
-    return [...izip3(xs, ys, zs)];
+    return Array.from(izip3(xs, ys, zs));
 }

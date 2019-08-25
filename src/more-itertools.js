@@ -173,7 +173,7 @@ export function* roundrobin<T>(...iters: Array<Iterable<T>>): Iterable<T> {
  * Non-lazy version of itake().
  */
 export function take<T>(n: number, iterable: Iterable<T>): Array<T> {
-    return [...itake(n, iterable)];
+    return Array.from(itake(n, iterable));
 }
 
 /**

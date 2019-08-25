@@ -25,14 +25,14 @@ const isPositive = x => x >= 0;
 
 describe('chain', () => {
     it('chains empty iterables', () => {
-        expect([...chain([], [])]).toEqual([]);
+        expect(Array.from(chain([], []))).toEqual([]);
     });
 
     it('chains iterables together', () => {
-        expect([...chain(['foo'], [])]).toEqual(['foo']);
-        expect([...chain([], ['bar'])]).toEqual(['bar']);
-        expect([...chain([], ['bar'], ['qux'])]).toEqual(['bar', 'qux']);
-        expect([...chain(['foo', 'bar'], ['qux'])]).toEqual(['foo', 'bar', 'qux']);
+        expect(Array.from(chain(['foo'], []))).toEqual(['foo']);
+        expect(Array.from(chain([], ['bar']))).toEqual(['bar']);
+        expect(Array.from(chain([], ['bar'], ['qux']))).toEqual(['bar', 'qux']);
+        expect(Array.from(chain(['foo', 'bar'], ['qux']))).toEqual(['foo', 'bar', 'qux']);
     });
 });
 
@@ -67,7 +67,7 @@ describe('count', () => {
 
 describe('cycle', () => {
     it('cycle with empty list', () => {
-        expect([...cycle([])]).toEqual([]);
+        expect(Array.from(cycle([]))).toEqual([]);
     });
 
     it('cycles', () => {
@@ -84,29 +84,29 @@ describe('cycle', () => {
 
 describe('dropwhile', () => {
     it('dropwhile on empty list', () => {
-        expect([...dropwhile([], isEven)]).toEqual([]);
-        expect([...dropwhile([], isPositive)]).toEqual([]);
+        expect(Array.from(dropwhile([], isEven))).toEqual([]);
+        expect(Array.from(dropwhile([], isPositive))).toEqual([]);
     });
 
     it('dropwhile on list', () => {
-        expect([...dropwhile([1], isEven)]).toEqual([1]);
-        expect([...dropwhile([1], isPositive)]).toEqual([]);
+        expect(Array.from(dropwhile([1], isEven))).toEqual([1]);
+        expect(Array.from(dropwhile([1], isPositive))).toEqual([]);
 
-        expect([...dropwhile([-1, 0, 1], isEven)]).toEqual([-1, 0, 1]);
-        expect([...dropwhile([4, -1, 0, 1], isEven)]).toEqual([-1, 0, 1]);
-        expect([...dropwhile([-1, 0, 1], isPositive)]).toEqual([-1, 0, 1]);
-        expect([...dropwhile([7, -1, 0, 1], isPositive)]).toEqual([-1, 0, 1]);
+        expect(Array.from(dropwhile([-1, 0, 1], isEven))).toEqual([-1, 0, 1]);
+        expect(Array.from(dropwhile([4, -1, 0, 1], isEven))).toEqual([-1, 0, 1]);
+        expect(Array.from(dropwhile([-1, 0, 1], isPositive))).toEqual([-1, 0, 1]);
+        expect(Array.from(dropwhile([7, -1, 0, 1], isPositive))).toEqual([-1, 0, 1]);
 
-        expect([...dropwhile([0, 2, 4, 6, 7, 8, 10], isEven)]).toEqual([7, 8, 10]);
-        expect([...dropwhile([0, 1, 2, -2, 3, 4, 5, 6, 7], isPositive)]).toEqual([-2, 3, 4, 5, 6, 7]);
+        expect(Array.from(dropwhile([0, 2, 4, 6, 7, 8, 10], isEven))).toEqual([7, 8, 10]);
+        expect(Array.from(dropwhile([0, 1, 2, -2, 3, 4, 5, 6, 7], isPositive))).toEqual([-2, 3, 4, 5, 6, 7]);
     });
 });
 
 describe('groupby', () => {
-    const countValues = grouped => [...imap(grouped, ([k, v]) => [k, [...v].length])];
+    const countValues = grouped => Array.from(imap(grouped, ([k, v]) => [k, Array.from(v).length]));
 
     it('groupby with empty list', () => {
-        expect([...groupby([])]).toEqual([]);
+        expect(Array.from(groupby([]))).toEqual([]);
     });
 
     it('groups elements', () => {
@@ -119,11 +119,11 @@ describe('groupby', () => {
     });
 
     it('handles not using the inner iterator', () => {
-        expect([...imap(groupby('aaabbbbcddddaa'), ([k]) => k)]).toEqual(['a', 'b', 'c', 'd', 'a']);
+        expect(Array.from(imap(groupby('aaabbbbcddddaa'), ([k]) => k))).toEqual(['a', 'b', 'c', 'd', 'a']);
     });
 
     it('handles using the inner iterator after the iteration has advanced', () => {
-        expect([...groupby('aaabb')].map(([, v]) => [...v])).toEqual([[], []]);
+        expect(Array.from(groupby('aaabb')).map(([, v]) => Array.from(v))).toEqual([[], []]);
         const it = groupby('aaabbccc');
         // Flow does not like that I use next on an iterable (it is actually
         // a generator but the Generator type is awful.
@@ -138,7 +138,7 @@ describe('groupby', () => {
         expect([...v1]).toEqual([]);
         expect([...v2]).toEqual([]);
         expect(v3.next().value).toEqual('c');
-        [...it]; // exhaust the groupby iterator
+        Array.from(it); // exhaust the groupby iterator
         expect([...v3]).toEqual([]);
     });
 });
@@ -171,15 +171,15 @@ describe('imap', () => {
 
 describe('islice', () => {
     it('islice an empty iterable', () => {
-        expect([...islice([], 2)]).toEqual([]);
+        expect(Array.from(islice([], 2))).toEqual([]);
     });
 
     it('islice with arguments', () => {
-        expect([...islice('ABCDEFG', /*stop*/ 2)]).toEqual(['A', 'B']);
-        expect([...islice('ABCDEFG', 2, 4)]).toEqual(['C', 'D']);
-        expect([...islice('ABCDEFG', /*start*/ 2, /*stop*/ null)]).toEqual(['C', 'D', 'E', 'F', 'G']);
-        expect([...islice('ABCDEFG', /*start*/ 0, /*stop*/ null, /*step*/ 2)]).toEqual(['A', 'C', 'E', 'G']);
-        expect([...islice('ABCDEFG', /*start*/ 1, /*stop*/ null, /*step*/ 2)]).toEqual(['B', 'D', 'F']);
+        expect(Array.from(islice('ABCDEFG', /*stop*/ 2))).toEqual(['A', 'B']);
+        expect(Array.from(islice('ABCDEFG', 2, 4))).toEqual(['C', 'D']);
+        expect(Array.from(islice('ABCDEFG', /*start*/ 2, /*stop*/ null))).toEqual(['C', 'D', 'E', 'F', 'G']);
+        expect(Array.from(islice('ABCDEFG', /*start*/ 0, /*stop*/ null, /*step*/ 2))).toEqual(['A', 'C', 'E', 'G']);
+        expect(Array.from(islice('ABCDEFG', /*start*/ 1, /*stop*/ null, /*step*/ 2))).toEqual(['B', 'D', 'F']);
     });
 });
 
@@ -209,13 +209,13 @@ describe('izipLongest', () => {
 
 describe('permutations', () => {
     it('permutations of empty list', () => {
-        expect([...permutations([])]).toEqual([[]]);
+        expect(Array.from(permutations([]))).toEqual([[]]);
     });
 
     it('permutations of unique values', () => {
-        expect([...permutations([1, 2])]).toEqual([[1, 2], [2, 1]]);
+        expect(Array.from(permutations([1, 2]))).toEqual([[1, 2], [2, 1]]);
 
-        expect([...permutations([1, 2, 3])]).toEqual([
+        expect(Array.from(permutations([1, 2, 3]))).toEqual([
             [1, 2, 3],
             [1, 3, 2],
             [2, 1, 3],
@@ -225,7 +225,7 @@ describe('permutations', () => {
         ]);
 
         // Duplicates have no effect on the results
-        expect([...permutations([2, 2, 3])]).toEqual([
+        expect(Array.from(permutations([2, 2, 3]))).toEqual([
             [2, 2, 3],
             [2, 3, 2],
             [2, 2, 3],
@@ -237,10 +237,10 @@ describe('permutations', () => {
 
     it('permutations with r param', () => {
         // r too big
-        expect([...permutations([1, 2], 5)]).toEqual([]);
+        expect(Array.from(permutations([1, 2], 5))).toEqual([]);
 
         // prettier-ignore
-        expect([...permutations(range(4), 2)]).toEqual([
+        expect(Array.from(permutations(range(4), 2))).toEqual([
             [0, 1], [0, 2], [0, 3], [1, 0], [1, 2], [1, 3],
             [2, 0], [2, 1], [2, 3], [3, 0], [3, 1], [3, 2],
         ]);
@@ -265,19 +265,19 @@ describe('repeat', () => {
 
 describe('takewhile', () => {
     it('takewhile on empty list', () => {
-        expect([...takewhile([], isEven)]).toEqual([]);
-        expect([...takewhile([], isPositive)]).toEqual([]);
+        expect(Array.from(takewhile([], isEven))).toEqual([]);
+        expect(Array.from(takewhile([], isPositive))).toEqual([]);
     });
 
     it('takewhile on list', () => {
-        expect([...takewhile([1], isEven)]).toEqual([]);
-        expect([...takewhile([1], isPositive)]).toEqual([1]);
+        expect(Array.from(takewhile([1], isEven))).toEqual([]);
+        expect(Array.from(takewhile([1], isPositive))).toEqual([1]);
 
-        expect([...takewhile([-1, 0, 1], isEven)]).toEqual([]);
-        expect([...takewhile([-1, 0, 1], isPositive)]).toEqual([]);
+        expect(Array.from(takewhile([-1, 0, 1], isEven))).toEqual([]);
+        expect(Array.from(takewhile([-1, 0, 1], isPositive))).toEqual([]);
 
-        expect([...takewhile([0, 2, 4, 6, 7, 8, 10], isEven)]).toEqual([0, 2, 4, 6]);
-        expect([...takewhile([0, 1, 2, -2, 3, 4, 5, 6, 7], isPositive)]).toEqual([0, 1, 2]);
+        expect(Array.from(takewhile([0, 2, 4, 6, 7, 8, 10], isEven))).toEqual([0, 2, 4, 6]);
+        expect(Array.from(takewhile([0, 1, 2, -2, 3, 4, 5, 6, 7], isPositive))).toEqual([0, 1, 2]);
     });
 });
 

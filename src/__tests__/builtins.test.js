@@ -80,17 +80,17 @@ describe('contains', () => {
 
 describe('enumerate', () => {
     it('enumerate empty list', () => {
-        expect([...enumerate([])]).toEqual([]);
+        expect(Array.from(enumerate([]))).toEqual([]);
     });
 
     it('enumerate attaches indexes', () => {
         // We'll have to wrap it in a take() call to avoid infinite-length arrays :)
-        expect([...enumerate(['x'])]).toEqual([[0, 'x']]);
-        expect([...enumerate(['even', 'odd'])]).toEqual([[0, 'even'], [1, 'odd']]);
+        expect(Array.from(enumerate(['x']))).toEqual([[0, 'x']]);
+        expect(Array.from(enumerate(['even', 'odd']))).toEqual([[0, 'even'], [1, 'odd']]);
     });
 
     it('enumerate from 3 up', () => {
-        expect([...enumerate('abc', 3)]).toEqual([[3, 'a'], [4, 'b'], [5, 'c']]);
+        expect(Array.from(enumerate('abc', 3))).toEqual([[3, 'a'], [4, 'b'], [5, 'c']]);
     });
 });
 
@@ -106,9 +106,9 @@ describe('filter', () => {
 
 describe('iter', () => {
     it('iter makes any iterable a one-time iterable', () => {
-        expect([...iter(new Map([[1, 'x'], [2, 'y'], [3, 'z']]))]).toEqual([[1, 'x'], [2, 'y'], [3, 'z']]);
-        expect([...iter([1, 2, 3])]).toEqual([1, 2, 3]);
-        expect([...iter(new Set([1, 2, 3]))]).toEqual([1, 2, 3]);
+        expect(Array.from(iter(new Map([[1, 'x'], [2, 'y'], [3, 'z']])))).toEqual([[1, 'x'], [2, 'y'], [3, 'z']]);
+        expect(Array.from(iter([1, 2, 3]))).toEqual([1, 2, 3]);
+        expect(Array.from(iter(new Set([1, 2, 3])))).toEqual([1, 2, 3]);
     });
 
     it('iter results can be consumed only once', () => {
@@ -129,11 +129,11 @@ describe('iter', () => {
         expect(first(it)).toBe(1);
         expect(first(it)).toBe(2);
         expect(first(it)).toBe(3);
-        expect([...it]).toEqual([4, 5]);
+        expect(Array.from(it)).toEqual([4, 5]);
 
         // Keeps returning "[]" when exhausted...
-        expect([...it]).toEqual([]);
-        expect([...it]).toEqual([]);
+        expect(Array.from(it)).toEqual([]);
+        expect(Array.from(it)).toEqual([]);
         // ...
     });
 
@@ -144,11 +144,11 @@ describe('iter', () => {
         const wrappedIter = iter(iter(iter(originalIter)));
         expect(first(wrappedIter)).toBe(2);
         expect(first(iter(wrappedIter))).toBe(3);
-        expect([...iter(originalIter)]).toEqual([4, 5]);
+        expect(Array.from(iter(originalIter))).toEqual([4, 5]);
 
         // Keeps returning "[]" when exhausted...
-        expect([...originalIter]).toEqual([]);
-        expect([...wrappedIter]).toEqual([]);
+        expect(Array.from(originalIter)).toEqual([]);
+        expect(Array.from(wrappedIter)).toEqual([]);
         // ...
     });
 });
@@ -213,26 +213,26 @@ describe('min', () => {
 
 describe('range', () => {
     it('range with end', () => {
-        expect([...range(0)]).toEqual([]);
-        expect([...range(1)]).toEqual([0]);
-        expect([...range(2)]).toEqual([0, 1]);
-        expect([...range(5)]).toEqual([0, 1, 2, 3, 4]);
-        expect([...range(-1)]).toEqual([]);
+        expect(Array.from(range(0))).toEqual([]);
+        expect(Array.from(range(1))).toEqual([0]);
+        expect(Array.from(range(2))).toEqual([0, 1]);
+        expect(Array.from(range(5))).toEqual([0, 1, 2, 3, 4]);
+        expect(Array.from(range(-1))).toEqual([]);
     });
 
     it('range with start and end', () => {
-        expect([...range(3, 5)]).toEqual([3, 4]);
-        expect([...range(4, 7)]).toEqual([4, 5, 6]);
+        expect(Array.from(range(3, 5))).toEqual([3, 4]);
+        expect(Array.from(range(4, 7))).toEqual([4, 5, 6]);
 
         // If end < start, then range is empty
-        expect([...range(5, 1)]).toEqual([]);
+        expect(Array.from(range(5, 1))).toEqual([]);
     });
 
     it('range with start, end, and step', () => {
-        expect([...range(3, 9, 3)]).toEqual([3, 6]);
-        expect([...range(3, 10, 3)]).toEqual([3, 6, 9]);
-        expect([...range(5, 1, -1)]).toEqual([5, 4, 3, 2]);
-        expect([...range(5, -3, -2)]).toEqual([5, 3, 1, -1]);
+        expect(Array.from(range(3, 9, 3))).toEqual([3, 6]);
+        expect(Array.from(range(3, 10, 3))).toEqual([3, 6, 9]);
+        expect(Array.from(range(5, 1, -1))).toEqual([5, 4, 3, 2]);
+        expect(Array.from(range(5, -3, -2))).toEqual([5, 3, 1, -1]);
     });
 });
 

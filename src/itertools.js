@@ -61,7 +61,7 @@ export function* count(start: number = 0, step: number = 1): Iterable<number> {
  * Non-lazy version of icompress().
  */
 export function compress<T>(data: Iterable<T>, selectors: Iterable<boolean>): Array<T> {
-    return [...icompress(data, selectors)];
+    return Array.from(icompress(data, selectors));
 }
 
 /**
@@ -332,7 +332,7 @@ export function* izipMany<T>(...iters: Array<Iterable<T>>): Iterable<Array<T>> {
  * permutation.
  */
 export function* permutations<T>(iterable: Iterable<T>, r: Maybe<number>): Iterable<Array<T>> {
-    let pool = [...iterable];
+    let pool = Array.from(iterable);
     let n = pool.length;
     let x = r === undefined ? n : r;
 
@@ -340,8 +340,8 @@ export function* permutations<T>(iterable: Iterable<T>, r: Maybe<number>): Itera
         return;
     }
 
-    let indices: Array<number> = [...range(n)];
-    let cycles: Array<number> = [...range(n, n - x, -1)];
+    let indices: Array<number> = Array.from(range(n));
+    let cycles: Array<number> = Array.from(range(n, n - x, -1));
     let poolgetter = i => pool[i];
 
     yield indices.slice(0, x).map(poolgetter);
@@ -407,7 +407,7 @@ export function zipLongest2<T1, T2, D>(
     ys: Iterable<T2>,
     filler: Maybe<D> = undefined
 ): Array<[T1 | D, T2 | D]> {
-    return [...izipLongest2(xs, ys, filler)];
+    return Array.from(izipLongest2(xs, ys, filler));
 }
 
 export function zipLongest3<T1, T2, T3, D>(
@@ -416,12 +416,12 @@ export function zipLongest3<T1, T2, T3, D>(
     zs: Iterable<T3>,
     filler: Maybe<D> = undefined
 ): Array<[T1 | D, T2 | D, T3 | D]> {
-    return [...izipLongest3(xs, ys, zs, filler)];
+    return Array.from(izipLongest3(xs, ys, zs, filler));
 }
 
 export const izipLongest = izipLongest2;
 export const zipLongest = zipLongest2;
 
 export function zipMany<T>(...iters: Array<Iterable<T>>): Array<Array<T>> {
-    return [...izipMany(...iters)];
+    return Array.from(izipMany(...iters));
 }
