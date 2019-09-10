@@ -28,8 +28,6 @@ export function identityPredicate<T>(x: T): boolean {
 export function numberIdentity<T>(x: T): number {
     /* istanbul ignore if */
     if (typeof x !== 'number') {
-        // eslint-disable-next-line no-console
-        console.error('Inputs must be numbers, got', x);
         throw new Error('Inputs must be numbers');
     }
     return x;
