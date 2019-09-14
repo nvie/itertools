@@ -1,3 +1,8 @@
+v1.5.1
+------
+* Internal change to make the code Flow 0.105.x compatible.  Basically stops
+  using array spreads (`[...things]`) in favor of `Array.from()`.
+
 v1.5.0
 ------
 * Remove direct code dependency on `regenerator-runtime` (let `@babel/runtime`
