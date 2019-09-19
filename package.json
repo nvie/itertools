@@ -1,69 +1,69 @@
 {
-  "name": "itertools",
-  "version": "1.5.1",
-  "description": "A JavaScript port of Python's awesome itertools standard library",
-  "githubUrl": "https://github.com/nvie/itertools.js",
-  "main": "./dist/index.js",
-  "files": [
-    "dist/"
-  ],
-  "scripts": {
-    "clean": "rimraf dist",
-    "build": "./bin/build.sh",
-    "check": "yarn run check:eslint && yarn run check:prettier && yarn run check:import-sort",
-    "check:eslint": "$(yarn bin)/eslint --report-unused-disable-directives src",
-    "check:import-sort": "$(yarn bin)/import-sort --list-different 'src/**/*.js'",
-    "check:prettier": "$(yarn bin)/prettier --list-different 'src/**/*.js'",
-    "fix": "yarn run fix:prettier && yarn run fix:import-sort",
-    "fix:import-sort": "$(yarn bin)/import-sort --write 'src/**/*.js'",
-    "fix:prettier": "$(yarn bin)/prettier --write 'src/**/*.js'",
-    "prepublish": "in-publish && yarn run actually-prepublish || not-in-publish",
-    "actually-prepublish": "echo \"\\n\\nPlease run \\`bin/publish.sh <options>\\` instead.\\n\\n\" && exit 2",
-    "test": "yarn run test:flow && yarn run test:jest && yarn run check",
-    "test:flow": "$(yarn bin)/flow check",
-    "test:jest": "$(yarn bin)/jest --coverage"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nvie/itertools.js.git"
-  },
-  "author": "Vincent Driessen",
-  "license": "MIT",
-  "keywords": [
-    "itertool",
-    "itertools",
-    "node-itertools"
-  ],
-  "bugs": {
-    "url": "https://github.com/nvie/itertools.js/issues"
-  },
-  "homepage": "https://github.com/nvie/itertools.js#readme",
-  "sideEffects": false,
-  "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/plugin-transform-runtime": "^7.2.0",
-    "@babel/preset-env": "^7.3.1",
-    "@babel/preset-flow": "^7.0.0",
-    "babel-eslint": "^10.0.1",
-    "coveralls": "^3.0.2",
-    "eslint": "^6.3.0",
-    "eslint-plugin-flowtype": "^4.3.0",
-    "flow-bin": "^0.107.0",
-    "flow-copy-source": "^2.0.1",
-    "flow-typed": "^2.5.1",
-    "import-sort-cli": "^6.0.0",
-    "import-sort-parser-babylon": "^6.0.0",
-    "import-sort-style-eslint": "^6.0.0",
-    "import-sort-style-module": "^6.0.0",
-    "in-publish": "^2.0.0",
-    "jest": "^24.1.0",
-    "jest-cli": "^24.1.0",
-    "prettier": "^1.18.2",
-    "prettier-plugin-package": "^0.3.1",
-    "rimraf": "^3.0.0"
-  },
-  "dependencies": {
-    "@babel/runtime": "^7.6.0"
-  }
+    "name": "itertools",
+    "version": "1.5.1",
+    "description": "A JavaScript port of Python's awesome itertools standard library",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nvie/itertools.js.git"
+    },
+    "author": "Vincent Driessen",
+    "homepage": "https://github.com/nvie/itertools.js#readme",
+    "bugs": {
+        "url": "https://github.com/nvie/itertools.js/issues"
+    },
+    "main": "./dist/index.js",
+    "scripts": {
+        "actually-prepublish": "echo \"\\n\\nPlease run \\`bin/publish.sh <options>\\` instead.\\n\\n\" && exit 2",
+        "build": "./bin/build.sh",
+        "check": "yarn run check:eslint && yarn run check:prettier && yarn run check:import-sort",
+        "check:eslint": "$(yarn bin)/eslint --report-unused-disable-directives src",
+        "check:import-sort": "$(yarn bin)/import-sort --list-different 'src/**/*.js'",
+        "check:prettier": "$(yarn bin)/prettier --list-different 'src/**/*.js'",
+        "clean": "rimraf dist",
+        "fix": "yarn run fix:prettier && yarn run fix:import-sort",
+        "fix:import-sort": "$(yarn bin)/import-sort --write 'src/**/*.js'",
+        "fix:prettier": "$(yarn bin)/prettier --write 'src/**/*.js'",
+        "prepublish": "in-publish && yarn run actually-prepublish || not-in-publish",
+        "test": "yarn run test:flow && yarn run test:jest && yarn run check",
+        "test:flow": "$(yarn bin)/flow check",
+        "test:jest": "$(yarn bin)/jest --coverage"
+    },
+    "files": [
+        "dist/"
+    ],
+    "keywords": [
+        "itertool",
+        "itertools",
+        "node-itertools"
+    ],
+    "dependencies": {
+        "@babel/runtime": "^7.6.0"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.2.3",
+        "@babel/core": "^7.2.2",
+        "@babel/plugin-transform-runtime": "^7.2.0",
+        "@babel/preset-env": "^7.3.1",
+        "@babel/preset-flow": "^7.0.0",
+        "babel-eslint": "^10.0.1",
+        "coveralls": "^3.0.2",
+        "eslint": "^6.3.0",
+        "eslint-plugin-flowtype": "^4.3.0",
+        "flow-bin": "^0.107.0",
+        "flow-copy-source": "^2.0.1",
+        "flow-typed": "^2.5.1",
+        "import-sort-cli": "^6.0.0",
+        "import-sort-parser-babylon": "^6.0.0",
+        "import-sort-style-eslint": "^6.0.0",
+        "import-sort-style-module": "^6.0.0",
+        "in-publish": "^2.0.0",
+        "jest": "^24.1.0",
+        "jest-cli": "^24.1.0",
+        "prettier": "^1.18.2",
+        "prettier-plugin-package": "^0.3.1",
+        "rimraf": "^3.0.0"
+    },
+    "githubUrl": "https://github.com/nvie/itertools.js",
+    "sideEffects": false
 }
