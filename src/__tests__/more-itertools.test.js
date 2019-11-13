@@ -27,7 +27,10 @@ describe('chunked', () => {
     });
 
     it('works with array of values', () => {
-        expect(Array.from(chunked([1, 2, 3, 4, 5], 3))).toEqual([[1, 2, 3], [4, 5]]);
+        expect(Array.from(chunked([1, 2, 3, 4, 5], 3))).toEqual([
+            [1, 2, 3],
+            [4, 5],
+        ]);
     });
 });
 
@@ -63,7 +66,14 @@ describe('flatten', () => {
     });
 
     it('flatten works', () => {
-        expect(Array.from(flatten([[1, 2], [3, 4, 5]]))).toEqual([1, 2, 3, 4, 5]);
+        expect(
+            Array.from(
+                flatten([
+                    [1, 2],
+                    [3, 4, 5],
+                ])
+            )
+        ).toEqual([1, 2, 3, 4, 5]);
         expect(Array.from(flatten(['hi', 'ha']))).toEqual(['h', 'i', 'h', 'a']);
     });
 });
@@ -93,9 +103,16 @@ describe('pairwise', () => {
     });
 
     it('it returns pairs of input', () => {
-        expect(Array.from(pairwise([0, 1, 2]))).toEqual([[0, 1], [1, 2]]);
+        expect(Array.from(pairwise([0, 1, 2]))).toEqual([
+            [0, 1],
+            [1, 2],
+        ]);
         expect(Array.from(pairwise([1, 2]))).toEqual([[1, 2]]);
-        expect(Array.from(pairwise([1, 2, 3, 4]))).toEqual([[1, 2], [2, 3], [3, 4]]);
+        expect(Array.from(pairwise([1, 2, 3, 4]))).toEqual([
+            [1, 2],
+            [2, 3],
+            [3, 4],
+        ]);
     });
 });
 
@@ -106,8 +123,14 @@ describe('partition', () => {
 
     it('partition splits input list into two lists', () => {
         const values = [1, -2, 3, 4, 5, 6, 8, 8, 0, -2, -3];
-        expect(partition(values, isEven)).toEqual([[-2, 4, 6, 8, 8, 0, -2], [1, 3, 5, -3]]);
-        expect(partition(values, isPositive)).toEqual([[1, 3, 4, 5, 6, 8, 8, 0], [-2, -2, -3]]);
+        expect(partition(values, isEven)).toEqual([
+            [-2, 4, 6, 8, 8, 0, -2],
+            [1, 3, 5, -3],
+        ]);
+        expect(partition(values, isPositive)).toEqual([
+            [1, 3, 4, 5, 6, 8, 8, 0],
+            [-2, -2, -3],
+        ]);
     });
 });
 

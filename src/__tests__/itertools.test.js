@@ -110,12 +110,25 @@ describe('groupby', () => {
     });
 
     it('groups elements', () => {
-        expect(countValues(groupby('aaabbbbcddddaa'))).toEqual([['a', 3], ['b', 4], ['c', 1], ['d', 4], ['a', 2]]);
+        expect(countValues(groupby('aaabbbbcddddaa'))).toEqual([
+            ['a', 3],
+            ['b', 4],
+            ['c', 1],
+            ['d', 4],
+            ['a', 2],
+        ]);
     });
 
     it('groups element with key function', () => {
-        expect(countValues(groupby('aaaAbb'))).toEqual([['a', 3], ['A', 1], ['b', 2]]);
-        expect(countValues(groupby('aaaAbb', val => val.toUpperCase()))).toEqual([['A', 4], ['B', 2]]);
+        expect(countValues(groupby('aaaAbb'))).toEqual([
+            ['a', 3],
+            ['A', 1],
+            ['b', 2],
+        ]);
+        expect(countValues(groupby('aaaAbb', val => val.toUpperCase()))).toEqual([
+            ['A', 4],
+            ['B', 2],
+        ]);
     });
 
     it('handles not using the inner iterator', () => {
@@ -165,7 +178,12 @@ describe('imap', () => {
     });
 
     it('...but imap can handle infinite inputs', () => {
-        expect(take(3, imap(range(9999), x => -x))).toEqual([-0, -1, -2]);
+        expect(
+            take(
+                3,
+                imap(range(9999), x => -x)
+            )
+        ).toEqual([-0, -1, -2]);
     });
 });
 
@@ -213,7 +231,10 @@ describe('permutations', () => {
     });
 
     it('permutations of unique values', () => {
-        expect(Array.from(permutations([1, 2]))).toEqual([[1, 2], [2, 1]]);
+        expect(Array.from(permutations([1, 2]))).toEqual([
+            [1, 2],
+            [2, 1],
+        ]);
 
         expect(Array.from(permutations([1, 2, 3]))).toEqual([
             [1, 2, 3],
@@ -288,7 +309,11 @@ describe('zipMany', () => {
     });
 
     it('zipMany takes any number of (homogenous) iterables', () => {
-        expect(zipMany('abc', 'ABC')).toEqual([['a', 'A'], ['b', 'B'], ['c', 'C']]);
+        expect(zipMany('abc', 'ABC')).toEqual([
+            ['a', 'A'],
+            ['b', 'B'],
+            ['c', 'C'],
+        ]);
         expect(zipMany('abc', 'ABC', 'pqrs', 'xyz')).toEqual([
             ['a', 'A', 'p', 'x'],
             ['b', 'B', 'q', 'y'],
@@ -303,9 +328,21 @@ describe('zipLongest', () => {
     });
 
     it('zipLongest with two iterables', () => {
-        expect(zipLongest('abc', '')).toEqual([['a', undefined], ['b', undefined], ['c', undefined]]);
-        expect(zipLongest('x', 'abc')).toEqual([['x', 'a'], [undefined, 'b'], [undefined, 'c']]);
-        expect(zipLongest('x', 'abc', /* filler */ 0)).toEqual([['x', 'a'], [0, 'b'], [0, 'c']]);
+        expect(zipLongest('abc', '')).toEqual([
+            ['a', undefined],
+            ['b', undefined],
+            ['c', undefined],
+        ]);
+        expect(zipLongest('x', 'abc')).toEqual([
+            ['x', 'a'],
+            [undefined, 'b'],
+            [undefined, 'c'],
+        ]);
+        expect(zipLongest('x', 'abc', /* filler */ 0)).toEqual([
+            ['x', 'a'],
+            [0, 'b'],
+            [0, 'c'],
+        ]);
     });
 });
 
@@ -320,7 +357,15 @@ describe('zipLongest3', () => {
             ['b', undefined, 2],
             ['c', undefined, 3],
         ]);
-        expect(zipLongest3('x', 'abc', [1, 2, 3])).toEqual([['x', 'a', 1], [undefined, 'b', 2], [undefined, 'c', 3]]);
-        expect(zipLongest3('x', 'abc', [1, 2], /* filler */ 0)).toEqual([['x', 'a', 1], [0, 'b', 2], [0, 'c', 0]]);
+        expect(zipLongest3('x', 'abc', [1, 2, 3])).toEqual([
+            ['x', 'a', 1],
+            [undefined, 'b', 2],
+            [undefined, 'c', 3],
+        ]);
+        expect(zipLongest3('x', 'abc', [1, 2], /* filler */ 0)).toEqual([
+            ['x', 'a', 1],
+            [0, 'b', 2],
+            [0, 'c', 0],
+        ]);
     });
 });

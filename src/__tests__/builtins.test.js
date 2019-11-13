@@ -86,11 +86,18 @@ describe('enumerate', () => {
     it('enumerate attaches indexes', () => {
         // We'll have to wrap it in a take() call to avoid infinite-length arrays :)
         expect(Array.from(enumerate(['x']))).toEqual([[0, 'x']]);
-        expect(Array.from(enumerate(['even', 'odd']))).toEqual([[0, 'even'], [1, 'odd']]);
+        expect(Array.from(enumerate(['even', 'odd']))).toEqual([
+            [0, 'even'],
+            [1, 'odd'],
+        ]);
     });
 
     it('enumerate from 3 up', () => {
-        expect(Array.from(enumerate('abc', 3))).toEqual([[3, 'a'], [4, 'b'], [5, 'c']]);
+        expect(Array.from(enumerate('abc', 3))).toEqual([
+            [3, 'a'],
+            [4, 'b'],
+            [5, 'c'],
+        ]);
     });
 });
 
@@ -106,7 +113,21 @@ describe('filter', () => {
 
 describe('iter', () => {
     it('iter makes any iterable a one-time iterable', () => {
-        expect(Array.from(iter(new Map([[1, 'x'], [2, 'y'], [3, 'z']])))).toEqual([[1, 'x'], [2, 'y'], [3, 'z']]);
+        expect(
+            Array.from(
+                iter(
+                    new Map([
+                        [1, 'x'],
+                        [2, 'y'],
+                        [3, 'z'],
+                    ])
+                )
+            )
+        ).toEqual([
+            [1, 'x'],
+            [2, 'y'],
+            [3, 'z'],
+        ]);
         expect(Array.from(iter([1, 2, 3]))).toEqual([1, 2, 3]);
         expect(Array.from(iter(new Set([1, 2, 3])))).toEqual([1, 2, 3]);
     });
@@ -302,11 +323,19 @@ describe('zip', () => {
     });
 
     it('izip with two iterables', () => {
-        expect(zip('abc', 'ABC')).toEqual([['a', 'A'], ['b', 'B'], ['c', 'C']]);
+        expect(zip('abc', 'ABC')).toEqual([
+            ['a', 'A'],
+            ['b', 'B'],
+            ['c', 'C'],
+        ]);
     });
 
     it('izip with three iterables', () => {
-        expect(zip3('abc', 'ABC', [5, 4, 3])).toEqual([['a', 'A', 5], ['b', 'B', 4], ['c', 'C', 3]]);
+        expect(zip3('abc', 'ABC', [5, 4, 3])).toEqual([
+            ['a', 'A', 5],
+            ['b', 'B', 4],
+            ['c', 'C', 3],
+        ]);
     });
 
     it('izip different input lengths', () => {
