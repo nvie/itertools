@@ -1,3 +1,7 @@
+v1.5.2
+------
+* Export `count()` function at the top level 🤦‍♂️
+
 v1.5.1
 ------
 * Internal change to make the code Flow 0.105.x compatible.  Basically stops

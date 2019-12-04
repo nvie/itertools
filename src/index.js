@@ -22,6 +22,7 @@ export {
 export {
     chain,
     compress,
+    count,
     cycle,
     dropwhile,
     groupby,
