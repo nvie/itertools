@@ -32,6 +32,13 @@ describe('chunked', () => {
             [4, 5],
         ]);
     });
+
+    it('works with exactly chunkable list', () => {
+        expect(Array.from(chunked([1, 2, 3, 4, 5, 6], 3))).toEqual([
+            [1, 2, 3],
+            [4, 5, 6],
+        ]);
+    });
 });
 
 describe('first', () => {

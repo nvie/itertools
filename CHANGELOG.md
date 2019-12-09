@@ -1,3 +1,7 @@
+v1.5.3
+------
+* Fix bug in `chunked()` when input is exactly dividable
+
 v1.5.2
 ------
 * Export `count()` function at the top level 🤦‍♂️

@@ -35,7 +35,10 @@ export function* chunked<T>(iterable: Iterable<T>, size: number): Iterable<Array
         }
     }
 
-    yield chunk;
+    // Yield the remainder, if there is any
+    if (chunk.length > 0) {
+        yield chunk;
+    }
 }
 
 /**
