@@ -39,7 +39,17 @@ export {
     zipLongest,
     zipMany,
 } from './itertools';
-export { chunked, flatten, itake, pairwise, partition, take, uniqueEverseen, uniqueJustseen } from './more-itertools';
+export {
+    chunked,
+    flatten,
+    itake,
+    pairwise,
+    partition,
+    roundrobin,
+    take,
+    uniqueEverseen,
+    uniqueJustseen,
+} from './more-itertools';
 export { compact, compactObject, first, flatmap, icompact } from './custom';
 
 export type { Predicate, Primitive };

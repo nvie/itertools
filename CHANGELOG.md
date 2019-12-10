@@ -1,3 +1,7 @@
+v1.5.4
+------
+* Export `roundrobin()` at the top level
+
 v1.5.3
 ------
 * Fix bug in `chunked()` when input is exactly dividable
