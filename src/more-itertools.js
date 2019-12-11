@@ -173,6 +173,47 @@ export function* roundrobin<T>(...iters: Array<Iterable<T>>): Iterable<T> {
 }
 
 /**
+ * Yields the heads of all of the given iterables.  This is almost like
+ * `roundrobin()`, except that the yielded outputs are grouped in to the
+ * "rounds":
+ *
+ *     >>> [...heads([1, 2, 3], [4], [5, 6, 7, 8])]
+ *     [[1, 4, 5], [2, 6], [3, 7], [8]]
+ *
+ * This is also different from `zipLongest()`, since the number of items in
+ * each round can decrease over time, rather than being filled with a filler.
+ */
+export function* heads<T>(...iters: Array<Iterable<T>>): Iterable<Array<T>> {
+    // We'll only keep lazy versions of the input iterables in here that we'll
+    // slowly going to exhaust.  Once an iterable is exhausted, it will be
+    // removed from this list.  Once the entire list is empty, this algorithm
+    // ends.
+    let iterables: Array<Iterator<T>> = map(iters, iter);
+
+    while (iterables.length > 0) {
+        let index = 0;
+        const round = [];
+        while (index < iterables.length) {
+            const it = iterables[index];
+            const result = it.next();
+
+            if (!result.done) {
+                round.push(result.value);
+                index++;
+            } else {
+                // This iterable is exhausted, make sure to remove it from the
+                // list of iterables.  We'll splice the array from under our
+                // feet, and NOT advancing the index counter.
+                iterables.splice(index, 1); // intentional side-effect!
+            }
+        }
+        if (round.length > 0) {
+            yield round;
+        }
+    }
+}
+
+/**
  * Non-lazy version of itake().
  */
 export function take<T>(n: number, iterable: Iterable<T>): Array<T> {

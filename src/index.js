@@ -42,6 +42,7 @@ export {
 export {
     chunked,
     flatten,
+    heads,
     itake,
     pairwise,
     partition,

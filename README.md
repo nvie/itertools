@@ -461,6 +461,7 @@ Non-lazy version of [izipMany](#izipMany).
 * [pairwise](#pairwise)
 * [partition](#partition)
 * [roundrobin](#roundrobin)
+* [heads](#heads)
 * [take](#take)
 * [uniqueEverseen](#uniqueEverseen)
 * [uniqueJustseen](#uniqueJustseen)
@@ -533,6 +534,14 @@ Continues until all items are exhausted.
 
     >>> [...roundrobin([1, 2, 3], [4], [5, 6, 7, 8])]
     [1, 4, 5, 2, 6, 3, 7, 8]
+
+
+<a name="heads" href="#heads">#</a> <b>heads</b>(...iterables: <i>Array&lt;Iterable&lt;T&gt;&gt;</i>): <i>Iterable&lt;Array&lt;T&gt;&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")
+
+Like `roundrobin()`, but will group the output per "round".
+
+    >>> [...heads([1, 2, 3], [4], [5, 6, 7, 8])]
+    [[1, 4, 5], [2, 6], [3, 7], [8]]
 
 
 <a name="take" href="#take">#</a> <b>take</b>(n: <i>number</i>, iterable: <i>Iterable&lt;T&gt;</i>): <i>Array&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js "Source")

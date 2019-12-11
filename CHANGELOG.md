@@ -1,3 +1,7 @@
+v1.6.0
+------
+* New itertool: `heads()`
+
 v1.5.4
 ------
 * Export `roundrobin()` at the top level

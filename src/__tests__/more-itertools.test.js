@@ -5,6 +5,7 @@ import { first } from '../custom';
 import {
     chunked,
     flatten,
+    heads,
     intersperse,
     pairwise,
     partition,
@@ -160,6 +161,31 @@ describe('roundrobin', () => {
         expect(Array.from(roundrobin([1], [], [2, 3, 4]))).toEqual([1, 2, 3, 4]);
         expect(Array.from(roundrobin([1, 2, 3, 4, 5], [6, 7]))).toEqual([1, 6, 2, 7, 3, 4, 5]);
         expect(Array.from(roundrobin([1, 2, 3], [4], [5, 6, 7, 8]))).toEqual([1, 4, 5, 2, 6, 3, 7, 8]);
+    });
+});
+
+describe('heads', () => {
+    it('heads on empty list', () => {
+        expect(Array.from(heads())).toEqual([]);
+        expect(Array.from(heads([]))).toEqual([]);
+        expect(Array.from(heads([], []))).toEqual([]);
+        expect(Array.from(heads([], [], []))).toEqual([]);
+        expect(Array.from(heads([], [], [], []))).toEqual([]);
+    });
+
+    it('heads on equally sized lists', () => {
+        expect(Array.from(heads([1], [2], [3]))).toEqual([[1, 2, 3]]);
+        expect(Array.from(heads([1, 2], [3, 4]))).toEqual([
+            [1, 3],
+            [2, 4],
+        ]);
+        expect(Array.from(heads('foo', 'bar')).map(s => s.join(''))).toEqual(['fb', 'oa', 'or']);
+    });
+
+    it('heads on unequally sized lists', () => {
+        expect(Array.from(heads([1], [], [2, 3, 4]))).toEqual([[1, 2], [3], [4]]);
+        expect(Array.from(heads([1, 2, 3, 4, 5], [6, 7]))).toEqual([[1, 6], [2, 7], [3], [4], [5]]);
+        expect(Array.from(heads([1, 2, 3], [4], [5, 6, 7, 8]))).toEqual([[1, 4, 5], [2, 6], [3, 7], [8]]);
     });
 });
 
