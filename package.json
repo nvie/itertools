@@ -59,7 +59,7 @@
         "import-sort-style-module": "^6.0.0",
         "in-publish": "^2.0.0",
         "jest": "^26.0.1",
-        "jest-cli": "^25.1.0",
+        "jest-cli": "^26.0.1",
         "prettier": "^1.19.1",
         "prettier-plugin-package": "^0.3.1",
         "rimraf": "^3.0.0"
