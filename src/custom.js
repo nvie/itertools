@@ -77,6 +77,6 @@ export function first<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): Maybe<T> 
  *     [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]  // note: no 0
  *
  */
-export function flatmap<T, S>(iterable: Iterable<T>, mapper: T => Iterable<S>): Iterable<S> {
+export function flatmap<T, S>(iterable: Iterable<T>, mapper: (T) => Iterable<S>): Iterable<S> {
     return flatten(imap(iterable, mapper));
 }

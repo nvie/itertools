@@ -20,8 +20,8 @@ import {
 } from '../itertools';
 import { take } from '../more-itertools';
 
-const isEven = x => x % 2 === 0;
-const isPositive = x => x >= 0;
+const isEven = (x) => x % 2 === 0;
+const isPositive = (x) => x >= 0;
 
 describe('chain', () => {
     it('chains empty iterables', () => {
@@ -103,7 +103,7 @@ describe('dropwhile', () => {
 });
 
 describe('groupby', () => {
-    const countValues = grouped => Array.from(imap(grouped, ([k, v]) => [k, Array.from(v).length]));
+    const countValues = (grouped) => Array.from(imap(grouped, ([k, v]) => [k, Array.from(v).length]));
 
     it('groupby with empty list', () => {
         expect(Array.from(groupby([]))).toEqual([]);
@@ -125,7 +125,7 @@ describe('groupby', () => {
             ['A', 1],
             ['b', 2],
         ]);
-        expect(countValues(groupby('aaaAbb', val => val.toUpperCase()))).toEqual([
+        expect(countValues(groupby('aaaAbb', (val) => val.toUpperCase()))).toEqual([
             ['A', 4],
             ['B', 2],
         ]);
@@ -181,7 +181,7 @@ describe('imap', () => {
         expect(
             take(
                 3,
-                imap(range(9999), x => -x)
+                imap(range(9999), (x) => -x)
             )
         ).toEqual([-0, -1, -2]);
     });
@@ -272,15 +272,15 @@ describe('repeat', () => {
     it('repeat indefinitely', () => {
         // practically limit it to something (in this case 99)
         let items = take(99, repeat(123));
-        expect(all(items, n => n === 123)).toEqual(true);
+        expect(all(items, (n) => n === 123)).toEqual(true);
 
         items = take(99, repeat('foo'));
-        expect(all(items, n => n === 'foo')).toEqual(true);
+        expect(all(items, (n) => n === 'foo')).toEqual(true);
     });
 
     it('repeat a fixed number of times', () => {
         const items = repeat('foo', 100);
-        expect(all(items, n => n === 'foo')).toEqual(true);
+        expect(all(items, (n) => n === 'foo')).toEqual(true);
     });
 });
 

@@ -72,7 +72,7 @@ export function any<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPred
  *
  */
 export function contains<T>(haystack: Iterable<T>, needle: T): boolean {
-    return any(haystack, x => x === needle);
+    return any(haystack, (x) => x === needle);
 }
 
 /**
@@ -118,7 +118,7 @@ export function iter<T>(iterable: Iterable<T>): Iterator<T> {
 /**
  * Non-lazy version of imap().
  */
-export function map<T, V>(iterable: Iterable<T>, mapper: T => V): Array<V> {
+export function map<T, V>(iterable: Iterable<T>, mapper: (T) => V): Array<V> {
     return Array.from(imap(iterable, mapper));
 }
 
@@ -133,7 +133,7 @@ export function map<T, V>(iterable: Iterable<T>, mapper: T => V): Array<V> {
  * If multiple items are maximal, the function returns either one of them, but
  * which one is not defined.
  */
-export function max<T>(iterable: Iterable<T>, keyFn: T => number = numberIdentity): Maybe<T> {
+export function max<T>(iterable: Iterable<T>, keyFn: (T) => number = numberIdentity): Maybe<T> {
     return reduce_(iterable, (x, y) => (keyFn(x) > keyFn(y) ? x : y));
 }
 
@@ -148,7 +148,7 @@ export function max<T>(iterable: Iterable<T>, keyFn: T => number = numberIdentit
  * If multiple items are minimal, the function returns either one of them, but
  * which one is not defined.
  */
-export function min<T>(iterable: Iterable<T>, keyFn: T => number = numberIdentity): Maybe<T> {
+export function min<T>(iterable: Iterable<T>, keyFn: (T) => number = numberIdentity): Maybe<T> {
     return reduce_(iterable, (x, y) => (keyFn(x) < keyFn(y) ? x : y));
 }
 
@@ -157,7 +157,7 @@ export function min<T>(iterable: Iterable<T>, keyFn: T => number = numberIdentit
  */
 function _range(start: number, stop: number, step: number): Iterable<number> {
     const counter = count(start, step);
-    const pred = step >= 0 ? n => n < stop : n => n > stop;
+    const pred = step >= 0 ? (n) => n < stop : (n) => n > stop;
     return takewhile(counter, pred);
 }
 
@@ -258,7 +258,7 @@ export function reduce_<T>(iterable: Iterable<T>, reducer: (T, T, number) => T):
  */
 export function sorted<T>(
     iterable: Iterable<T>,
-    keyFn: T => Primitive = primitiveIdentity,
+    keyFn: (T) => Primitive = primitiveIdentity,
     reverse: boolean = false
 ): Array<T> {
     const result = Array.from(iterable);
