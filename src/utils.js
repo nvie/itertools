@@ -4,7 +4,7 @@ import type { Primitive } from './types';
 
 type CmpFn<T> = (T, T) => number;
 
-export function keyToCmp<T>(keyFn: T => Primitive): CmpFn<T> {
+export function keyToCmp<T>(keyFn: (T) => Primitive): CmpFn<T> {
     return (a: T, b: T) => {
         let ka = keyFn(a);
         let kb = keyFn(b);

@@ -15,8 +15,8 @@ import {
     uniqueJustseen,
 } from '../more-itertools';
 
-const isEven = x => x % 2 === 0;
-const isPositive = x => x >= 0;
+const isEven = (x) => x % 2 === 0;
+const isPositive = (x) => x >= 0;
 
 describe('chunked', () => {
     it('does nothing for empty array', () => {
@@ -60,10 +60,10 @@ describe('first', () => {
     });
 
     it('first uses a predicate if provided', () => {
-        expect(first([0, 1, 2, 3, 4], n => !!n)).toBe(1);
-        expect(first([0, 1, 2, 3, 4], n => n > 1)).toBe(2);
-        expect(first([0, 1, 2, 3, 4], n => n < 0)).toBeUndefined();
-        expect(first([false, true], x => x)).toBe(true);
+        expect(first([0, 1, 2, 3, 4], (n) => !!n)).toBe(1);
+        expect(first([0, 1, 2, 3, 4], (n) => n > 1)).toBe(2);
+        expect(first([0, 1, 2, 3, 4], (n) => n < 0)).toBeUndefined();
+        expect(first([false, true], (x) => x)).toBe(true);
     });
 });
 
@@ -179,7 +179,7 @@ describe('heads', () => {
             [1, 3],
             [2, 4],
         ]);
-        expect(Array.from(heads('foo', 'bar')).map(s => s.join(''))).toEqual(['fb', 'oa', 'or']);
+        expect(Array.from(heads('foo', 'bar')).map((s) => s.join(''))).toEqual(['fb', 'oa', 'or']);
     });
 
     it('heads on unequally sized lists', () => {
@@ -219,7 +219,7 @@ describe('uniqueJustseen', () => {
     });
 
     it('uniqueEverseen with key function', () => {
-        expect(Array.from(uniqueJustseen('AaABbBCcaABBb', s => s.toLowerCase()))).toEqual(['A', 'B', 'C', 'a', 'B']);
+        expect(Array.from(uniqueJustseen('AaABbBCcaABBb', (s) => s.toLowerCase()))).toEqual(['A', 'B', 'C', 'a', 'B']);
     });
 });
 
@@ -236,7 +236,7 @@ describe('uniqueEverseen', () => {
 
     it('uniqueEverseen with key function', () => {
         expect(Array.from(uniqueEverseen('AAAABBBCCDAABBB'))).toEqual(['A', 'B', 'C', 'D']);
-        expect(Array.from(uniqueEverseen('ABCcAb', s => s.toLowerCase()))).toEqual(['A', 'B', 'C']);
-        expect(Array.from(uniqueEverseen('AbCBBcAb', s => s.toLowerCase()))).toEqual(['A', 'b', 'C']);
+        expect(Array.from(uniqueEverseen('ABCcAb', (s) => s.toLowerCase()))).toEqual(['A', 'B', 'C']);
+        expect(Array.from(uniqueEverseen('AbCBBcAb', (s) => s.toLowerCase()))).toEqual(['A', 'b', 'C']);
     });
 });

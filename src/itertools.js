@@ -7,7 +7,7 @@ import { primitiveIdentity } from './utils';
 
 const SENTINEL = Symbol();
 
-function composeAnd(f1: number => boolean, f2: number => boolean): number => boolean {
+function composeAnd(f1: (number) => boolean, f2: (number) => boolean): (number) => boolean {
     return (n: number) => f1(n) && f2(n);
 }
 
@@ -105,7 +105,7 @@ export function* dropwhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): I
 
 export function* groupby<T>(
     iterable: Iterable<T>,
-    keyFn: T => Primitive = primitiveIdentity
+    keyFn: (T) => Primitive = primitiveIdentity
 ): Iterable<[Primitive, Iterable<T>]> {
     const it = iter(iterable);
 
@@ -171,7 +171,7 @@ export function* ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Ite
  * Returns an iterator that computes the given mapper function using arguments
  * from each of the iterables.
  */
-export function* imap<T, V>(iterable: Iterable<T>, mapper: T => V): Iterable<V> {
+export function* imap<T, V>(iterable: Iterable<T>, mapper: (T) => V): Iterable<V> {
     for (let value of iterable) {
         yield mapper(value);
     }
@@ -307,10 +307,10 @@ export function* izipMany<T>(...iters: Array<Iterable<T>>): Iterable<Array<T>> {
     const iterables = iters.map(iter);
 
     for (;;) {
-        const heads: Array<IteratorResult<T, void>> = iterables.map(xs => xs.next());
-        if (all(heads, h => !h.done)) {
+        const heads: Array<IteratorResult<T, void>> = iterables.map((xs) => xs.next());
+        if (all(heads, (h) => !h.done)) {
             // $FlowFixMe
-            yield heads.map(h => ((h.value: any): T));
+            yield heads.map((h) => ((h.value: any): T));
         } else {
             // One of the iterables exhausted
             return;
@@ -342,7 +342,7 @@ export function* permutations<T>(iterable: Iterable<T>, r: Maybe<number>): Itera
 
     let indices: Array<number> = Array.from(range(n));
     let cycles: Array<number> = Array.from(range(n, n - x, -1));
-    let poolgetter = i => pool[i];
+    let poolgetter = (i) => pool[i];
 
     yield indices.slice(0, x).map(poolgetter);
 

@@ -19,7 +19,7 @@ import {
 } from '../builtins';
 import { first } from '../custom';
 
-const isEven = n => n % 2 === 0;
+const isEven = (n) => n % 2 === 0;
 
 describe('all', () => {
     it('all of empty list is true', () => {
@@ -176,13 +176,13 @@ describe('iter', () => {
 
 describe('map', () => {
     it('map on empty iterable', () => {
-        expect(map([], x => x)).toEqual([]);
+        expect(map([], (x) => x)).toEqual([]);
     });
 
     it('imap works like Array.map, but lazy', () => {
-        expect(map([1, 2, 3], x => x)).toEqual([1, 2, 3]);
-        expect(map([1, 2, 3], x => 2 * x)).toEqual([2, 4, 6]);
-        expect(map([1, 2, 3], x => x.toString())).toEqual(['1', '2', '3']);
+        expect(map([1, 2, 3], (x) => x)).toEqual([1, 2, 3]);
+        expect(map([1, 2, 3], (x) => 2 * x)).toEqual([2, 4, 6]);
+        expect(map([1, 2, 3], (x) => x.toString())).toEqual(['1', '2', '3']);
     });
 });
 
@@ -205,7 +205,7 @@ describe('max', () => {
     });
 
     it('max of multi-item array with key function', () => {
-        expect(max([{ n: 2 }, { n: 3 }, { n: 1 }], o => o.n)).toEqual({ n: 3 });
+        expect(max([{ n: 2 }, { n: 3 }, { n: 1 }], (o) => o.n)).toEqual({ n: 3 });
     });
 });
 
@@ -228,7 +228,7 @@ describe('min', () => {
     });
 
     it('min of multi-item array with key function', () => {
-        expect(min([{ n: 2 }, { n: 3 }, { n: 1 }], o => o.n)).toEqual({ n: 1 });
+        expect(min([{ n: 2 }, { n: 3 }, { n: 1 }], (o) => o.n)).toEqual({ n: 1 });
     });
 });
 

@@ -229,7 +229,7 @@ export function take<T>(n: number, iterable: Iterable<T>): Array<T> {
  *     ['A', 'b', 'C']
  *
  */
-export function* uniqueEverseen<T>(iterable: Iterable<T>, keyFn: T => Primitive = primitiveIdentity): Iterable<T> {
+export function* uniqueEverseen<T>(iterable: Iterable<T>, keyFn: (T) => Primitive = primitiveIdentity): Iterable<T> {
     let seen = new Set();
     for (let item of iterable) {
         let key = keyFn(item);
@@ -249,7 +249,7 @@ export function* uniqueEverseen<T>(iterable: Iterable<T>, keyFn: T => Primitive 
  *     ['A', 'b', 'C', 'A', 'B']
  *
  */
-export function* uniqueJustseen<T>(iterable: Iterable<T>, keyFn: T => Primitive = primitiveIdentity): Iterable<T> {
+export function* uniqueJustseen<T>(iterable: Iterable<T>, keyFn: (T) => Primitive = primitiveIdentity): Iterable<T> {
     let last = undefined;
     for (let item of iterable) {
         let key = keyFn(item);
