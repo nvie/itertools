@@ -120,8 +120,8 @@ export function* groupby<T>(
 
             const nextVal = it.next();
             if (nextVal.done) return;
-            currentValue = nextVal.value; // eslint-disable-line require-atomic-updates
-            currentKey = keyFn(currentValue); // eslint-disable-line require-atomic-updates
+            currentValue = nextVal.value;
+            currentKey = keyFn(currentValue);
         }
     };
 
