@@ -141,11 +141,11 @@ describe('groupby', () => {
         // Flow does not like that I use next on an iterable (it is actually
         // a generator but the Generator type is awful.
 
-        // $FlowFixMe
+        // $FlowFixMe[prop-missing]
         const [, v1] = it.next().value;
-        // $FlowFixMe
+        // $FlowFixMe[prop-missing]
         const [, v2] = it.next().value;
-        // $FlowFixMe
+        // $FlowFixMe[prop-missing]
         const [, v3] = it.next().value;
 
         expect([...v1]).toEqual([]);

@@ -111,7 +111,7 @@ export function filter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Array
 export function iter<T>(iterable: Iterable<T>): Iterator<T> {
     // TODO: Not sure why Flow choked on this expression below, but at least we lock down the
     // type transformation in the function signature this way.
-    // $FlowFixMe
+    // $FlowFixMe[incompatible-use]
     return iterable[Symbol.iterator]();
 }
 

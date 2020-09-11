@@ -110,7 +110,7 @@ export function* groupby<T>(
     const it = iter(iterable);
 
     let currentValue;
-    // $FlowFixMe - deliberate use of the SENTINEL symbol
+    // $FlowFixMe[incompatible-type] - deliberate use of the SENTINEL symbol
     let currentKey: Primitive = SENTINEL;
     let targetKey = currentKey;
 
@@ -129,7 +129,7 @@ export function* groupby<T>(
         while (currentKey === targetKey) {
             const nextVal = it.next();
             if (nextVal.done) {
-                // $FlowFixMe - deliberate use of the SENTINEL symbol
+                // $FlowFixMe[incompatible-type] - deliberate use of the SENTINEL symbol
                 currentKey = SENTINEL;
                 return;
             }
@@ -309,7 +309,7 @@ export function* izipMany<T>(...iters: Array<Iterable<T>>): Iterable<Array<T>> {
     for (;;) {
         const heads: Array<IteratorResult<T, void>> = iterables.map((xs) => xs.next());
         if (all(heads, (h) => !h.done)) {
-            // $FlowFixMe
+            // $FlowFixMe[unclear-type]
             yield heads.map((h) => ((h.value: any): T));
         } else {
             // One of the iterables exhausted
