@@ -1,3 +1,8 @@
+v1.6.1
+------
+* Include an error code with every FlowFixMe suppression
+  (Flow 0.132.x compatibility)
+
 v1.6.0
 ------
 * New itertool: `heads()`
