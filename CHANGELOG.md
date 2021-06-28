@@ -1,3 +1,9 @@
+v1.7.0
+------
+* TypeScript support!
+* Declare official support for Node 16.x
+* Drop support for Node 13.x (unstable release)
+
 v1.6.1
 ------
 * Include an error code with every FlowFixMe suppression
