@@ -21,11 +21,11 @@ export function keyToCmp<T>(keyFn: (T) => Primitive): CmpFn<T> {
     };
 }
 
-export function identityPredicate<T>(x: T): boolean {
+export function identityPredicate(x: mixed): boolean {
     return !!x;
 }
 
-export function numberIdentity<T>(x: T): number {
+export function numberIdentity(x: mixed): number {
     /* istanbul ignore if */
     if (typeof x !== 'number') {
         throw new Error('Inputs must be numbers');
@@ -33,7 +33,7 @@ export function numberIdentity<T>(x: T): number {
     return x;
 }
 
-export function primitiveIdentity<T>(x: T): Primitive {
+export function primitiveIdentity(x: mixed): Primitive {
     /* istanbul ignore if */
     if (typeof x !== 'string' && typeof x !== 'number' && typeof x !== 'boolean') {
         throw new Error('Please provide a key function that can establish object identity');
