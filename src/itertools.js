@@ -250,10 +250,10 @@ export const izip = izip2;
  * the iterables are of uneven length, missing values are filled-in with
  * fillvalue.  Iteration continues until the longest iterable is exhausted.
  */
-export function* izipLongest2<T1, T2, D>(
+export function* izipLongest2<T1, T2, D = void>(
     xs: Iterable<T1>,
     ys: Iterable<T2>,
-    filler: Maybe<D> = undefined
+    filler: D
 ): Iterable<[T1 | D, T2 | D]> {
     const ixs = iter(xs);
     const iys = iter(ys);
@@ -272,11 +272,11 @@ export function* izipLongest2<T1, T2, D>(
 /**
  * See izipLongest2, but for three.
  */
-export function* izipLongest3<T1, T2, T3, D>(
+export function* izipLongest3<T1, T2, T3, D = void>(
     xs: Iterable<T1>,
     ys: Iterable<T2>,
     zs: Iterable<T3>,
-    filler: Maybe<D> = undefined
+    filler: D
 ): Iterable<[T1 | D, T2 | D, T3 | D]> {
     const ixs = iter(xs);
     const iys = iter(ys);
@@ -402,19 +402,15 @@ export function* takewhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): I
     }
 }
 
-export function zipLongest2<T1, T2, D>(
-    xs: Iterable<T1>,
-    ys: Iterable<T2>,
-    filler: Maybe<D> = undefined
-): Array<[T1 | D, T2 | D]> {
+export function zipLongest2<T1, T2, D = void>(xs: Iterable<T1>, ys: Iterable<T2>, filler: D): Array<[T1 | D, T2 | D]> {
     return Array.from(izipLongest2(xs, ys, filler));
 }
 
-export function zipLongest3<T1, T2, T3, D>(
+export function zipLongest3<T1, T2, T3, D = void>(
     xs: Iterable<T1>,
     ys: Iterable<T2>,
     zs: Iterable<T3>,
-    filler: Maybe<D> = undefined
+    filler: D
 ): Array<[T1 | D, T2 | D, T3 | D]> {
     return Array.from(izipLongest3(xs, ys, zs, filler));
 }

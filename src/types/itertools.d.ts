@@ -13,32 +13,40 @@ export function islice<T>(iterable: Iterable<T>, start: number, stop?: number, s
 export function izip<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): Iterable<[T1, T2]>;
 export function izip2<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): Iterable<[T1, T2]>;
 export function izip3<T1, T2, T3>(xs: Iterable<T1>, ys: Iterable<T2>, zs: Iterable<T3>): Iterable<[T1, T2, T3]>;
-export function izipLongest<T1, T2, D>(
+export function izipLongest<T1, T2, D = undefined>(
     xs: Iterable<T1>,
     ys: Iterable<T2>,
-    filler?: Maybe<D>
+    filler: D
 ): Iterable<[T1 | D, T2 | D]>;
-export function izipLongest2<T1, T2, D>(
+export function izipLongest2<T1, T2, D = undefined>(
     xs: Iterable<T1>,
     ys: Iterable<T2>,
-    filler?: Maybe<D>
+    filler: D
 ): Iterable<[T1 | D, T2 | D]>;
-export function izipLongest3<T1, T2, T3, D>(
+export function izipLongest3<T1, T2, T3, D = undefined>(
     xs: Iterable<T1>,
     ys: Iterable<T2>,
     zs: Iterable<T3>,
-    filler?: Maybe<D>
+    filler: D
 ): Iterable<[T1 | D, T2 | D, T3 | D]>;
 export function izipMany<T>(...iters: Array<Iterable<T>>): Iterable<T[]>;
 export function permutations<T>(iterable: Iterable<T>, r: Maybe<number>): Iterable<T[]>;
 export function repeat<T>(thing: T, times?: number): Iterable<T>;
 export function takewhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T>;
-export function zipLongest<T1, T2, D>(xs: Iterable<T1>, ys: Iterable<T2>, filler?: Maybe<D>): Array<[T1 | D, T2 | D]>;
-export function zipLongest2<T1, T2, D>(xs: Iterable<T1>, ys: Iterable<T2>, filler?: Maybe<D>): Array<[T1 | D, T2 | D]>;
-export function zipLongest3<T1, T2, T3, D>(
+export function zipLongest<T1, T2, D = undefined>(
+    xs: Iterable<T1>,
+    ys: Iterable<T2>,
+    filler: D
+): Array<[T1 | D, T2 | D]>;
+export function zipLongest2<T1, T2, D = undefined>(
+    xs: Iterable<T1>,
+    ys: Iterable<T2>,
+    filler: D
+): Array<[T1 | D, T2 | D]>;
+export function zipLongest3<T1, T2, T3, D = undefined>(
     xs: Iterable<T1>,
     ys: Iterable<T2>,
     zs: Iterable<T3>,
-    filler?: Maybe<D>
+    filler: D
 ): Array<[T1 | D, T2 | D, T3 | D]>;
 export function zipMany<T>(...iters: Array<Iterable<T>>): T[][];
