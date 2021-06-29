@@ -1,6 +1,6 @@
 {
     "name": "itertools",
-    "version": "1.6.1",
+    "version": "1.7.0",
     "description": "A JavaScript port of Python's awesome itertools standard library",
     "license": "MIT",
     "repository": {
@@ -27,8 +27,8 @@
         "prepublish": "in-publish && yarn run actually-prepublish || not-in-publish",
         "test": "yarn run test:flow && yarn run test:typescript && yarn run test:jest && yarn run check",
         "test:flow": "$(yarn bin)/flow check",
-        "test:typescript": "dtslint --localTs node_modules/typescript/lib src/types",
-        "test:jest": "$(yarn bin)/jest --coverage"
+        "test:jest": "$(yarn bin)/jest --coverage",
+        "test:typescript": "dtslint --localTs node_modules/typescript/lib src/types"
     },
     "files": [
         "dist/"
