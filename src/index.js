@@ -29,6 +29,7 @@ export {
     icompress,
     ifilter,
     imap,
+    islice,
     izip,
     izip2,
     izip3,
