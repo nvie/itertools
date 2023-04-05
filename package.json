@@ -63,7 +63,8 @@
         "jest-cli": "^27.2.4",
         "prettier": "^2.8.7",
         "prettier-plugin-package": "^1.3.0",
-        "rimraf": "^3.0.2"
+        "rimraf": "^3.0.2",
+        "typescript": "^4.1.6"
     },
     "types": "./dist/types/index.d.ts",
     "githubUrl": "https://github.com/nvie/itertools.js",
