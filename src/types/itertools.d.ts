@@ -5,7 +5,10 @@ export function count(start?: number, step?: number): Iterable<number>;
 export function compress<T>(data: Iterable<T>, selectors: Iterable<boolean>): T[];
 export function cycle<T>(iterable: Iterable<T>): Iterable<T>;
 export function dropwhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T>;
-export function groupby<T, U extends Primitive>(iterable: Iterable<T>, keyFn?: (item: T) => U): Iterable<[U, Iterable<T>]>;
+export function groupby<T, U extends Primitive>(
+    iterable: Iterable<T>,
+    keyFn?: (item: T) => U
+): Iterable<[U, Iterable<T>]>;
 export function icompress<T>(data: Iterable<T>, selectors: Iterable<boolean>): Iterable<T>;
 export function ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T>;
 export function imap<T, V>(iterable: Iterable<T>, mapper: (item: T) => V): Iterable<V>;
