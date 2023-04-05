@@ -27,7 +27,7 @@ if git is-dirty; then
     exit 4
 fi
 
-yarn run test
+npm run test
 ./bin/build.sh
 
 # Read the version from the package.json file, we don't need to re-enter it
@@ -46,7 +46,7 @@ if git is-dirty; then
     git push --tags
 fi
 
-cd "$DIST" && yarn publish --new-version "$VERSION" "$@"
+cd "$DIST" && npm publish --new-version "$VERSION" "$@"
 
 # Open browser tab to create new release
 open "${GITHUB_URL}/blob/v${VERSION}/CHANGELOG.md"
