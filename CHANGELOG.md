@@ -1,3 +1,7 @@
+## vNEXT
+
+-   Drop support for Node 10.x
+
 ## v1.7.1
 
 -   Add missing re-export of `islice` at the top level
