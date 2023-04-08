@@ -2,7 +2,7 @@
     "compilerOptions": {
         "noEmit": true,
         "strict": true,
-        "target": "es5",
+        "target": "es2015",
         "lib": ["es6"],
 
         /* Visit https://aka.ms/tsconfig.json to read more about this file */
