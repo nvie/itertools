@@ -268,12 +268,12 @@ describe('permutations', () => {
 describe('repeat', () => {
     it('repeat indefinitely #1', () => {
         // practically limit it to something (in this case 99)
-        let items = take(99, repeat(123));
+        const items = take(99, repeat(123));
         expect(all(items, (n) => n === 123)).toEqual(true);
     });
 
     it('repeat indefinitely #2', () => {
-        let items = take(99, repeat('foo'));
+        const items = take(99, repeat('foo'));
         expect(all(items, (n) => n === 'foo')).toEqual(true);
     });
 

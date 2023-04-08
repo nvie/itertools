@@ -54,7 +54,7 @@ export function chain<T>(...iterables: Iterable<T>[]): Iterable<T> {
  * (default 0), incrementing by `step`.  To decrement, use a negative step
  * number.
  */
-export function* count(start: number = 0, step: number = 1): Iterable<number> {
+export function* count(start = 0, step = 1): Iterable<number> {
     let n = start;
     for (;;) {
         yield n;
@@ -153,7 +153,7 @@ export function* groupby<T, K extends Primitive>(
  * Stops when either the data or selectors iterables has been exhausted.
  */
 export function* icompress<T>(data: Iterable<T>, selectors: Iterable<boolean>): Iterable<T> {
-    for (let [d, s] of izip(data, selectors)) {
+    for (const [d, s] of izip(data, selectors)) {
         if (s) {
             yield d;
         }
@@ -165,7 +165,7 @@ export function* icompress<T>(data: Iterable<T>, selectors: Iterable<boolean>): 
  * for which the predicate is true.
  */
 export function* ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> {
-    for (let value of iterable) {
+    for (const value of iterable) {
         if (predicate(value)) {
             yield value;
         }
@@ -177,7 +177,7 @@ export function* ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Ite
  * from each of the iterables.
  */
 export function* imap<T, V>(iterable: Iterable<T>, mapper: (item: T) => V): Iterable<V> {
-    for (let value of iterable) {
+    for (const value of iterable) {
         yield mapper(value);
     }
 }
@@ -197,7 +197,7 @@ export function* islice<T>(
     iterable: Iterable<T>,
     stopOrStart: number,
     possiblyStop?: number | null,
-    step: number = 1
+    step = 1
 ): Iterable<T> {
     let start, stop;
     if (possiblyStop !== undefined) {
@@ -345,23 +345,23 @@ export function* izipMany<T>(...iters: Iterable<T>[]): Iterable<T[]> {
  * permutation.
  */
 export function* permutations<T>(iterable: Iterable<T>, r?: number): Iterable<T[]> {
-    let pool = Array.from(iterable);
-    let n = pool.length;
-    let x = r === undefined ? n : r;
+    const pool = Array.from(iterable);
+    const n = pool.length;
+    const x = r === undefined ? n : r;
 
     if (x > n) {
         return;
     }
 
     let indices: number[] = Array.from(range(n));
-    let cycles: number[] = Array.from(range(n, n - x, -1));
-    let poolgetter = (i: number) => pool[i];
+    const cycles: number[] = Array.from(range(n, n - x, -1));
+    const poolgetter = (i: number) => pool[i];
 
     yield indices.slice(0, x).map(poolgetter);
 
     while (n > 0) {
-        let cleanExit: boolean = true;
-        for (let i of range(x - 1, -1, -1)) {
+        let cleanExit = true;
+        for (const i of range(x - 1, -1, -1)) {
             cycles[i] -= 1;
             if (cycles[i] === 0) {
                 indices = indices
@@ -370,9 +370,9 @@ export function* permutations<T>(iterable: Iterable<T>, r?: number): Iterable<T[
                     .concat(indices.slice(i, i + 1));
                 cycles[i] = n - i;
             } else {
-                let j: number = cycles[i];
+                const j: number = cycles[i];
 
-                let [p, q] = [indices[indices.length - j], indices[i]];
+                const [p, q] = [indices[indices.length - j], indices[i]];
                 indices[i] = p;
                 indices[indices.length - j] = q;
                 yield indices.slice(0, x).map(poolgetter);

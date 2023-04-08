@@ -293,7 +293,7 @@ describe('sorted', () => {
     });
 
     it('sorted does not modify input', () => {
-        let values = [4, 0, -3, 7, 1];
+        const values = [4, 0, -3, 7, 1];
         expect(sorted(values)).toEqual([-3, 0, 1, 4, 7]);
         expect(values).toEqual([4, 0, -3, 7, 1]);
     });

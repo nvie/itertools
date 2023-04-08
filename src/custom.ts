@@ -13,7 +13,7 @@ function isDefined<T>(x: T): boolean {
  *     [1, 2, 3]
  */
 export function* icompact<T>(iterable: Iterable<T | null | undefined>): Iterable<T> {
-    for (let item of iterable) {
+    for (const item of iterable) {
         if (item != null) {
             yield item;
         }
@@ -35,7 +35,7 @@ export function compact<T>(iterable: Iterable<T | null | undefined>): T[] {
  *
  */
 export function compactObject<K extends string, V>(obj: Record<K, V | null | undefined>): Record<K, V> {
-    let result = {} as Record<K, V>;
+    const result = {} as Record<K, V>;
     for (const [key, value_] of Object.entries(obj)) {
         const value = value_ as V | null | undefined;
         if (value != null) {
@@ -52,7 +52,7 @@ export function compactObject<K extends string, V>(obj: Record<K, V | null | und
  */
 export function find<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): T | undefined {
     const fn = keyFn || isDefined;
-    for (let value of iterable) {
+    for (const value of iterable) {
         if (fn(value)) {
             return value;
         }

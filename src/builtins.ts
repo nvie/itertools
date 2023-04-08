@@ -22,7 +22,7 @@ import { identityPredicate, keyToCmp, numberIdentity, primitiveIdentity } from '
  *
  */
 export function all<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
-    for (let item of iterable) {
+    for (const item of iterable) {
         if (!keyFn(item)) {
             return false;
         }
@@ -49,7 +49,7 @@ export function all<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPred
  *
  */
 export function any<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
-    for (let item of iterable) {
+    for (const item of iterable) {
         if (keyFn(item)) {
             return true;
         }
@@ -86,9 +86,9 @@ export function contains<T>(haystack: Iterable<T>, needle: T): boolean {
  *     console.log([...enumerate(['hello', 'world'])]);
  *     // [0, 'hello'], [1, 'world']]
  */
-export function* enumerate<T>(iterable: Iterable<T>, start: number = 0): Iterable<[number, T]> {
+export function* enumerate<T>(iterable: Iterable<T>, start = 0): Iterable<[number, T]> {
     let index: number = start;
-    for (let value of iterable) {
+    for (const value of iterable) {
         yield [index++, value];
     }
 }
@@ -270,7 +270,7 @@ export function reduce_<T>(iterable: Iterable<T>, reducer: (agg: T, item: T, ind
 export function sorted<T>(
     iterable: Iterable<T>,
     keyFn: (item: T) => Primitive = primitiveIdentity,
-    reverse: boolean = false
+    reverse = false
 ): T[] {
     const result = Array.from(iterable);
     result.sort(keyToCmp(keyFn)); // sort in-place
