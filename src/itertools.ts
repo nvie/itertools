@@ -19,8 +19,7 @@ function slicePredicate(start: number, stop: number | null, step: number) {
 
     // If stop is not provided (= undefined), then interpret the start value as the stop value
     let _start = start,
-        _stop = stop,
-        _step = step;
+        _stop = stop;
     if (_stop === undefined) {
         [_start, _stop] = [0, _start];
     }
@@ -32,8 +31,8 @@ function slicePredicate(start: number, stop: number | null, step: number) {
         pred = composeAnd(pred, (n: number) => n < definedStop);
     }
 
-    if (_step > 1) {
-        pred = composeAnd(pred, (n: number) => (n - _start) % _step === 0);
+    if (step > 1) {
+        pred = composeAnd(pred, (n: number) => (n - _start) % step === 0);
     }
 
     return pred;
@@ -323,7 +322,7 @@ export function* izipMany<T>(...iters: Iterable<T>[]): Iterable<T[]> {
     for (;;) {
         const heads: Array<IteratorResult<T, undefined>> = iterables.map((xs) => xs.next());
         if (all(heads, (h) => !h.done)) {
-            yield heads.map((h) => h.value!);
+            yield heads.map((h) => h.value as T);
         } else {
             // One of the iterables exhausted
             return;
@@ -397,7 +396,6 @@ export function* repeat<T>(thing: T, times?: number): Iterable<T> {
             yield thing;
         }
     } else {
-        // eslint-disable-next-line no-unused-vars
         for (const _ of range(times)) {
             yield thing;
         }
