@@ -1,5 +1,3 @@
-// @flow strict
-
 import { imap } from './itertools';
 import { flatten } from './more-itertools';
 import type { Maybe, Predicate } from './types';

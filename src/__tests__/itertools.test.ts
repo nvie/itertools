@@ -1,5 +1,3 @@
-// @flow strict
-
 import { all, range } from '../builtins';
 import {
     chain,

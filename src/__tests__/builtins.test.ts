@@ -1,5 +1,3 @@
-// @flow strict
-
 import {
     all,
     any,

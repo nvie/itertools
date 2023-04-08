@@ -1,5 +1,3 @@
-// @flow strict
-
 import { iter, map } from './builtins';
 import { izip, repeat } from './itertools';
 import type { Predicate, Primitive } from './types';

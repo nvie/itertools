@@ -1,5 +1,3 @@
-// @flow strict
-
 import { all, enumerate, iter, range } from './builtins';
 import { flatten } from './more-itertools';
 import type { Maybe, Predicate, Primitive } from './types';

@@ -1,5 +1,3 @@
-// @flow strict
-
 import { first } from './custom';
 import { count, ifilter, imap, izip, izip3, takewhile } from './itertools';
 import type { Maybe, Predicate, Primitive } from './types';
