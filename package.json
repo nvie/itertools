@@ -17,10 +17,10 @@
         "actually-prepublish": "echo \"\\n\\nPlease run \\`bin/publish.sh <options>\\` instead.\\n\\n\" && exit 2",
         "build": "./bin/build.sh",
         "lint": "npm run lint:eslint && npm run lint:prettier",
-        "lint:eslint": "npx eslint --report-unused-disable-directives src",
-        "lint:prettier": "npx prettier --list-different 'src/**/*.js'",
+        "lint:eslint": "npx eslint --report-unused-disable-directives src/",
+        "lint:prettier": "npx prettier --list-different src/",
         "clean": "rimraf dist",
-        "format": "npx prettier --write 'src/**/*.js'",
+        "format": "npx prettier --write src/",
         "prepublish": "in-publish && npm run actually-prepublish || not-in-publish",
         "test": "vitest run --coverage"
     },
