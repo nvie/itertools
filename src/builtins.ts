@@ -204,8 +204,9 @@ export function range(a: number, ...rest: number[]): Iterable<number> {
             return _range(args[0], args[1], 1);
         case 3:
             return _range(args[0], args[1], args[2]);
-        /* istanbul ignore next */
+
         default:
+            /* c8 ignore next */
             throw new Error('invalid number of arguments');
     }
 }

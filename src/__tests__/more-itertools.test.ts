@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { range } from '../builtins';
 import { first } from '../custom';
 import {
