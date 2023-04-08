@@ -9,7 +9,14 @@ function composeAnd(f1: (v1: number) => boolean, f2: (v2: number) => boolean): (
     return (n: number) => f1(n) && f2(n);
 }
 
-function slicePredicate(start: number, stop?: number, step: number = 1) {
+function slicePredicate(start: number, stop: number | null, step: number) {
+    /* istanbul ignore if */
+    if (start < 0) throw new Error('start cannot be negative');
+    /* istanbul ignore if */
+    if (stop !== null && stop < 0) throw new Error('stop cannot be negative');
+    /* istanbul ignore if */
+    if (step < 0) throw new Error('step cannot be negative');
+
     // If stop is not provided (= undefined), then interpret the start value as the stop value
     let _start = start,
         _stop = stop,
@@ -21,8 +28,8 @@ function slicePredicate(start: number, stop?: number, step: number = 1) {
     let pred = (n: number) => n >= _start;
 
     if (_stop !== null) {
-        const stopNotNull = _stop;
-        pred = composeAnd(pred, (n: number) => n < stopNotNull);
+        const definedStop = _stop;
+        pred = composeAnd(pred, (n: number) => n < definedStop);
     }
 
     if (_step > 1) {
@@ -184,15 +191,26 @@ export function* imap<T, V>(iterable: Iterable<T>, mapper: (item: T) => V): Iter
  * otherwise, the iterable will be fully exhausted.  `islice()` does not
  * support negative values for `start`, `stop`, or `step`.
  */
-export function* islice<T>(iterable: Iterable<T>, start: number, stop?: number | null, step: number = 1): Iterable<T> {
-    /* istanbul ignore if */
-    if (start < 0) throw new Error('start cannot be negative');
-    /* istanbul ignore if */
-    if (typeof stop === 'number' && stop < 0) throw new Error('stop cannot be negative');
-    /* istanbul ignore if */
-    if (step < 0) throw new Error('step cannot be negative');
+export function islice<T>(iterable: Iterable<T>, stop: number): Iterable<T>;
+export function islice<T>(iterable: Iterable<T>, start: number, stop?: number | null, step?: number): Iterable<T>;
+export function* islice<T>(
+    iterable: Iterable<T>,
+    stopOrStart: number,
+    possiblyStop?: number | null,
+    step: number = 1
+): Iterable<T> {
+    let start, stop;
+    if (possiblyStop !== undefined) {
+        // islice(iterable, start, stop[, step])
+        start = stopOrStart;
+        stop = possiblyStop;
+    } else {
+        // islice(iterable, stop)
+        start = 0;
+        stop = stopOrStart;
+    }
 
-    const pred = slicePredicate(start, stop ?? undefined, step);
+    const pred = slicePredicate(start, stop, step);
     for (const [i, value] of enumerate(iterable)) {
         if (pred(i)) {
             yield value;
