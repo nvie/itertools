@@ -1,7 +1,8 @@
 ## vNEXT
 
 -   Rewrite the source code in TypeScript
--   Drop support for Node 10.x
+-   Support only Node >= 12.x
+-   Support only TypeScript versions >= 4.3
 
 ## v1.7.1
 

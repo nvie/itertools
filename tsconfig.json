@@ -4,7 +4,6 @@
         "strict": true,
         "target": "es5",
         "lib": ["es6"],
-        "types": [],
 
         /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
