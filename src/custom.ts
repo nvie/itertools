@@ -1,22 +1,20 @@
 import { imap } from './itertools';
 import { flatten } from './more-itertools';
-import type { Maybe, Predicate } from './types';
+import type { Predicate } from './types';
 
 function isDefined<T>(x: T): boolean {
     return x !== undefined;
 }
 
 /**
- * Returns an iterable, filtering out any `undefined` values from the input
- * iterable.  This function is useful to convert a list of `Maybe<T>`'s to
- * a list of `T`'s, discarding all the undefined values:
+ * Returns an iterable, filtering out any `undefined` values from the iterable.
  *
  *     >>> compact([1, 2, undefined, 3])
  *     [1, 2, 3]
  */
-export function* icompact<T>(iterable: Iterable<T>): Iterable<$NonMaybeType<T>> {
+export function* icompact<T>(iterable: Iterable<T | null | undefined>): Iterable<T> {
     for (let item of iterable) {
-        if (typeof item !== 'undefined') {
+        if (item != null) {
             yield item;
         }
     }
@@ -25,7 +23,7 @@ export function* icompact<T>(iterable: Iterable<T>): Iterable<$NonMaybeType<T>> 
 /**
  * See icompact().
  */
-export function compact<T>(iterable: Iterable<T>): Array<$NonMaybeType<T>> {
+export function compact<T>(iterable: Iterable<T | null | undefined>): T[] {
     return Array.from(icompact(iterable));
 }
 
@@ -36,11 +34,12 @@ export function compact<T>(iterable: Iterable<T>): Array<$NonMaybeType<T>> {
  *     { a: 1, c: 0 }
  *
  */
-export function compactObject<O: { +[key: string]: mixed }>(obj: O): $ObjMap<O, <T>(T) => $NonMaybeType<T>> {
-    let result = {};
-    for (const [key, value] of Object.entries(obj)) {
-        if (typeof value !== 'undefined') {
-            result[key] = value;
+export function compactObject<K extends string, V>(obj: Record<K, V | null | undefined>): Record<K, V> {
+    let result = {} as Record<K, V>;
+    for (const [key, value_] of Object.entries(obj)) {
+        const value = value_ as V | null | undefined;
+        if (value != null) {
+            result[key as K] = value;
         }
     }
     return result;
@@ -51,7 +50,7 @@ export function compactObject<O: { +[key: string]: mixed }>(obj: O): $ObjMap<O, 
  * any.  If no such item exists, `undefined` is returned.  The default
  * predicate is any defined value.
  */
-export function first<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): Maybe<T> {
+export function find<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): T | undefined {
     const fn = keyFn || isDefined;
     for (let value of iterable) {
         if (fn(value)) {
@@ -60,6 +59,13 @@ export function first<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): Maybe<T> 
     }
     return undefined;
 }
+
+/**
+ * Returns the first item in the iterable for which the predicate holds, if
+ * any.  If no such item exists, `undefined` is returned.  The default
+ * predicate is any defined value.
+ */
+export const first = find;
 
 /**
  * Returns 0 or more values for every value in the given iterable.
@@ -75,6 +81,6 @@ export function first<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): Maybe<T> 
  *     [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]  // note: no 0
  *
  */
-export function flatmap<T, S>(iterable: Iterable<T>, mapper: (T) => Iterable<S>): Iterable<S> {
+export function flatmap<T, S>(iterable: Iterable<T>, mapper: (item: T) => Iterable<S>): Iterable<S> {
     return flatten(imap(iterable, mapper));
 }

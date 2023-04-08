@@ -17,7 +17,7 @@ import {
 } from '../builtins';
 import { first } from '../custom';
 
-const isEven = (n) => n % 2 === 0;
+const isEven = (n: number) => n % 2 === 0;
 
 describe('all', () => {
     it('all of empty list is true', () => {

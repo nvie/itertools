@@ -1,4 +1,4 @@
-import type { Predicate, Primitive } from './types';
+export type { Predicate, Primitive } from './types';
 
 export {
     all,
@@ -51,5 +51,3 @@ export {
     uniqueJustseen,
 } from './more-itertools';
 export { compact, compactObject, first, flatmap, icompact } from './custom';
-
-export type { Predicate, Primitive };

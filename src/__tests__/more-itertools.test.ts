@@ -13,8 +13,8 @@ import {
     uniqueJustseen,
 } from '../more-itertools';
 
-const isEven = (x) => x % 2 === 0;
-const isPositive = (x) => x >= 0;
+const isEven = (x: number) => x % 2 === 0;
+const isPositive = (x: number) => x >= 0;
 
 describe('chunked', () => {
     it('does nothing for empty array', () => {

@@ -15,7 +15,7 @@ import { primitiveIdentity } from './utils';
  *     [...chunked([1, 2, 3, 4, 5, 6, 7, 8], 3)]
  *     // [[1, 2, 3], [4, 5, 6], [7, 8]]
  */
-export function* chunked<T>(iterable: Iterable<T>, size: number): Iterable<Array<T>> {
+export function* chunked<T>(iterable: Iterable<T>, size: number): Iterable<T[]> {
     const it = iter(iterable);
     let r1 = it.next();
     if (r1.done) {
@@ -61,7 +61,7 @@ export function* flatten<T>(iterableOfIterables: Iterable<Iterable<T>>): Iterabl
  *     [1, -1, 2, -1, 3, -1, 4]
  *
  */
-export function intersperse<T>(value: T, iterable: Iterable<T>): Iterable<T> {
+export function intersperse<T, V>(value: V, iterable: Iterable<T>): Iterable<T | V> {
     const stream = flatten(izip(repeat(value), iterable));
     take(1, stream); // eat away and discard the first value from the output
     return stream;
@@ -96,12 +96,12 @@ export function* itake<T>(n: number, iterable: Iterable<T>): Iterable<T> {
  */
 export function* pairwise<T>(iterable: Iterable<T>): Iterable<[T, T]> {
     const it = iter(iterable);
-    let r1 = it.next();
-    if (r1.done) {
+    let first = it.next();
+    if (first.done) {
         return;
     }
 
-    r1 = r1.value;
+    let r1: T = first.value;
     for (const r2 of it) {
         yield [r1, r2];
         r1 = r2;
@@ -122,7 +122,7 @@ export function* pairwise<T>(iterable: Iterable<T>): Iterable<[T, T]> {
  *     [0, 2, 4, 6, 8]
  *
  */
-export function partition<T>(iterable: Iterable<T>, predicate: Predicate<T>): [Array<T>, Array<T>] {
+export function partition<T>(iterable: Iterable<T>, predicate: Predicate<T>): [T[], T[]] {
     let good = [];
     let bad = [];
 
@@ -144,7 +144,7 @@ export function partition<T>(iterable: Iterable<T>, predicate: Predicate<T>): [A
  *     >>> [...roundrobin([1, 2, 3], [4], [5, 6, 7, 8])]
  *     [1, 4, 5, 2, 6, 3, 7, 8]
  */
-export function* roundrobin<T>(...iters: Array<Iterable<T>>): Iterable<T> {
+export function* roundrobin<T>(...iters: Iterable<T>[]): Iterable<T> {
     // We'll only keep lazy versions of the input iterables in here that we'll
     // slowly going to exhaust.  Once an iterable is exhausted, it will be
     // removed from this list.  Once the entire list is empty, this algorithm
@@ -181,7 +181,7 @@ export function* roundrobin<T>(...iters: Array<Iterable<T>>): Iterable<T> {
  * This is also different from `zipLongest()`, since the number of items in
  * each round can decrease over time, rather than being filled with a filler.
  */
-export function* heads<T>(...iters: Array<Iterable<T>>): Iterable<Array<T>> {
+export function* heads<T>(...iters: Array<Iterable<T>>): Iterable<T[]> {
     // We'll only keep lazy versions of the input iterables in here that we'll
     // slowly going to exhaust.  Once an iterable is exhausted, it will be
     // removed from this list.  Once the entire list is empty, this algorithm
@@ -214,7 +214,7 @@ export function* heads<T>(...iters: Array<Iterable<T>>): Iterable<Array<T>> {
 /**
  * Non-lazy version of itake().
  */
-export function take<T>(n: number, iterable: Iterable<T>): Array<T> {
+export function take<T>(n: number, iterable: Iterable<T>): T[] {
     return Array.from(itake(n, iterable));
 }
 
@@ -227,7 +227,10 @@ export function take<T>(n: number, iterable: Iterable<T>): Array<T> {
  *     ['A', 'b', 'C']
  *
  */
-export function* uniqueEverseen<T>(iterable: Iterable<T>, keyFn: (T) => Primitive = primitiveIdentity): Iterable<T> {
+export function* uniqueEverseen<T>(
+    iterable: Iterable<T>,
+    keyFn: (item: T) => Primitive = primitiveIdentity
+): Iterable<T> {
     let seen = new Set();
     for (let item of iterable) {
         let key = keyFn(item);
@@ -247,7 +250,10 @@ export function* uniqueEverseen<T>(iterable: Iterable<T>, keyFn: (T) => Primitiv
  *     ['A', 'b', 'C', 'A', 'B']
  *
  */
-export function* uniqueJustseen<T>(iterable: Iterable<T>, keyFn: (T) => Primitive = primitiveIdentity): Iterable<T> {
+export function* uniqueJustseen<T>(
+    iterable: Iterable<T>,
+    keyFn: (item: T) => Primitive = primitiveIdentity
+): Iterable<T> {
     let last = undefined;
     for (let item of iterable) {
         let key = keyFn(item);

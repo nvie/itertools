@@ -1,5 +1,6 @@
 ## vNEXT
 
+-   Rewrite the source code in TypeScript
 -   Drop support for Node 10.x
 
 ## v1.7.1
