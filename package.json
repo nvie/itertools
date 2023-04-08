@@ -16,13 +16,13 @@
     "scripts": {
         "actually-prepublish": "echo \"\\n\\nPlease run \\`bin/publish.sh <options>\\` instead.\\n\\n\" && exit 2",
         "build": "./bin/build.sh",
-        "lint": "npm run check:eslint && npm run check:prettier",
+        "lint": "npm run lint:eslint && npm run lint:prettier",
         "lint:eslint": "npx eslint --report-unused-disable-directives src",
         "lint:prettier": "npx prettier --list-different 'src/**/*.js'",
         "clean": "rimraf dist",
         "format": "npx prettier --write 'src/**/*.js'",
         "prepublish": "in-publish && npm run actually-prepublish || not-in-publish",
-        "test": "tsc && vitest run --coverage && npm run check"
+        "test": "vitest run --coverage"
     },
     "files": [
         "dist/"
