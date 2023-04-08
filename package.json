@@ -25,10 +25,9 @@
         "fix:import-sort": "npx import-sort --write 'src/**/*.js'",
         "fix:prettier": "npx prettier --write 'src/**/*.js'",
         "prepublish": "in-publish && npm run actually-prepublish || not-in-publish",
-        "test": "npm run test:flow && npm run test:typescript && npm run test:jest && npm run check",
-        "test:flow": "npx flow check",
-        "test:jest": "npx jest --coverage",
-        "test:typescript": "dtslint --localTs node_modules/typescript/lib src/types"
+        "test": "npm run test:typescript && npm run test:jest && npm run check",
+        "test:typescript": "tsc",
+        "test:jest": "npx jest --coverage"
     },
     "files": [
         "dist/"
@@ -39,20 +38,10 @@
         "node-itertools"
     ],
     "devDependencies": {
-        "@babel/cli": "^7.15.7",
-        "@babel/core": "^7.15.5",
-        "@babel/plugin-transform-runtime": "^7.15.0",
-        "@babel/preset-env": "^7.15.6",
-        "@babel/preset-flow": "^7.14.5",
         "@types/jest": "^29.5.0",
-        "babel-eslint": "^10.1.0",
         "coveralls": "^3.1.1",
         "dtslint": "^4.1.6",
         "eslint": "^7.32.0",
-        "eslint-plugin-flowtype": "^6.1.0",
-        "flow-bin": "^0.161.0",
-        "flow-copy-source": "^2.0.9",
-        "flow-typed": "^3.3.1",
         "import-sort-cli": "^6.0.0",
         "import-sort-parser-babylon": "^6.0.0",
         "import-sort-style-eslint": "^6.0.0",
