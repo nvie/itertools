@@ -16,11 +16,11 @@
     "scripts": {
         "actually-prepublish": "echo \"\\n\\nPlease run \\`bin/publish.sh <options>\\` instead.\\n\\n\" && exit 2",
         "build": "tsup",
+        "clean": "rimraf dist",
+        "format": "npx prettier --write src/",
         "lint": "npm run lint:eslint && npm run lint:prettier",
         "lint:eslint": "npx eslint --report-unused-disable-directives src/",
         "lint:prettier": "npx prettier --list-different src/",
-        "clean": "rimraf dist",
-        "format": "npx prettier --write src/",
         "prepublish": "in-publish && npm run actually-prepublish || not-in-publish",
         "test": "vitest run --coverage"
     },
