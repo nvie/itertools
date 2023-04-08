@@ -7,10 +7,10 @@ describe('compact', () => {
         expect(compact([])).toEqual([]);
     });
 
-    it('icompact removes undefined values', () => {
+    it('icompact removes nullish values', () => {
         expect(compact('abc')).toEqual(['a', 'b', 'c']);
         expect(compact(['x', undefined])).toEqual(['x']);
-        expect(compact([0, null, undefined, NaN, Infinity])).toEqual([0, null, NaN, Infinity]);
+        expect(compact([0, null, undefined, NaN, Infinity])).toEqual([0, NaN, Infinity]);
     });
 });
 
