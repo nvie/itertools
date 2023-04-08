@@ -44,20 +44,3 @@ jobs:
       - name: Run linters
         run: |
           npm run lint
-
-      - name: Upload coverage report to Coveralls
-        uses: coverallsapp/github-action@v2
-        with:
-          github-token: ${{ secrets.github_token }}
-          parallel: true
-
-  coveralls:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Coveralls finished
-        uses: coverallsapp/github-action@v2
-        with:
-          github-token: ${{ secrets.github_token }}
-          parallel-finished: true
