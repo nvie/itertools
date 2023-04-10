@@ -1,36 +1,43 @@
-import { imap } from './itertools';
+import { ifilter, imap } from './itertools';
 import { flatten } from './more-itertools';
 import type { Predicate } from './types';
+
+function isNullish<T>(x: T): x is NonNullable<T> {
+    return x != null;
+}
 
 function isDefined<T>(x: T): boolean {
     return x !== undefined;
 }
 
 /**
- * Returns an iterable, filtering out any `undefined` values from the iterable.
+ * Returns an iterable, filtering out any "nullish" values from the iterable.
  *
- *     >>> compact([1, 2, undefined, 3])
+ *     >>> compact([1, 2, undefined, 3, null])
  *     [1, 2, 3]
+ *
+ * For an eager version, @see compact().
  */
-export function* icompact<T>(iterable: Iterable<T | null | undefined>): Iterable<T> {
-    for (const item of iterable) {
-        if (item != null) {
-            yield item;
-        }
-    }
+export function icompact<T>(iterable: Iterable<T | null | undefined>): Iterable<T> {
+    return ifilter(iterable, isNullish);
 }
 
 /**
- * See icompact().
+ * Returns an array, filtering out any "nullish" values from the iterable.
+ *
+ *     >>> compact([1, 2, undefined, 3, null])
+ *     [1, 2, 3]
+ *
+ * For a lazy version, @see icompact().
  */
 export function compact<T>(iterable: Iterable<T | null | undefined>): T[] {
     return Array.from(icompact(iterable));
 }
 
 /**
- * Removes all undefined values from the given object.  Returns a new object.
+ * Removes all "nullish" values from the given object. Returns a new object.
  *
- *     >>> compactObject({ a: 1, b: undefined, c: 0 })
+ *     >>> compactObject({ a: 1, b: undefined, c: 0, d: null })
  *     { a: 1, c: 0 }
  *
  */
@@ -67,7 +74,10 @@ export function find<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): T | undefi
 }
 
 /**
- * Almost an alias of find(). The key difference is that if an empty
+ * Almost an alias of find(). There only is a difference if no key fn is
+ * provided. In that case, `find()` will return the first item in the iterable,
+ * whereas `first()` will return the first non-`undefined` value in the
+ * iterable.
  */
 export function first<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): T | undefined {
     return find(iterable, keyFn ?? isDefined);

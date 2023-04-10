@@ -19,9 +19,9 @@ describe('compactObject', () => {
         expect(compactObject({})).toEqual({});
     });
 
-    it('compactObject removes undefined values', () => {
-        expect(compactObject({ a: 1, b: 'foo', c: 0 })).toEqual({ a: 1, b: 'foo', c: 0 });
-        expect(compactObject({ a: undefined, b: false, c: 0 })).toEqual({ b: false, c: 0 });
+    it('compactObject removes nullish values', () => {
+        expect(compactObject({ a: 1, b: 'foo', c: 0, d: null })).toEqual({ a: 1, b: 'foo', c: 0 });
+        expect(compactObject({ a: undefined, b: false, c: 0, d: null })).toEqual({ b: false, c: 0 });
     });
 });
 
