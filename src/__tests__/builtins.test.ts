@@ -20,6 +20,10 @@ import { first } from '../custom';
 
 const isEven = (n: number) => n % 2 === 0;
 
+function isNum(value: unknown): value is number {
+    return typeof value === 'number';
+}
+
 describe('all', () => {
     it('all of empty list is true', () => {
         expect(all([])).toBe(true);
@@ -107,6 +111,12 @@ describe('filter', () => {
 
     it('ifilter works like Array.filter, but lazy', () => {
         expect(filter([0, 1, 2, 3], isEven)).toEqual([0, 2]);
+    });
+
+    it('filter retains rich type info', () => {
+        const filtered = filter([3, 'hi', null, -7], isNum);
+        expect(filtered).toEqual([3, -7]);
+        //     ^^^^^^^^ number[]
     });
 });
 

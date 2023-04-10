@@ -96,6 +96,8 @@ export function* enumerate<T>(iterable: Iterable<T>, start = 0): Iterable<[numbe
 /**
  * Non-lazy version of ifilter().
  */
+export function filter<T, N extends T>(iterable: Iterable<T>, predicate: (item: T) => item is N): N[];
+export function filter<T>(iterable: Iterable<T>, predicate: Predicate<T>): T[];
 export function filter<T>(iterable: Iterable<T>, predicate: Predicate<T>): T[] {
     return Array.from(ifilter(iterable, predicate));
 }

@@ -17,6 +17,10 @@ import {
 const isEven = (x: number) => x % 2 === 0;
 const isPositive = (x: number) => x >= 0;
 
+function isNum(value: unknown): value is number {
+    return typeof value === 'number';
+}
+
 describe('chunked', () => {
     it('does nothing for empty array', () => {
         expect(Array.from(chunked([], 3))).toEqual([]);
@@ -169,15 +173,13 @@ describe('partition', () => {
         ]);
     });
 
-    function isNum(value: unknown): value is number {
-        return typeof value === 'number';
-    }
-
     it('parition retains rich type info', () => {
         const values = ['hi', 3, null, 'foo', -7];
         const [good, bad] = partition(values, isNum);
         expect(good).toEqual([3, -7]);
+        //     ^^^^ number[]
         expect(bad).toEqual(['hi', null, 'foo']);
+        //     ^^^ (string | null)[]
     });
 });
 

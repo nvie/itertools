@@ -156,6 +156,8 @@ export function* icompress<T>(data: Iterable<T>, selectors: Iterable<boolean>): 
  * Returns an iterator that filters elements from iterable returning only those
  * for which the predicate is true.
  */
+export function ifilter<T, N extends T>(iterable: Iterable<T>, predicate: (item: T) => item is N): Iterable<N>;
+export function ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T>;
 export function* ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> {
     for (const value of iterable) {
         if (predicate(value)) {

@@ -22,6 +22,10 @@ import { take } from '../more-itertools';
 const isEven = (x: number) => x % 2 === 0;
 const isPositive = (x: number) => x >= 0;
 
+function isNum(value: unknown): value is number {
+    return typeof value === 'number';
+}
+
 describe('chain', () => {
     it('chains empty iterables', () => {
         expect(Array.from(chain([], []))).toEqual([]);
@@ -166,6 +170,12 @@ describe('ifilter', () => {
 
     it('ifilter can handle infinite inputs', () => {
         expect(take(5, ifilter(range(9999), isEven))).toEqual([0, 2, 4, 6, 8]);
+    });
+
+    it('ifilter retains rich type info', () => {
+        const filtered = take(5, ifilter([3, 'hi', null, -7], isNum));
+        expect(filtered).toEqual([3, -7]);
+        //     ^^^^^^^^ number[]
     });
 });
 
