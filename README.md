@@ -7,7 +7,7 @@ A JavaScript port of Python's awesome
 
 Usage example:
 
-```javascript
+```ts
 >>> import { izip, cycle } from 'itertools';
 >>>
 >>> const xs = [1, 2, 3, 4];
@@ -45,7 +45,7 @@ The rationale for this flipping of argument order is because in practice, the
 function bodies can span multiple lines, in which case the following block will
 remaing aesthetically pleasing:
 
-```javascript
+```ts
 import { map } from 'itertools';
 
 const numbers = [1, 2, 3];
@@ -97,7 +97,7 @@ collection.
 
 Examples:
 
-```javascript
+```ts
 all([])                           // => true
 all([0])                          // => false
 all([0, 1, 2])                    // => false
@@ -106,7 +106,7 @@ all([1, 2, 3])                    // => true
 
 Examples with using a key function:
 
-```javascript
+```ts
 all([2, 4, 6], n => n % 2 === 0)  // => true
 all([2, 4, 5], n => n % 2 === 0)  // => false
 ```
@@ -120,7 +120,7 @@ collection.
 
 Examples:
 
-```javascript
+```ts
 any([])                           // => false
 any([0])                          // => false
 any([0, 1, null, undefined])      // => true
@@ -128,7 +128,7 @@ any([0, 1, null, undefined])      // => true
 
 Examples with using a key function:
 
-```javascript
+```ts
 any([1, 4, 5], n => n % 2 === 0)  // => true
 any([{name: 'Bob'}, {name: 'Alice'}], person => person.name.startsWith('C'))  // => false
 ```
@@ -141,7 +141,7 @@ object.
 
 Examples:
 
-```javascript
+```ts
 contains([], 'whatever')         // => false
 contains([3], 42)                // => false
 contains([3], 3)                 // => true
@@ -158,7 +158,7 @@ the values obtained from iterating over given iterable.
 
 Example:
 
-```javascript
+```ts
 import { enumerate } from 'itertools';
 
 console.log([...enumerate(['hello', 'world'])]);
