@@ -12,10 +12,24 @@
     "bugs": {
         "url": "https://github.com/nvie/itertools.js/issues"
     },
-    "main": "./dist/index.js",
+    "type": "module",
+    "types": "./dist/index.d.ts",
+    "main": "./dist/index.cjs",
+    "exports": {
+        ".": {
+            "import": {
+                "types": "./dist/index.d.ts",
+                "default": "./dist/index.js"
+            },
+            "require": {
+                "types": "./dist/index.d.cts",
+                "default": "./dist/index.cjs"
+            }
+        }
+    },
     "scripts": {
         "actually-prepublish": "echo \"\\n\\nPlease run \\`bin/publish.sh <options>\\` instead.\\n\\n\" && exit 2",
-        "build": "tsup",
+        "build": "tsup && cp dist/index.d.ts dist/index.d.cts",
         "clean": "rimraf dist",
         "format": "npx prettier --write src/",
         "lint": "npm run lint:eslint && npm run lint:prettier",
@@ -46,7 +60,6 @@
         "typescript": "^4.3.5",
         "vitest": "^0.29.8"
     },
-    "types": "./dist/types/index.d.ts",
     "githubUrl": "https://github.com/nvie/itertools.js",
     "sideEffects": false
 }
