@@ -197,6 +197,7 @@ function _range(start: number, stop: number, step: number): Iterable<number> {
  */
 export function range(a: number, ...rest: number[]): Iterable<number> {
     const args = [a, ...rest]; // "a" was only used by Flow to make at least one value mandatory
+
     switch (args.length) {
         case 1:
             return _range(0, args[0], 1);
@@ -205,9 +206,10 @@ export function range(a: number, ...rest: number[]): Iterable<number> {
         case 3:
             return _range(args[0], args[1], args[2]);
 
-        // istanbul ignore next
-        default:
+        default: {
+            // istanbul ignore next -- @preserve
             throw new Error('invalid number of arguments');
+        }
     }
 }
 

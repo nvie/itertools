@@ -192,6 +192,7 @@ describe('islice', () => {
     it('islice with arguments', () => {
         expect(Array.from(islice('ABCDEFG', /*stop*/ 2))).toEqual(['A', 'B']);
         expect(Array.from(islice('ABCDEFG', 2, 4))).toEqual(['C', 'D']);
+        expect(Array.from(islice('ABCDEFG', /*start*/ 2, /*stop*/ undefined))).toEqual(['A', 'B']);
         expect(Array.from(islice('ABCDEFG', /*start*/ 2, /*stop*/ null))).toEqual(['C', 'D', 'E', 'F', 'G']);
         expect(Array.from(islice('ABCDEFG', /*start*/ 0, /*stop*/ null, /*step*/ 2))).toEqual(['A', 'C', 'E', 'G']);
         expect(Array.from(islice('ABCDEFG', /*start*/ 1, /*stop*/ null, /*step*/ 2))).toEqual(['B', 'D', 'F']);

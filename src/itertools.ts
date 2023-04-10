@@ -10,29 +10,22 @@ function composeAnd(f1: (v1: number) => boolean, f2: (v2: number) => boolean): (
 }
 
 function slicePredicate(start: number, stop: number | null, step: number) {
-    /* istanbul ignore if */
+    // istanbul ignore if -- @preserve
     if (start < 0) throw new Error('start cannot be negative');
-    /* istanbul ignore if */
+    // istanbul ignore if -- @preserve
     if (stop !== null && stop < 0) throw new Error('stop cannot be negative');
-    /* istanbul ignore if */
+    // istanbul ignore if -- @preserve
     if (step < 0) throw new Error('step cannot be negative');
 
-    // If stop is not provided (= undefined), then interpret the start value as the stop value
-    let _start = start,
-        _stop = stop;
-    if (_stop === undefined) {
-        [_start, _stop] = [0, _start];
-    }
+    let pred = (n: number) => n >= start;
 
-    let pred = (n: number) => n >= _start;
-
-    if (_stop !== null) {
-        const definedStop = _stop;
+    if (stop !== null) {
+        const definedStop = stop;
         pred = composeAnd(pred, (n: number) => n < definedStop);
     }
 
     if (step > 1) {
-        pred = composeAnd(pred, (n: number) => (n - _start) % step === 0);
+        pred = composeAnd(pred, (n: number) => (n - start) % step === 0);
     }
 
     return pred;
