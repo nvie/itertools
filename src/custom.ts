@@ -51,13 +51,19 @@ export function compactObject<K extends string, V>(obj: Record<K, V | null | und
  * the iterable.
  */
 export function find<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): T | undefined {
-    const fn = keyFn || isDefined;
-    for (const value of iterable) {
-        if (fn(value)) {
+    if (keyFn === undefined) {
+        for (const value of iterable) {
             return value;
         }
+        return undefined;
+    } else {
+        for (const value of iterable) {
+            if (keyFn(value)) {
+                return value;
+            }
+        }
+        return undefined;
     }
-    return undefined;
 }
 
 /**

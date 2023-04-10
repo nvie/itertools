@@ -259,6 +259,12 @@ describe('range', () => {
 describe('reduce', () => {
     const adder = (x: number, y: number) => x + y;
 
+    it('reduce without initializer', () => {
+        expect(reduce([], adder)).toBeUndefined();
+        expect(reduce([1], adder)).toEqual(1);
+        expect(reduce([1, 2], adder)).toEqual(3);
+    });
+
     it('reduce on empty list returns start value', () => {
         expect(reduce([], adder, 0)).toEqual(0);
         expect(reduce([], adder, 13)).toEqual(13);
