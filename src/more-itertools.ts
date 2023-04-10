@@ -16,26 +16,19 @@ import { primitiveIdentity } from './utils';
  *     // [[1, 2, 3], [4, 5, 6], [7, 8]]
  */
 export function* chunked<T>(iterable: Iterable<T>, size: number): Iterable<T[]> {
+    if (size < 1) {
+        throw new Error(`Invalid chunk size: ${size}`);
+    }
+
     const it = iter(iterable);
-    const r1 = it.next();
-    if (r1.done) {
-        return;
-    }
-
-    let chunk = [r1.value];
-
-    for (const item of it) {
-        chunk.push(item);
-
-        if (chunk.length === size) {
+    for (;;) {
+        const chunk = take(size, it);
+        if (chunk.length > 0) {
             yield chunk;
-            chunk = [];
         }
-    }
-
-    // Yield the remainder, if there is any
-    if (chunk.length > 0) {
-        yield chunk;
+        if (chunk.length < size) {
+            return;
+        }
     }
 }
 
@@ -122,6 +115,11 @@ export function* pairwise<T>(iterable: Iterable<T>): Iterable<[T, T]> {
  *     [0, 2, 4, 6, 8]
  *
  */
+export function partition<T, N extends T>(
+    iterable: Iterable<T>,
+    predicate: (item: T) => item is N
+): [N[], Exclude<T, N>[]];
+export function partition<T>(iterable: Iterable<T>, predicate: Predicate<T>): [T[], T[]];
 export function partition<T>(iterable: Iterable<T>, predicate: Predicate<T>): [T[], T[]] {
     const good = [];
     const bad = [];

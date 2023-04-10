@@ -7,7 +7,7 @@ A JavaScript port of Python's awesome
 
 Usage example:
 
-```javascript
+```ts
 >>> import { izip, cycle } from 'itertools';
 >>>
 >>> const xs = [1, 2, 3, 4];
@@ -45,7 +45,7 @@ The rationale for this flipping of argument order is because in practice, the
 function bodies can span multiple lines, in which case the following block will
 remaing aesthetically pleasing:
 
-```javascript
+```ts
 import { map } from 'itertools';
 
 const numbers = [1, 2, 3];
@@ -72,8 +72,8 @@ The `itertools` package consists of a few building blocks:
 
 ### Ports of builtins
 
-* [all](#all)
-* [any](#any)
+* [every](#every)
+* [some](#some)
 * [contains](#contains)
 * [enumerate](#enumerate)
 * [filter](#filter)
@@ -83,65 +83,64 @@ The `itertools` package consists of a few building blocks:
 * [min](#min)
 * [range](#range)
 * [reduce](#reduce)
-* [reduce\_](#reduce_)
 * [sorted](#sorted)
 * [sum](#sum)
 * [zip](#zip)
 * [zip3](#zip3)
 
-<a name="all" href="#all">#</a> <b>all</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>boolean</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
+<a name="every" href="#every">#</a> <b>every</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>boolean</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 
-Returns true when all of the items in iterable are truthy.  An optional key
+Returns true when every of the items in iterable are truthy.  An optional key
 function can be used to define what truthiness means for this specific
 collection.
 
 Examples:
 
-```javascript
-all([])                           // => true
-all([0])                          // => false
-all([0, 1, 2])                    // => false
-all([1, 2, 3])                    // => true
+```ts
+every([])                           // => true
+every([0])                          // => false
+every([0, 1, 2])                    // => false
+every([1, 2, 3])                    // => true
 ```
 
 Examples with using a key function:
 
-```javascript
-all([2, 4, 6], n => n % 2 === 0)  // => true
-all([2, 4, 5], n => n % 2 === 0)  // => false
+```ts
+every([2, 4, 6], n => n % 2 === 0)  // => true
+every([2, 4, 5], n => n % 2 === 0)  // => false
 ```
 
 
-<a name="any" href="#any">#</a> <b>any</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>boolean</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
+<a name="some" href="#some">#</a> <b>some</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>boolean</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 
-Returns true when any of the items in iterable are truthy.  An optional key
+Returns true when some of the items in iterable are truthy.  An optional key
 function can be used to define what truthiness means for this specific
 collection.
 
 Examples:
 
-```javascript
-any([])                           // => false
-any([0])                          // => false
-any([0, 1, null, undefined])      // => true
+```ts
+some([])                           // => false
+some([0])                          // => false
+some([0, 1, null, undefined])      // => true
 ```
 
 Examples with using a key function:
 
-```javascript
-any([1, 4, 5], n => n % 2 === 0)  // => true
-any([{name: 'Bob'}, {name: 'Alice'}], person => person.name.startsWith('C'))  // => false
+```ts
+some([1, 4, 5], n => n % 2 === 0)  // => true
+some([{name: 'Bob'}, {name: 'Alice'}], person => person.name.startsWith('C'))  // => false
 ```
 
 
 <a name="contains" href="#contains">#</a> <b>contains</b>(haystack: <i>Iterable&lt;T&gt;</i>, needle: <i>T</i>): <i>boolean</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 
-Returns true when any of the items in the iterable are equal to the target
+Returns true when some of the items in the iterable are equal to the target
 object.
 
 Examples:
 
-```javascript
+```ts
 contains([], 'whatever')         // => false
 contains([3], 42)                // => false
 contains([3], 3)                 // => true
@@ -158,7 +157,7 @@ the values obtained from iterating over given iterable.
 
 Example:
 
-```javascript
+```ts
 import { enumerate } from 'itertools';
 
 console.log([...enumerate(['hello', 'world'])]);
@@ -209,7 +208,7 @@ If multiple items are minimal, the function returns either one of them, but
 which one is not defined.
 
 
-<a name="range" href="#range">#</a> <b>range</b>(start: <i>number</i>): <i>Iterable&lt;number&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")<br />
+<a name="range" href="#range">#</a> <b>range</b>(stop: <i>number</i>): <i>Iterable&lt;number&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")<br />
 <a name="range" href="#range">#</a> <b>range</b>(start: <i>number</i>, stop: <i>number</i>, step: <i>number</i> = 1): <i>Iterable&lt;number&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 
 Returns an iterator producing all the numbers in the given range one by one,
@@ -237,27 +236,39 @@ meet the value constraint.
 
 
 <a name="reduce" href="#reduce">#</a> <b>reduce</b>(iterable: <i>Iterable&lt;T&gt;</i>, reducer: <i>(O, T, number) =&gt; O</i>, start: <i>O</i>): <i>O</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")<br />
-<a name="reduce_" href="#reduce_">#</a> <b>reduce\_</b>(iterable: <i>Iterable&lt;T&gt;</i>, reducer: <i>(T, T, number) =&gt; T</i>): <i>Maybe&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
+<a name="reduce" href="#reduce">#</a> <b>reduce</b>(iterable: <i>Iterable&lt;T&gt;</i>, reducer: <i>(T, T, number) =&gt; T</i>): <i>Maybe&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 
 Apply function of two arguments cumulatively to the items of sequence, from
 left to right, so as to reduce the sequence to a single value.  For example:
 
-    reduce([1, 2, 3, 4, 5], (x, y) => x + y, 0)
+```ts
+reduce(
+  [1, 2, 3, 4, 5],
+  (total, x) => total + x,
+  0
+)
+```
 
 calculates
 
     (((((0+1)+2)+3)+4)+5)
 
-The left argument, `x`, is the accumulated value and the right argument, `y`,
-is the update value from the sequence.
+The left argument, `total`, is the accumulated value and the right argument,
+`x`, is the update value from the sequence.
 
-**Difference between `reduce()` and `reduce\_()`**:  `reduce()` requires an
-explicit initializer, whereas `reduce_()` will automatically use the first item
-in the given iterable as the initializer.  When using `reduce()`, the
-initializer value is placed before the items of the sequence in the
-calculation, and serves as a default when the sequence is empty.  When using
-`reduce_()`, and the given iterable is empty, then no default value can be
-derived and `undefined` will be returned.
+Without an explicit initializer arg:
+
+```ts
+reduce(
+  [1, 2, 3, 4, 5],
+  (total, x) => total + x
+)
+```
+
+it calculates
+
+    ((((1+2)+3)+4)+5)
+
 
 
 <a name="sorted" href="#sorted">#</a> <b>sorted</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>T =&gt; Primitive</i></i>, reverse?: <i>boolean</i>): <i>Array&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
@@ -572,6 +583,7 @@ Yields elements in order, ignoring serial duplicates.
 
 * [compact](#compact)
 * [compactObject](#compactObject)
+* [find](#find)
 * [first](#first)
 * [flatmap](#flatmap)
 * [icompact](#icompact)
@@ -591,11 +603,20 @@ Removes all undefined values from the given object.  Returns a new object.
     { a: 1, c: 0, d: null }
 
 
-<a name="first" href="#first">#</a> <b>first</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>Maybe&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
+<a name="find" href="#find">#</a> <b>find</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>Maybe&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
 
 Returns the first item in the iterable for which the predicate holds, if any.
 If no such item exists, `undefined` is returned.  The default predicate is any
 defined value.
+
+
+<a name="first" href="#first">#</a> <b>first</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>Maybe&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
+
+Almost the same as `find()`, except when no explicit predicate function is
+given. `find()` will always return the first value in the iterable, whereas
+`first()` will return the first non-undefined value in the iterable.
+
+Prefer using `find()`, as its behavior is more intuitive and predictable.
 
 
 <a name="flatmap" href="#flatmap">#</a> <b>flatmap</b>(iterable: <i>Iterable&lt;T&gt;</i>, mapper: <i>T =&gt; Iterable&lt;S&gt;</i>): <i>Iterable&lt;S&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")

@@ -1,3 +1,33 @@
+## v2.1.0
+
+The following functions retain richer type information about their arguments:
+
+-   `ifilter()`
+-   `filter()`
+-   `partition()`
+
+For example, TypeScript will now know the following:
+
+```ts
+const items = [3, 'hi', -7, 'foo', 13];
+
+function isNum(value: unknown): value is number {
+    return typeof value === 'number';
+}
+
+const numbers: number[] = filter(items, isNum); // ✅
+
+const [numbers, strings] = partition(items, isNum); // ✅
+//     ^^^^^^^  ^^^^^^^ string[]
+//     number[]
+```
+
+-   Add new `find(iterable, pred)` function, which is almost the same as
+    `first(iterable, pred)` but behaves slightly more intuitive in the case
+    where no predicate function is given.
+
+-   Fix bug in `chunked()` with `size=1`
+
 ## v2.0.0
 
 **Breaking changes:**

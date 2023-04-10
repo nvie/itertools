@@ -47,25 +47,31 @@ export function compactObject<K extends string, V>(obj: Record<K, V | null | und
 
 /**
  * Returns the first item in the iterable for which the predicate holds, if
- * any.  If no such item exists, `undefined` is returned.  The default
- * predicate is any defined value.
+ * any. If no predicate is given, it will return the first value returned by
+ * the iterable.
  */
 export function find<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): T | undefined {
-    const fn = keyFn || isDefined;
-    for (const value of iterable) {
-        if (fn(value)) {
+    if (keyFn === undefined) {
+        for (const value of iterable) {
             return value;
         }
+        return undefined;
+    } else {
+        for (const value of iterable) {
+            if (keyFn(value)) {
+                return value;
+            }
+        }
+        return undefined;
     }
-    return undefined;
 }
 
 /**
- * Returns the first item in the iterable for which the predicate holds, if
- * any.  If no such item exists, `undefined` is returned.  The default
- * predicate is any defined value.
+ * Almost an alias of find(). The key difference is that if an empty
  */
-export const first = find;
+export function first<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): T | undefined {
+    return find(iterable, keyFn ?? isDefined);
+}
 
 /**
  * Returns 0 or more values for every value in the given iterable.

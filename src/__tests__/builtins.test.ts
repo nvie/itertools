@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
+import * as fc from 'fast-check';
 import {
-    all,
-    any,
     contains,
     enumerate,
+    every,
     filter,
     iter,
     map,
@@ -11,6 +11,7 @@ import {
     min,
     range,
     reduce,
+    some,
     sorted,
     sum,
     zip,
@@ -20,36 +21,95 @@ import { first } from '../custom';
 
 const isEven = (n: number) => n % 2 === 0;
 
-describe('all', () => {
-    it('all of empty list is true', () => {
-        expect(all([])).toBe(true);
+function isNum(value: unknown): value is number {
+    return typeof value === 'number';
+}
+
+function predicate(): fc.Arbitrary<(a: unknown) => boolean> {
+    return fc.oneof(
+        fc.constant(() => true),
+        fc.constant(() => false),
+        fc.constant((a: unknown) => (JSON.stringify(a) ?? '').length > 10),
+        fc.constant((a: unknown) => (JSON.stringify(a) ?? '').length !== 0),
+        fc.constant((a: unknown) => typeof a === 'number'),
+        fc.constant((a: unknown) => typeof a === 'string'),
+        fc.constant((a: unknown) => typeof a === 'object'),
+        fc.constant((a: unknown) => typeof a === 'function'),
+        fc.constant((a: unknown) => Array.isArray(a))
+    );
+}
+
+describe('every', () => {
+    it('every of empty list is true', () => {
+        expect(every([])).toBe(true);
     });
 
-    it('all is true if all elements are truthy', () => {
-        expect(all([1])).toBe(true);
-        expect(all([1, 2, 3])).toBe(true);
+    it('every is true if every elements are truthy', () => {
+        expect(every([1])).toBe(true);
+        expect(every([1, 2, 3])).toBe(true);
     });
 
-    it('all is false if any elements are not truthy', () => {
-        expect(all([0, 1])).toBe(false);
-        expect(all([1, 2, undefined, 3, 4])).toBe(false);
+    it('every is false if some elements are not truthy', () => {
+        expect(every([0, 1])).toBe(false);
+        expect(every([1, 2, undefined, 3, 4])).toBe(false);
     });
 });
 
-describe('any', () => {
-    it('any of empty list is false', () => {
-        expect(any([])).toBe(false);
+describe('some', () => {
+    it('some of empty list is false', () => {
+        expect(some([])).toBe(false);
     });
 
-    it('any is true if any elements are truthy', () => {
-        expect(any([1, 2, 3])).toBe(true);
-        expect(any([0, 1])).toBe(true);
-        expect(any([1, 0])).toBe(true);
-        expect(any([0, undefined, NaN, 1])).toBe(true);
+    it('some is true if some elements are truthy', () => {
+        expect(some([1, 2, 3])).toBe(true);
+        expect(some([0, 1])).toBe(true);
+        expect(some([1, 0])).toBe(true);
+        expect(some([0, undefined, NaN, 1])).toBe(true);
     });
 
-    it('any is false if no elements are truthy', () => {
-        expect(any([0, null, NaN, undefined])).toBe(false);
+    it('some is false if no elements are truthy', () => {
+        expect(some([0, null, NaN, undefined])).toBe(false);
+    });
+});
+
+describe('every vs some', () => {
+    it('every is always true with empty list', () => {
+        fc.assert(
+            fc.property(
+                predicate(),
+
+                (pred) => {
+                    expect(every([], pred)).toBe(true);
+                }
+            )
+        );
+    });
+
+    it('some is always false with empty list', () => {
+        fc.assert(
+            fc.property(
+                predicate(),
+
+                (pred) => {
+                    expect(some([], pred)).toBe(false);
+                }
+            )
+        );
+    });
+
+    it('every and some complete each other', () => {
+        fc.assert(
+            fc.property(
+                fc.array(fc.anything()),
+                predicate(),
+
+                (arr, pred) => {
+                    const inverse = (x: unknown) => !pred(x);
+                    expect(every(arr, pred)).toEqual(!some(arr, inverse));
+                    expect(some(arr, pred)).toEqual(!every(arr, inverse));
+                }
+            )
+        );
     });
 });
 
@@ -108,10 +168,16 @@ describe('filter', () => {
     it('ifilter works like Array.filter, but lazy', () => {
         expect(filter([0, 1, 2, 3], isEven)).toEqual([0, 2]);
     });
+
+    it('filter retains rich type info', () => {
+        const filtered = filter([3, 'hi', null, -7], isNum);
+        expect(filtered).toEqual([3, -7]);
+        //     ^^^^^^^^ number[]
+    });
 });
 
 describe('iter', () => {
-    it('iter makes any iterable a one-time iterable', () => {
+    it('iter makes some iterable a one-time iterable', () => {
         expect(
             Array.from(
                 iter(
@@ -258,6 +324,12 @@ describe('range', () => {
 
 describe('reduce', () => {
     const adder = (x: number, y: number) => x + y;
+
+    it('reduce without initializer', () => {
+        expect(reduce([], adder)).toBeUndefined();
+        expect(reduce([1], adder)).toEqual(1);
+        expect(reduce([1, 2], adder)).toEqual(3);
+    });
 
     it('reduce on empty list returns start value', () => {
         expect(reduce([], adder, 0)).toEqual(0);

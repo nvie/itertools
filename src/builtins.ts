@@ -21,7 +21,7 @@ import { identityPredicate, keyToCmp, numberIdentity, primitiveIdentity } from '
  *     all([2, 4, 5], n => n % 2 === 0)  // => false
  *
  */
-export function all<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
+export function every<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
     for (const item of iterable) {
         if (!keyFn(item)) {
             return false;
@@ -48,7 +48,7 @@ export function all<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPred
  *     any([{name: 'Bob'}, {name: 'Alice'}], person => person.name.startsWith('C'))  // => false
  *
  */
-export function any<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
+export function some<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
     for (const item of iterable) {
         if (keyFn(item)) {
             return true;
@@ -57,6 +57,16 @@ export function any<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPred
 
     return false;
 }
+
+/**
+ * Alias of `every()`.
+ */
+export const all = every;
+
+/**
+ * Alias of `some()`.
+ */
+export const any = some;
 
 /**
  * Returns true when any of the items in the iterable are equal to the target object.
@@ -96,6 +106,8 @@ export function* enumerate<T>(iterable: Iterable<T>, start = 0): Iterable<[numbe
 /**
  * Non-lazy version of ifilter().
  */
+export function filter<T, N extends T>(iterable: Iterable<T>, predicate: (item: T) => item is N): N[];
+export function filter<T>(iterable: Iterable<T>, predicate: Predicate<T>): T[];
 export function filter<T>(iterable: Iterable<T>, predicate: Predicate<T>): T[] {
     return Array.from(ifilter(iterable, predicate));
 }
@@ -144,7 +156,7 @@ export function map<T, V>(iterable: Iterable<T>, mapper: (item: T) => V): V[] {
  * which one is not defined.
  */
 export function max<T>(iterable: Iterable<T>, keyFn: (item: T) => number = numberIdentity): T | undefined {
-    return reduce_(iterable, (x, y) => (keyFn(x) > keyFn(y) ? x : y));
+    return reduce2(iterable, (x, y) => (keyFn(x) > keyFn(y) ? x : y));
 }
 
 /**
@@ -159,13 +171,13 @@ export function max<T>(iterable: Iterable<T>, keyFn: (item: T) => number = numbe
  * which one is not defined.
  */
 export function min<T>(iterable: Iterable<T>, keyFn: (item: T) => number = numberIdentity): T | undefined {
-    return reduce_(iterable, (x, y) => (keyFn(x) < keyFn(y) ? x : y));
+    return reduce2(iterable, (x, y) => (keyFn(x) < keyFn(y) ? x : y));
 }
 
 /**
  * Internal helper for the range function
  */
-function _range(start: number, stop: number, step: number): Iterable<number> {
+function range_(start: number, stop: number, step: number): Iterable<number> {
     const counter = count(start, step);
     const pred = step >= 0 ? (n: number) => n < stop : (n: number) => n > stop;
     return takewhile(counter, pred);
@@ -195,21 +207,14 @@ function _range(start: number, stop: number, step: number): Iterable<number> {
  * The produced range will be empty if the first value to produce already does
  * not meet the value constraint.
  */
-export function range(a: number, ...rest: number[]): Iterable<number> {
-    const args = [a, ...rest]; // "a" was only used by Flow to make at least one value mandatory
 
-    switch (args.length) {
-        case 1:
-            return _range(0, args[0], 1);
-        case 2:
-            return _range(args[0], args[1], 1);
-        case 3:
-            return _range(args[0], args[1], args[2]);
-
-        default: {
-            // istanbul ignore next -- @preserve
-            throw new Error('invalid number of arguments');
-        }
+export function range(stop: number): Iterable<number>;
+export function range(start: number, stop: number, step?: number): Iterable<number>;
+export function range(startOrStop: number, definitelyStop?: number, step = 1): Iterable<number> {
+    if (definitelyStop !== undefined) {
+        return range_(startOrStop /* as start */, definitelyStop, step);
+    } else {
+        return range_(0, startOrStop /* as stop */, step);
     }
 }
 
@@ -234,25 +239,36 @@ export function range(a: number, ...rest: number[]): Iterable<number> {
  * `reduce_()`, and the given iterable is empty, then no default value can be
  * derived and `undefined` will be returned.
  */
-export function reduce<T, O>(iterable: Iterable<T>, reducer: (agg: O, item: T, index: number) => O, start: O): O {
-    const it = iter(iterable);
+export function reduce<T>(iterable: Iterable<T>, reducer: (agg: T, item: T, index: number) => T): T | undefined;
+export function reduce<T, O>(iterable: Iterable<T>, reducer: (agg: O, item: T, index: number) => O, start: O): O;
+export function reduce<T, O>(
+    iterable: Iterable<T>,
+    reducer: ((agg: T, item: T, index: number) => T) | ((agg: O, item: T, index: number) => O),
+    start?: O
+): O | (T | undefined) {
+    if (start === undefined) {
+        return reduce2(iterable, reducer as (agg: T, item: T, index: number) => T);
+    } else {
+        return reduce3(iterable, reducer as (agg: O, item: T, index: number) => O, start);
+    }
+}
+
+function reduce3<T, O>(iterable: Iterable<T>, reducer: (agg: O, item: T, index: number) => O, start: O): O {
     let output = start;
-    for (const [index, item] of enumerate(it)) {
-        output = reducer(output, item, index);
+    let index = 0;
+    for (const item of iterable) {
+        output = reducer(output, item, index++);
     }
     return output;
 }
 
-/**
- * See reduce().
- */
-export function reduce_<T>(iterable: Iterable<T>, reducer: (agg: T, item: T, index: number) => T): T | undefined {
+function reduce2<T>(iterable: Iterable<T>, reducer: (agg: T, item: T, index: number) => T): T | undefined {
     const it = iter(iterable);
     const start = first(it);
     if (start === undefined) {
         return undefined;
     } else {
-        return reduce(it, reducer, start);
+        return reduce3(it, reducer, start);
     }
 }
 

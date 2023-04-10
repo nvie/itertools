@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { range } from '../builtins';
-import { first } from '../custom';
+import { find, first } from '../custom';
 import {
     chunked,
     flatten,
@@ -13,13 +13,28 @@ import {
     uniqueEverseen,
     uniqueJustseen,
 } from '../more-itertools';
+import * as fc from 'fast-check';
 
 const isEven = (x: number) => x % 2 === 0;
 const isPositive = (x: number) => x >= 0;
 
+function isNum(value: unknown): value is number {
+    return typeof value === 'number';
+}
+
 describe('chunked', () => {
-    it('does nothing for empty array', () => {
+    it('empty', () => {
         expect(Array.from(chunked([], 3))).toEqual([]);
+        expect(Array.from(chunked([], 1337))).toEqual([]);
+    });
+
+    it('fails with invalid chunk size', () => {
+        expect(() => Array.from(chunked([3, 2, 1], 0))).toThrow();
+        expect(() => Array.from(chunked([3, 2, 1], -3))).toThrow();
+    });
+
+    it('works with chunk size of 1', () => {
+        expect(Array.from(chunked([5, 4, 3, 2, 1], 1))).toEqual([[5], [4], [3], [2], [1]]);
     });
 
     it('works with array smaller than chunk size', () => {
@@ -39,6 +54,83 @@ describe('chunked', () => {
             [4, 5, 6],
         ]);
     });
+
+    it('works with chunkable list with remainder', () => {
+        const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+        expect(Array.from(chunked(numbers, 3))).toEqual([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]]);
+        expect(Array.from(chunked(numbers, 5))).toEqual([
+            [1, 2, 3, 4, 5],
+            [6, 7, 8, 9, 10],
+        ]);
+        expect(Array.from(chunked(numbers, 9999))).toEqual([numbers]);
+    });
+
+    it('no chunk will be larger than the chunk size', () => {
+        fc.assert(
+            fc.property(
+                fc.array(fc.anything()),
+                fc.integer({ min: 1 }),
+
+                (input, chunkSize) => {
+                    const output = Array.from(chunked(input, chunkSize));
+                    fc.pre(output.length > 0);
+
+                    const lastChunk = output.pop()!;
+                    expect(lastChunk.length).toBeGreaterThan(0);
+                    expect(lastChunk.length).toBeLessThanOrEqual(chunkSize);
+
+                    // The remaining chunks are all exactly the chunk size
+                    for (const chunk of output) {
+                        expect(chunk.length).toEqual(chunkSize);
+                    }
+                }
+            )
+        );
+    });
+
+    it('chunks contain all elements, in the same order as the input', () => {
+        fc.assert(
+            fc.property(
+                fc.array(fc.anything()),
+                fc.integer({ min: 1 }),
+
+                (input, chunkSize) => {
+                    const output = Array.from(chunked(input, chunkSize));
+
+                    // Exact same elements as input array
+                    expect(output.flatMap((x) => x)).toEqual(input);
+                }
+            )
+        );
+    });
+});
+
+describe('find', () => {
+    it('returns nothing for an empty array', () => {
+        expect(find([])).toBeUndefined();
+        expect(find([undefined, undefined])).toBeUndefined();
+    });
+
+    it('returns the first value in the array', () => {
+        expect(find([3, 'ohai'])).toBe(3);
+        expect(find(['ohai', 3])).toBe('ohai');
+    });
+
+    it('find may returns falsey values too', () => {
+        expect(find([0, 1, 2])).toBe(0);
+        expect(find([false, true])).toBe(false);
+        expect(find([null, false, true])).toBe(null);
+        expect(find([undefined, 3, 'ohai'])).toBe(undefined);
+        expect(find([NaN, 3, 'ohai'])).toBe(NaN);
+    });
+
+    it('find uses a predicate if provided', () => {
+        expect(find([0, 1, 2, 3, 4], (n) => !!n)).toBe(1);
+        expect(find([0, 1, 2, 3, 4], (n) => n > 1)).toBe(2);
+        expect(find([0, 1, 2, 3, 4], (n) => n < 0)).toBeUndefined();
+        expect(find([false, true], (x) => x)).toBe(true);
+    });
 });
 
 describe('first', () => {
@@ -49,16 +141,18 @@ describe('first', () => {
 
     it('returns the first value in the array', () => {
         expect(first([3, 'ohai'])).toBe(3);
-        expect(first([undefined, 3, 'ohai'])).toBe(3);
         expect(first(['ohai', 3])).toBe('ohai');
+        expect(first([undefined, 3, 'ohai'])).toBe(3);
     });
 
-    it('first may returns falsey values too', () => {
+    it('find may returns falsey values too', () => {
         expect(first([0, 1, 2])).toBe(0);
         expect(first([false, true])).toBe(false);
+        expect(first([null, false, true])).toBe(null);
+        expect(first([NaN, 3, 'ohai'])).toBe(NaN);
     });
 
-    it('first uses a predicate if provided', () => {
+    it('find uses a predicate if provided', () => {
         expect(first([0, 1, 2, 3, 4], (n) => !!n)).toBe(1);
         expect(first([0, 1, 2, 3, 4], (n) => n > 1)).toBe(2);
         expect(first([0, 1, 2, 3, 4], (n) => n < 0)).toBeUndefined();
@@ -138,6 +232,15 @@ describe('partition', () => {
             [1, 3, 4, 5, 6, 8, 8, 0],
             [-2, -2, -3],
         ]);
+    });
+
+    it('parition retains rich type info', () => {
+        const values = ['hi', 3, null, 'foo', -7];
+        const [good, bad] = partition(values, isNum);
+        expect(good).toEqual([3, -7]);
+        //     ^^^^ number[]
+        expect(bad).toEqual(['hi', null, 'foo']);
+        //     ^^^ (string | null)[]
     });
 });
 
