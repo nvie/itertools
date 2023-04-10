@@ -2,16 +2,20 @@
 
 **Breaking changes:**
 
+-   Rewritten source code in TypeScript (instead of Flow)
+-   Modern ESM and CJS dual exports (fully tree-shakable when using ESM)
+-   Massively [reduced bundle size](https://bundlephobia.com/package/itertools@2.0.0)
+-   Targeted ES2015 (instead of ES5)
+-   Support only TypeScript versions >= 4.3
+-   Drop Flow support\*
+-   Drop Node 10.x support
 -   `icompact`, `compact`, and `compactObject` functions will now also remove
     `null` values, not only `undefined`
--   Support only Node >= 12.x
--   Support only TypeScript versions >= 4.3
--   Drop Flow support
 
-Changes:
-
--   Modern ESM and CJS dual exports
--   Rewrite the source code in TypeScript
+(\*: I'm still open to bundling Flow types within this package, but only if
+that can be supported in a maintenance-free way, for example by using a script
+that will generate `*.flow` files from TypeScript source files. If someone can
+add support for that, I'm open to pull requests! 🙏 )
 
 ## v1.7.1
 
