@@ -26,6 +26,8 @@ const [numbers, strings] = partition(items, isNum); // ✅
     `first(iterable, pred)` but behaves slightly more intuitive in the case
     where no predicate function is given.
 
+-   Fix bug in `chunked()` with `size=1`
+
 ## v2.0.0
 
 **Breaking changes:**
