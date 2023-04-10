@@ -1,6 +1,5 @@
 [![npm](https://img.shields.io/npm/v/itertools.svg)](https://www.npmjs.com/package/itertools)
 [![Build Status](https://github.com/nvie/itertools.js/workflows/test/badge.svg)](https://github.com/nvie/itertools.js/actions)
-[![Coverage Status](https://img.shields.io/coveralls/nvie/itertools.js/master.svg)](https://coveralls.io/github/nvie/itertools.js?branch=master)
 [![Minified Size](https://badgen.net/bundlephobia/minzip/itertools)](https://bundlephobia.com/result?p=itertools)
 
 A JavaScript port of Python's awesome
