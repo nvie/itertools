@@ -3,7 +3,6 @@ set -e
 
 # The output directory for the package build
 ROOT="$(git rev-parse --show-toplevel)"
-DIST="${ROOT}/dist"
 
 # Work from the root folder, build the dist/ folder
 cd "$ROOT"
@@ -28,16 +27,20 @@ if git is-dirty; then
 fi
 
 npm run test
-npm run build
+
 
 # Read the version from the package.json file, we don't need to re-enter it
-VERSION="$(cat package.json | jq -r .version)"
 GITHUB_URL="$(cat package.json | jq -r .githubUrl)"
 
 if [ -z "$GITHUB_URL" -o "$GITHUB_URL" = "null" ]; then
     echo 'Please specify `githubUrl` in package.json.' >&2
     exit 5
 fi
+
+# Bump the version
+./bin/bump.sh
+
+VERSION="$(cat package.json | jq -r .version)"
 
 if git is-dirty; then
     git commit -m "Bump to $VERSION" package.json
@@ -46,7 +49,8 @@ if git is-dirty; then
     git push --tags
 fi
 
-cd "$DIST" && npm publish --new-version "$VERSION" "$@"
+npm run build
+npm publish --new-version "$VERSION" "$@"
 
 # Open browser tab to create new release
 open "${GITHUB_URL}/blob/v${VERSION}/CHANGELOG.md"
