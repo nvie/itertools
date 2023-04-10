@@ -1,6 +1,6 @@
 {
     "name": "itertools",
-    "version": "2.0.0-beta1",
+    "version": "2.0.0",
     "description": "A JavaScript port of Python's awesome itertools standard library",
     "license": "MIT",
     "repository": {
