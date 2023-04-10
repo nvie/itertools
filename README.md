@@ -209,7 +209,7 @@ If multiple items are minimal, the function returns either one of them, but
 which one is not defined.
 
 
-<a name="range" href="#range">#</a> <b>range</b>(start: <i>number</i>): <i>Iterable&lt;number&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")<br />
+<a name="range" href="#range">#</a> <b>range</b>(stop: <i>number</i>): <i>Iterable&lt;number&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")<br />
 <a name="range" href="#range">#</a> <b>range</b>(start: <i>number</i>, stop: <i>number</i>, step: <i>number</i> = 1): <i>Iterable&lt;number&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 
 Returns an iterator producing all the numbers in the given range one by one,
