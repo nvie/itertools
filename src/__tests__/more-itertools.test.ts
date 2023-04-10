@@ -168,6 +168,17 @@ describe('partition', () => {
             [-2, -2, -3],
         ]);
     });
+
+    function isNum(value: unknown): value is number {
+        return typeof value === 'number';
+    }
+
+    it('parition retains rich type info', () => {
+        const values = ['hi', 3, null, 'foo', -7];
+        const [good, bad] = partition(values, isNum);
+        expect(good).toEqual([3, -7]);
+        expect(bad).toEqual(['hi', null, 'foo']);
+    });
 });
 
 describe('roundrobin', () => {

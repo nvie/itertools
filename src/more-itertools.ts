@@ -122,6 +122,11 @@ export function* pairwise<T>(iterable: Iterable<T>): Iterable<[T, T]> {
  *     [0, 2, 4, 6, 8]
  *
  */
+export function partition<T, N extends T>(
+    iterable: Iterable<T>,
+    predicate: (item: T) => item is N
+): [N[], Exclude<T, N>[]];
+export function partition<T>(iterable: Iterable<T>, predicate: Predicate<T>): [T[], T[]];
 export function partition<T>(iterable: Iterable<T>, predicate: Predicate<T>): [T[], T[]] {
     const good = [];
     const bad = [];
