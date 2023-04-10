@@ -1,4 +1,4 @@
-import { first } from './custom';
+import { find } from './custom';
 import { count, ifilter, imap, izip, izip3, takewhile } from './itertools';
 import type { Predicate, Primitive } from './types';
 import { identityPredicate, keyToCmp, numberIdentity, primitiveIdentity } from './utils';
@@ -264,7 +264,7 @@ function reduce3<T, O>(iterable: Iterable<T>, reducer: (agg: O, item: T, index: 
 
 function reduce2<T>(iterable: Iterable<T>, reducer: (agg: T, item: T, index: number) => T): T | undefined {
     const it = iter(iterable);
-    const start = first(it);
+    const start = find(it);
     if (start === undefined) {
         return undefined;
     } else {

@@ -324,6 +324,7 @@ describe('range', () => {
 
 describe('reduce', () => {
     const adder = (x: number, y: number) => x + y;
+    const firstOne = (x: unknown) => x;
 
     it('reduce without initializer', () => {
         expect(reduce([], adder)).toBeUndefined();
@@ -344,6 +345,11 @@ describe('reduce', () => {
     it('reduce on list with multiple items', () => {
         expect(reduce([1, 2, 3, 4], adder, 0)).toEqual(10);
         expect(reduce([1, 2, 3, 4, 5], adder, 13)).toEqual(28);
+    });
+
+    it('reduce on list with multiple items (no initializer)', () => {
+        expect(reduce([13, 2, 3, 4], firstOne)).toEqual(13);
+        expect(reduce([undefined, null, 1, 2, 3, 4], firstOne)).toEqual(undefined);
     });
 });
 
