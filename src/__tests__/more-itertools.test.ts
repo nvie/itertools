@@ -13,6 +13,7 @@ import {
     uniqueEverseen,
     uniqueJustseen,
 } from '../more-itertools';
+import * as fc from 'fast-check';
 
 const isEven = (x: number) => x % 2 === 0;
 const isPositive = (x: number) => x >= 0;
@@ -42,6 +43,56 @@ describe('chunked', () => {
             [1, 2, 3],
             [4, 5, 6],
         ]);
+    });
+
+    it('works with chunkable list with remainder', () => {
+        const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+        expect(Array.from(chunked(numbers, 3))).toEqual([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]]);
+        expect(Array.from(chunked(numbers, 5))).toEqual([
+            [1, 2, 3, 4, 5],
+            [6, 7, 8, 9, 10],
+        ]);
+        expect(Array.from(chunked(numbers, 9999))).toEqual([numbers]);
+    });
+
+    it('no chunk will be larger than the chunk size', () => {
+        fc.assert(
+            fc.property(
+                fc.array(fc.anything()),
+                fc.integer({ min: 1 }),
+
+                (input, chunkSize) => {
+                    const output = Array.from(chunked(input, chunkSize));
+                    fc.pre(output.length > 0);
+
+                    const lastChunk = output.pop()!;
+                    expect(lastChunk.length).toBeGreaterThan(0);
+                    expect(lastChunk.length).toBeLessThanOrEqual(chunkSize);
+
+                    // The remaining chunks are all exactly the chunk size
+                    for (const chunk of output) {
+                        expect(chunk.length).toEqual(chunkSize);
+                    }
+                }
+            )
+        );
+    });
+
+    it('chunks contain all elements, in the same order as the input', () => {
+        fc.assert(
+            fc.property(
+                fc.array(fc.anything()),
+                fc.integer({ min: 1 }),
+
+                (input, chunkSize) => {
+                    const output = Array.from(chunked(input, chunkSize));
+
+                    // Exact same elements as input array
+                    expect(output.flatMap((x) => x)).toEqual(input);
+                }
+            )
+        );
     });
 });
 
