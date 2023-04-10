@@ -7,27 +7,19 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [
-            12.x,
-            14.x,
-            # 16.x,
-            18.x,
-            # latest,
-          ]
+        node-version: [12, 14, 16, 18, latest]
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Use Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
-
-      # - name: Install TypeScript ${{ matrix.ts-version }}
-      #   run: npm install -D typescript@${{ matrix.ts-version }}
 
       - name: Check TypeScript
         run: npx tsc
