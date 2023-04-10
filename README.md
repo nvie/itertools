@@ -72,8 +72,8 @@ The `itertools` package consists of a few building blocks:
 
 ### Ports of builtins
 
-* [all](#all)
-* [any](#any)
+* [every](#every)
+* [some](#some)
 * [contains](#contains)
 * [enumerate](#enumerate)
 * [filter](#filter)
@@ -88,54 +88,54 @@ The `itertools` package consists of a few building blocks:
 * [zip](#zip)
 * [zip3](#zip3)
 
-<a name="all" href="#all">#</a> <b>all</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>boolean</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
+<a name="every" href="#every">#</a> <b>every</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>boolean</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 
-Returns true when all of the items in iterable are truthy.  An optional key
+Returns true when every of the items in iterable are truthy.  An optional key
 function can be used to define what truthiness means for this specific
 collection.
 
 Examples:
 
 ```ts
-all([])                           // => true
-all([0])                          // => false
-all([0, 1, 2])                    // => false
-all([1, 2, 3])                    // => true
+every([])                           // => true
+every([0])                          // => false
+every([0, 1, 2])                    // => false
+every([1, 2, 3])                    // => true
 ```
 
 Examples with using a key function:
 
 ```ts
-all([2, 4, 6], n => n % 2 === 0)  // => true
-all([2, 4, 5], n => n % 2 === 0)  // => false
+every([2, 4, 6], n => n % 2 === 0)  // => true
+every([2, 4, 5], n => n % 2 === 0)  // => false
 ```
 
 
-<a name="any" href="#any">#</a> <b>any</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>boolean</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
+<a name="some" href="#some">#</a> <b>some</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>boolean</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 
-Returns true when any of the items in iterable are truthy.  An optional key
+Returns true when some of the items in iterable are truthy.  An optional key
 function can be used to define what truthiness means for this specific
 collection.
 
 Examples:
 
 ```ts
-any([])                           // => false
-any([0])                          // => false
-any([0, 1, null, undefined])      // => true
+some([])                           // => false
+some([0])                          // => false
+some([0, 1, null, undefined])      // => true
 ```
 
 Examples with using a key function:
 
 ```ts
-any([1, 4, 5], n => n % 2 === 0)  // => true
-any([{name: 'Bob'}, {name: 'Alice'}], person => person.name.startsWith('C'))  // => false
+some([1, 4, 5], n => n % 2 === 0)  // => true
+some([{name: 'Bob'}, {name: 'Alice'}], person => person.name.startsWith('C'))  // => false
 ```
 
 
 <a name="contains" href="#contains">#</a> <b>contains</b>(haystack: <i>Iterable&lt;T&gt;</i>, needle: <i>T</i>): <i>boolean</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
 
-Returns true when any of the items in the iterable are equal to the target
+Returns true when some of the items in the iterable are equal to the target
 object.
 
 Examples:

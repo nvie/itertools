@@ -21,7 +21,7 @@ import { identityPredicate, keyToCmp, numberIdentity, primitiveIdentity } from '
  *     all([2, 4, 5], n => n % 2 === 0)  // => false
  *
  */
-export function all<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
+export function every<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
     for (const item of iterable) {
         if (!keyFn(item)) {
             return false;
@@ -48,7 +48,7 @@ export function all<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPred
  *     any([{name: 'Bob'}, {name: 'Alice'}], person => person.name.startsWith('C'))  // => false
  *
  */
-export function any<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
+export function some<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
     for (const item of iterable) {
         if (keyFn(item)) {
             return true;
@@ -57,6 +57,16 @@ export function any<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPred
 
     return false;
 }
+
+/**
+ * Alias of `every()`.
+ */
+export const all = every;
+
+/**
+ * Alias of `some()`.
+ */
+export const any = some;
 
 /**
  * Returns true when any of the items in the iterable are equal to the target object.
