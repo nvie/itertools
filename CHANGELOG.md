@@ -4,6 +4,7 @@
 
 -   `icompact`, `compact`, and `compactObject` functions will now also remove
     `null` values, not only `undefined`
+-   Support only Node >= 12.x
 -   Support only TypeScript versions >= 4.3
 -   Drop Flow support
 

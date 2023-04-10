@@ -8,7 +8,6 @@ jobs:
     strategy:
       matrix:
         node-version: [
-            10.x,
             12.x,
             14.x,
             # 16.x,
@@ -25,23 +24,18 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        run: |
-          npm ci
+        run: npm ci
 
       # - name: Install TypeScript ${{ matrix.ts-version }}
-      #   run: |
-      #     npm install -D typescript@${{ matrix.ts-version }}
+      #   run: npm install -D typescript@${{ matrix.ts-version }}
 
       - name: Check TypeScript
-        run: |
-          npx tsc
+        run: npx tsc
 
       - name: Run tests
-        run: |
-          npm run test
+        run: npm run test
         env:
           CI: true
 
       - name: Run linters
-        run: |
-          npm run lint
+        run: npm run lint
