@@ -32,20 +32,20 @@ export function every<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPr
 }
 
 /**
- * Returns true when any of the items in iterable are truthy.  An optional key
+ * Returns true when some of the items in iterable are truthy.  An optional key
  * function can be used to define what truthiness means for this specific
  * collection.
  *
  * Examples:
  *
- *     any([])                           // => false
- *     any([0])                          // => false
- *     any([0, 1, null, undefined])      // => true
+ *     some([])                           // => false
+ *     some([0])                          // => false
+ *     some([0, 1, null, undefined])      // => true
  *
  * Examples with using a key function:
  *
- *     any([1, 4, 5], n => n % 2 === 0)  // => true
- *     any([{name: 'Bob'}, {name: 'Alice'}], person => person.name.startsWith('C'))  // => false
+ *     some([1, 4, 5], n => n % 2 === 0)  // => true
+ *     some([{name: 'Bob'}, {name: 'Alice'}], person => person.name.startsWith('C'))  // => false
  *
  */
 export function some<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
@@ -80,7 +80,7 @@ export const any = some;
  *
  */
 export function contains<T>(haystack: Iterable<T>, needle: T): boolean {
-    return any(haystack, (x) => x === needle);
+    return some(haystack, (x) => x === needle);
 }
 
 /**

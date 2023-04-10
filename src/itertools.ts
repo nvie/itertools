@@ -1,4 +1,4 @@
-import { all, enumerate, iter, range } from './builtins';
+import { enumerate, every, iter, range } from './builtins';
 import { flatten } from './more-itertools';
 import type { Predicate, Primitive } from './types';
 import { primitiveIdentity } from './utils';
@@ -316,7 +316,7 @@ export function* izipMany<T>(...iters: Iterable<T>[]): Iterable<T[]> {
 
     for (;;) {
         const heads: Array<IteratorResult<T, undefined>> = iterables.map((xs) => xs.next());
-        if (all(heads, (h) => !h.done)) {
+        if (every(heads, (h) => !h.done)) {
             yield heads.map((h) => h.value as T);
         } else {
             // One of the iterables exhausted
