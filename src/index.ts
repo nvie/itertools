@@ -50,4 +50,4 @@ export {
     uniqueEverseen,
     uniqueJustseen,
 } from './more-itertools';
-export { compact, compactObject, first, flatmap, icompact } from './custom';
+export { compact, compactObject, find, first, flatmap, icompact } from './custom';

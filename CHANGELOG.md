@@ -1,3 +1,9 @@
+## v2.1.0
+
+-   Add new `find(iterable, predicate)` function, which is almost the same as
+    `first()` but behaves slightly more intuitive in the case where no
+    predicate function is given.
+
 ## v2.0.0
 
 **Breaking changes:**

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { range } from '../builtins';
-import { first } from '../custom';
+import { find, first } from '../custom';
 import {
     chunked,
     flatten,
@@ -41,6 +41,33 @@ describe('chunked', () => {
     });
 });
 
+describe('find', () => {
+    it('returns nothing for an empty array', () => {
+        expect(find([])).toBeUndefined();
+        expect(find([undefined, undefined])).toBeUndefined();
+    });
+
+    it('returns the first value in the array', () => {
+        expect(find([3, 'ohai'])).toBe(3);
+        expect(find(['ohai', 3])).toBe('ohai');
+    });
+
+    it('find may returns falsey values too', () => {
+        expect(find([0, 1, 2])).toBe(0);
+        expect(find([false, true])).toBe(false);
+        expect(find([null, false, true])).toBe(null);
+        expect(find([undefined, 3, 'ohai'])).toBe(undefined);
+        expect(find([NaN, 3, 'ohai'])).toBe(NaN);
+    });
+
+    it('find uses a predicate if provided', () => {
+        expect(find([0, 1, 2, 3, 4], (n) => !!n)).toBe(1);
+        expect(find([0, 1, 2, 3, 4], (n) => n > 1)).toBe(2);
+        expect(find([0, 1, 2, 3, 4], (n) => n < 0)).toBeUndefined();
+        expect(find([false, true], (x) => x)).toBe(true);
+    });
+});
+
 describe('first', () => {
     it('returns nothing for an empty array', () => {
         expect(first([])).toBeUndefined();
@@ -49,16 +76,18 @@ describe('first', () => {
 
     it('returns the first value in the array', () => {
         expect(first([3, 'ohai'])).toBe(3);
-        expect(first([undefined, 3, 'ohai'])).toBe(3);
         expect(first(['ohai', 3])).toBe('ohai');
+        expect(first([undefined, 3, 'ohai'])).toBe(3);
     });
 
-    it('first may returns falsey values too', () => {
+    it('find may returns falsey values too', () => {
         expect(first([0, 1, 2])).toBe(0);
         expect(first([false, true])).toBe(false);
+        expect(first([null, false, true])).toBe(null);
+        expect(first([NaN, 3, 'ohai'])).toBe(NaN);
     });
 
-    it('first uses a predicate if provided', () => {
+    it('find uses a predicate if provided', () => {
         expect(first([0, 1, 2, 3, 4], (n) => !!n)).toBe(1);
         expect(first([0, 1, 2, 3, 4], (n) => n > 1)).toBe(2);
         expect(first([0, 1, 2, 3, 4], (n) => n < 0)).toBeUndefined();

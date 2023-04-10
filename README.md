@@ -572,6 +572,7 @@ Yields elements in order, ignoring serial duplicates.
 
 * [compact](#compact)
 * [compactObject](#compactObject)
+* [find](#find)
 * [first](#first)
 * [flatmap](#flatmap)
 * [icompact](#icompact)
@@ -591,11 +592,20 @@ Removes all undefined values from the given object.  Returns a new object.
     { a: 1, c: 0, d: null }
 
 
-<a name="first" href="#first">#</a> <b>first</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>Maybe&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
+<a name="find" href="#find">#</a> <b>find</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>Maybe&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
 
 Returns the first item in the iterable for which the predicate holds, if any.
 If no such item exists, `undefined` is returned.  The default predicate is any
 defined value.
+
+
+<a name="first" href="#first">#</a> <b>first</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>Predicate&lt;T&gt;</i>): <i>Maybe&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
+
+Almost the same as `find()`, except when no explicit predicate function is
+given. `find()` will always return the first value in the iterable, whereas
+`first()` will return the first non-undefined value in the iterable.
+
+Prefer using `find()`, as its behavior is more intuitive and predictable.
 
 
 <a name="flatmap" href="#flatmap">#</a> <b>flatmap</b>(iterable: <i>Iterable&lt;T&gt;</i>, mapper: <i>T =&gt; Iterable&lt;S&gt;</i>): <i>Iterable&lt;S&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
