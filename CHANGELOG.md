@@ -1,3 +1,8 @@
+## v2.1.1
+
+-   Fix a bug in `reduce()` in a very small edge case (see
+    ab3b91cebaba44e798c1a2d35a1591b25e612f0f)
+
 ## v2.1.0
 
 The following functions retain richer type information about their arguments:
