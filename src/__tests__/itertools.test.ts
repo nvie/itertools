@@ -207,6 +207,13 @@ describe('islice', () => {
         expect(Array.from(islice('ABCDEFG', /*start*/ 0, /*stop*/ null, /*step*/ 2))).toEqual(['A', 'C', 'E', 'G']);
         expect(Array.from(islice('ABCDEFG', /*start*/ 1, /*stop*/ null, /*step*/ 2))).toEqual(['B', 'D', 'F']);
     });
+
+    it('islice invalid stop argument', () => {
+        expect(() => Array.from(islice('ABCDEFG', /*stop*/ -2))).toThrow();
+        expect(() => Array.from(islice('ABCDEFG', -2, -3))).toThrow();
+        expect(() => Array.from(islice('ABCDEFG', 0, 3, 0))).toThrow();
+        expect(() => Array.from(islice('ABCDEFG', 0, 3, -1))).toThrow();
+    });
 });
 
 describe('izip', () => {

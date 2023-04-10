@@ -10,12 +10,9 @@ function composeAnd(f1: (v1: number) => boolean, f2: (v2: number) => boolean): (
 }
 
 function slicePredicate(start: number, stop: number | null, step: number) {
-    // istanbul ignore if -- @preserve
     if (start < 0) throw new Error('start cannot be negative');
-    // istanbul ignore if -- @preserve
     if (stop !== null && stop < 0) throw new Error('stop cannot be negative');
-    // istanbul ignore if -- @preserve
-    if (step < 0) throw new Error('step cannot be negative');
+    if (step <= 0) throw new Error('step cannot be negative');
 
     let pred = (n: number) => n >= start;
 
