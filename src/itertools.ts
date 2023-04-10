@@ -1,21 +1,25 @@
-// @flow strict
-
 import { all, enumerate, iter, range } from './builtins';
 import { flatten } from './more-itertools';
-import type { Maybe, Predicate, Primitive } from './types';
+import type { Predicate, Primitive } from './types';
 import { primitiveIdentity } from './utils';
 
 const SENTINEL = Symbol();
 
-function composeAnd(f1: (number) => boolean, f2: (number) => boolean): (number) => boolean {
+function composeAnd(f1: (v1: number) => boolean, f2: (v2: number) => boolean): (v3: number) => boolean {
     return (n: number) => f1(n) && f2(n);
 }
 
-function slicePredicate(start: number, stop: ?number, step: number) {
+function slicePredicate(start: number, stop: number | null, step: number) {
+    /* istanbul ignore if */
+    if (start < 0) throw new Error('start cannot be negative');
+    /* istanbul ignore if */
+    if (stop !== null && stop < 0) throw new Error('stop cannot be negative');
+    /* istanbul ignore if */
+    if (step < 0) throw new Error('step cannot be negative');
+
     // If stop is not provided (= undefined), then interpret the start value as the stop value
     let _start = start,
-        _stop = stop,
-        _step = step;
+        _stop = stop;
     if (_stop === undefined) {
         [_start, _stop] = [0, _start];
     }
@@ -23,12 +27,12 @@ function slicePredicate(start: number, stop: ?number, step: number) {
     let pred = (n: number) => n >= _start;
 
     if (_stop !== null) {
-        const stopNotNull = _stop;
-        pred = composeAnd(pred, (n: number) => n < stopNotNull);
+        const definedStop = _stop;
+        pred = composeAnd(pred, (n: number) => n < definedStop);
     }
 
-    if (_step > 1) {
-        pred = composeAnd(pred, (n: number) => (n - _start) % _step === 0);
+    if (step > 1) {
+        pred = composeAnd(pred, (n: number) => (n - _start) % step === 0);
     }
 
     return pred;
@@ -40,7 +44,7 @@ function slicePredicate(start: number, stop: ?number, step: number) {
  * are exhausted.  Used for treating consecutive sequences as a single
  * sequence.
  */
-export function chain<T>(...iterables: Array<Iterable<T>>): Iterable<T> {
+export function chain<T>(...iterables: Iterable<T>[]): Iterable<T> {
     return flatten(iterables);
 }
 
@@ -49,7 +53,7 @@ export function chain<T>(...iterables: Array<Iterable<T>>): Iterable<T> {
  * (default 0), incrementing by `step`.  To decrement, use a negative step
  * number.
  */
-export function* count(start: number = 0, step: number = 1): Iterable<number> {
+export function* count(start = 0, step = 1): Iterable<number> {
     let n = start;
     for (;;) {
         yield n;
@@ -60,7 +64,7 @@ export function* count(start: number = 0, step: number = 1): Iterable<number> {
 /**
  * Non-lazy version of icompress().
  */
-export function compress<T>(data: Iterable<T>, selectors: Iterable<boolean>): Array<T> {
+export function compress<T>(data: Iterable<T>, selectors: Iterable<boolean>): T[] {
     return Array.from(icompress(data, selectors));
 }
 
@@ -103,18 +107,18 @@ export function* dropwhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): I
     }
 }
 
-export function* groupby<T>(
+export function* groupby<T, K extends Primitive>(
     iterable: Iterable<T>,
-    keyFn: (T) => Primitive = primitiveIdentity
-): Iterable<[Primitive, Iterable<T>]> {
+    keyFn: (item: T) => K = primitiveIdentity
+): Generator<[K, Generator<T, undefined>], undefined> {
     const it = iter(iterable);
 
-    let currentValue;
-    // $FlowFixMe[incompatible-type] - deliberate use of the SENTINEL symbol
-    let currentKey: Primitive = SENTINEL;
-    let targetKey = currentKey;
+    let currentValue: T;
+    let currentKey: K = SENTINEL as unknown as K;
+    //                           ^^^^^^^^^^^^^^^ Hack!
+    let targetKey: K = currentKey;
 
-    const grouper = function* grouper(tgtKey) {
+    const grouper = function* grouper(tgtKey: K): Generator<T, undefined> {
         while (currentKey === tgtKey) {
             yield currentValue;
 
@@ -129,8 +133,8 @@ export function* groupby<T>(
         while (currentKey === targetKey) {
             const nextVal = it.next();
             if (nextVal.done) {
-                // $FlowFixMe[incompatible-type] - deliberate use of the SENTINEL symbol
-                currentKey = SENTINEL;
+                currentKey = SENTINEL as unknown as K;
+                //                    ^^^^^^^^^^^^^^^ Hack!
                 return;
             }
             currentValue = nextVal.value;
@@ -148,7 +152,7 @@ export function* groupby<T>(
  * Stops when either the data or selectors iterables has been exhausted.
  */
 export function* icompress<T>(data: Iterable<T>, selectors: Iterable<boolean>): Iterable<T> {
-    for (let [d, s] of izip(data, selectors)) {
+    for (const [d, s] of izip(data, selectors)) {
         if (s) {
             yield d;
         }
@@ -160,7 +164,7 @@ export function* icompress<T>(data: Iterable<T>, selectors: Iterable<boolean>): 
  * for which the predicate is true.
  */
 export function* ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> {
-    for (let value of iterable) {
+    for (const value of iterable) {
         if (predicate(value)) {
             yield value;
         }
@@ -171,8 +175,8 @@ export function* ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Ite
  * Returns an iterator that computes the given mapper function using arguments
  * from each of the iterables.
  */
-export function* imap<T, V>(iterable: Iterable<T>, mapper: (T) => V): Iterable<V> {
-    for (let value of iterable) {
+export function* imap<T, V>(iterable: Iterable<T>, mapper: (item: T) => V): Iterable<V> {
+    for (const value of iterable) {
         yield mapper(value);
     }
 }
@@ -186,13 +190,24 @@ export function* imap<T, V>(iterable: Iterable<T>, mapper: (T) => V): Iterable<V
  * otherwise, the iterable will be fully exhausted.  `islice()` does not
  * support negative values for `start`, `stop`, or `step`.
  */
-export function* islice<T>(iterable: Iterable<T>, start: number, stop: ?number, step: number = 1): Iterable<T> {
-    /* istanbul ignore if */
-    if (start < 0) throw new Error('start cannot be negative');
-    /* istanbul ignore if */
-    if (typeof stop === 'number' && stop < 0) throw new Error('stop cannot be negative');
-    /* istanbul ignore if */
-    if (step < 0) throw new Error('step cannot be negative');
+export function islice<T>(iterable: Iterable<T>, stop: number): Iterable<T>;
+export function islice<T>(iterable: Iterable<T>, start: number, stop?: number | null, step?: number): Iterable<T>;
+export function* islice<T>(
+    iterable: Iterable<T>,
+    stopOrStart: number,
+    possiblyStop?: number | null,
+    step = 1
+): Iterable<T> {
+    let start, stop;
+    if (possiblyStop !== undefined) {
+        // islice(iterable, start, stop[, step])
+        start = stopOrStart;
+        stop = possiblyStop;
+    } else {
+        // islice(iterable, stop)
+        start = 0;
+        stop = stopOrStart;
+    }
 
     const pred = slicePredicate(start, stop, step);
     for (const [i, value] of enumerate(iterable)) {
@@ -250,11 +265,8 @@ export const izip = izip2;
  * the iterables are of uneven length, missing values are filled-in with
  * fillvalue.  Iteration continues until the longest iterable is exhausted.
  */
-export function* izipLongest2<T1, T2, D = void>(
-    xs: Iterable<T1>,
-    ys: Iterable<T2>,
-    filler: D
-): Iterable<[T1 | D, T2 | D]> {
+export function* izipLongest2<T1, T2, D>(xs: Iterable<T1>, ys: Iterable<T2>, filler?: D): Iterable<[T1 | D, T2 | D]> {
+    const filler_ = filler as D;
     const ixs = iter(xs);
     const iys = iter(ys);
     for (;;) {
@@ -264,7 +276,7 @@ export function* izipLongest2<T1, T2, D = void>(
             // All iterables exhausted
             return;
         } else {
-            yield [!x.done ? x.value : filler, !y.done ? y.value : filler];
+            yield [!x.done ? x.value : filler_, !y.done ? y.value : filler_];
         }
     }
 }
@@ -272,12 +284,13 @@ export function* izipLongest2<T1, T2, D = void>(
 /**
  * See izipLongest2, but for three.
  */
-export function* izipLongest3<T1, T2, T3, D = void>(
+export function* izipLongest3<T1, T2, T3, D = undefined>(
     xs: Iterable<T1>,
     ys: Iterable<T2>,
     zs: Iterable<T3>,
-    filler: D
+    filler?: D
 ): Iterable<[T1 | D, T2 | D, T3 | D]> {
+    const filler_ = filler as D;
     const ixs = iter(xs);
     const iys = iter(ys);
     const izs = iter(zs);
@@ -289,7 +302,7 @@ export function* izipLongest3<T1, T2, T3, D = void>(
             // All iterables exhausted
             return;
         } else {
-            yield [!x.done ? x.value : filler, !y.done ? y.value : filler, !z.done ? z.value : filler];
+            yield [!x.done ? x.value : filler_, !y.done ? y.value : filler_, !z.done ? z.value : filler_];
         }
     }
 }
@@ -302,15 +315,14 @@ export function* izipLongest3<T1, T2, T3, D = void>(
  * iterables with homogeneous types, so you cannot mix types like <A, B> like
  * you can with izip2().
  */
-export function* izipMany<T>(...iters: Array<Iterable<T>>): Iterable<Array<T>> {
+export function* izipMany<T>(...iters: Iterable<T>[]): Iterable<T[]> {
     // Make them all iterables
     const iterables = iters.map(iter);
 
     for (;;) {
-        const heads: Array<IteratorResult<T, void>> = iterables.map((xs) => xs.next());
+        const heads: Array<IteratorResult<T, undefined>> = iterables.map((xs) => xs.next());
         if (all(heads, (h) => !h.done)) {
-            // $FlowFixMe[unclear-type]
-            yield heads.map((h) => ((h.value: any): T));
+            yield heads.map((h) => h.value as T);
         } else {
             // One of the iterables exhausted
             return;
@@ -331,24 +343,24 @@ export function* izipMany<T>(...iters: Array<Iterable<T>>): Iterable<Array<T>> {
  * So if the input elements are unique, there will be no repeat values in each
  * permutation.
  */
-export function* permutations<T>(iterable: Iterable<T>, r: Maybe<number>): Iterable<Array<T>> {
-    let pool = Array.from(iterable);
-    let n = pool.length;
-    let x = r === undefined ? n : r;
+export function* permutations<T>(iterable: Iterable<T>, r?: number): Iterable<T[]> {
+    const pool = Array.from(iterable);
+    const n = pool.length;
+    const x = r === undefined ? n : r;
 
     if (x > n) {
         return;
     }
 
-    let indices: Array<number> = Array.from(range(n));
-    let cycles: Array<number> = Array.from(range(n, n - x, -1));
-    let poolgetter = (i) => pool[i];
+    let indices: number[] = Array.from(range(n));
+    const cycles: number[] = Array.from(range(n, n - x, -1));
+    const poolgetter = (i: number) => pool[i];
 
     yield indices.slice(0, x).map(poolgetter);
 
     while (n > 0) {
-        let cleanExit: boolean = true;
-        for (let i of range(x - 1, -1, -1)) {
+        let cleanExit = true;
+        for (const i of range(x - 1, -1, -1)) {
             cycles[i] -= 1;
             if (cycles[i] === 0) {
                 indices = indices
@@ -357,9 +369,9 @@ export function* permutations<T>(iterable: Iterable<T>, r: Maybe<number>): Itera
                     .concat(indices.slice(i, i + 1));
                 cycles[i] = n - i;
             } else {
-                let j: number = cycles[i];
+                const j: number = cycles[i];
 
-                let [p, q] = [indices[indices.length - j], indices[i]];
+                const [p, q] = [indices[indices.length - j], indices[i]];
                 indices[i] = p;
                 indices[indices.length - j] = q;
                 yield indices.slice(0, x).map(poolgetter);
@@ -384,8 +396,7 @@ export function* repeat<T>(thing: T, times?: number): Iterable<T> {
             yield thing;
         }
     } else {
-        // eslint-disable-next-line no-unused-vars
-        for (const i of range(times)) {
+        for (const _ of range(times)) {
             yield thing;
         }
     }
@@ -402,15 +413,15 @@ export function* takewhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): I
     }
 }
 
-export function zipLongest2<T1, T2, D = void>(xs: Iterable<T1>, ys: Iterable<T2>, filler: D): Array<[T1 | D, T2 | D]> {
+export function zipLongest2<T1, T2, D>(xs: Iterable<T1>, ys: Iterable<T2>, filler?: D): Array<[T1 | D, T2 | D]> {
     return Array.from(izipLongest2(xs, ys, filler));
 }
 
-export function zipLongest3<T1, T2, T3, D = void>(
+export function zipLongest3<T1, T2, T3, D>(
     xs: Iterable<T1>,
     ys: Iterable<T2>,
     zs: Iterable<T3>,
-    filler: D
+    filler?: D
 ): Array<[T1 | D, T2 | D, T3 | D]> {
     return Array.from(izipLongest3(xs, ys, zs, filler));
 }
@@ -418,6 +429,6 @@ export function zipLongest3<T1, T2, T3, D = void>(
 export const izipLongest = izipLongest2;
 export const zipLongest = zipLongest2;
 
-export function zipMany<T>(...iters: Array<Iterable<T>>): Array<Array<T>> {
+export function zipMany<T>(...iters: Iterable<T>[]): T[][] {
     return Array.from(izipMany(...iters));
 }

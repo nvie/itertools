@@ -1,5 +1,3 @@
-// @flow strict
-
 import { iter, map } from './builtins';
 import { izip, repeat } from './itertools';
 import type { Predicate, Primitive } from './types';
@@ -17,9 +15,9 @@ import { primitiveIdentity } from './utils';
  *     [...chunked([1, 2, 3, 4, 5, 6, 7, 8], 3)]
  *     // [[1, 2, 3], [4, 5, 6], [7, 8]]
  */
-export function* chunked<T>(iterable: Iterable<T>, size: number): Iterable<Array<T>> {
+export function* chunked<T>(iterable: Iterable<T>, size: number): Iterable<T[]> {
     const it = iter(iterable);
-    let r1 = it.next();
+    const r1 = it.next();
     if (r1.done) {
         return;
     }
@@ -49,8 +47,8 @@ export function* chunked<T>(iterable: Iterable<T>, size: number): Iterable<Array
  *
  */
 export function* flatten<T>(iterableOfIterables: Iterable<Iterable<T>>): Iterable<T> {
-    for (let iterable of iterableOfIterables) {
-        for (let item of iterable) {
+    for (const iterable of iterableOfIterables) {
+        for (const item of iterable) {
             yield item;
         }
     }
@@ -63,7 +61,7 @@ export function* flatten<T>(iterableOfIterables: Iterable<Iterable<T>>): Iterabl
  *     [1, -1, 2, -1, 3, -1, 4]
  *
  */
-export function intersperse<T>(value: T, iterable: Iterable<T>): Iterable<T> {
+export function intersperse<T, V>(value: V, iterable: Iterable<T>): Iterable<T | V> {
     const stream = flatten(izip(repeat(value), iterable));
     take(1, stream); // eat away and discard the first value from the output
     return stream;
@@ -77,7 +75,7 @@ export function* itake<T>(n: number, iterable: Iterable<T>): Iterable<T> {
     const it = iter(iterable);
     let count = n;
     while (count-- > 0) {
-        let s = it.next();
+        const s = it.next();
         if (!s.done) {
             yield s.value;
         } else {
@@ -98,12 +96,12 @@ export function* itake<T>(n: number, iterable: Iterable<T>): Iterable<T> {
  */
 export function* pairwise<T>(iterable: Iterable<T>): Iterable<[T, T]> {
     const it = iter(iterable);
-    let r1 = it.next();
-    if (r1.done) {
+    const first = it.next();
+    if (first.done) {
         return;
     }
 
-    r1 = r1.value;
+    let r1: T = first.value;
     for (const r2 of it) {
         yield [r1, r2];
         r1 = r2;
@@ -124,11 +122,11 @@ export function* pairwise<T>(iterable: Iterable<T>): Iterable<[T, T]> {
  *     [0, 2, 4, 6, 8]
  *
  */
-export function partition<T>(iterable: Iterable<T>, predicate: Predicate<T>): [Array<T>, Array<T>] {
-    let good = [];
-    let bad = [];
+export function partition<T>(iterable: Iterable<T>, predicate: Predicate<T>): [T[], T[]] {
+    const good = [];
+    const bad = [];
 
-    for (let item of iterable) {
+    for (const item of iterable) {
         if (predicate(item)) {
             good.push(item);
         } else {
@@ -146,12 +144,12 @@ export function partition<T>(iterable: Iterable<T>, predicate: Predicate<T>): [A
  *     >>> [...roundrobin([1, 2, 3], [4], [5, 6, 7, 8])]
  *     [1, 4, 5, 2, 6, 3, 7, 8]
  */
-export function* roundrobin<T>(...iters: Array<Iterable<T>>): Iterable<T> {
+export function* roundrobin<T>(...iters: Iterable<T>[]): Iterable<T> {
     // We'll only keep lazy versions of the input iterables in here that we'll
     // slowly going to exhaust.  Once an iterable is exhausted, it will be
     // removed from this list.  Once the entire list is empty, this algorithm
     // ends.
-    let iterables: Array<Iterator<T>> = map(iters, iter);
+    const iterables: Array<Iterator<T>> = map(iters, iter);
 
     while (iterables.length > 0) {
         let index = 0;
@@ -183,12 +181,12 @@ export function* roundrobin<T>(...iters: Array<Iterable<T>>): Iterable<T> {
  * This is also different from `zipLongest()`, since the number of items in
  * each round can decrease over time, rather than being filled with a filler.
  */
-export function* heads<T>(...iters: Array<Iterable<T>>): Iterable<Array<T>> {
+export function* heads<T>(...iters: Array<Iterable<T>>): Iterable<T[]> {
     // We'll only keep lazy versions of the input iterables in here that we'll
     // slowly going to exhaust.  Once an iterable is exhausted, it will be
     // removed from this list.  Once the entire list is empty, this algorithm
     // ends.
-    let iterables: Array<Iterator<T>> = map(iters, iter);
+    const iterables: Array<Iterator<T>> = map(iters, iter);
 
     while (iterables.length > 0) {
         let index = 0;
@@ -216,7 +214,7 @@ export function* heads<T>(...iters: Array<Iterable<T>>): Iterable<Array<T>> {
 /**
  * Non-lazy version of itake().
  */
-export function take<T>(n: number, iterable: Iterable<T>): Array<T> {
+export function take<T>(n: number, iterable: Iterable<T>): T[] {
     return Array.from(itake(n, iterable));
 }
 
@@ -229,10 +227,13 @@ export function take<T>(n: number, iterable: Iterable<T>): Array<T> {
  *     ['A', 'b', 'C']
  *
  */
-export function* uniqueEverseen<T>(iterable: Iterable<T>, keyFn: (T) => Primitive = primitiveIdentity): Iterable<T> {
-    let seen = new Set();
-    for (let item of iterable) {
-        let key = keyFn(item);
+export function* uniqueEverseen<T>(
+    iterable: Iterable<T>,
+    keyFn: (item: T) => Primitive = primitiveIdentity
+): Iterable<T> {
+    const seen = new Set();
+    for (const item of iterable) {
+        const key = keyFn(item);
         if (!seen.has(key)) {
             seen.add(key);
             yield item;
@@ -249,10 +250,13 @@ export function* uniqueEverseen<T>(iterable: Iterable<T>, keyFn: (T) => Primitiv
  *     ['A', 'b', 'C', 'A', 'B']
  *
  */
-export function* uniqueJustseen<T>(iterable: Iterable<T>, keyFn: (T) => Primitive = primitiveIdentity): Iterable<T> {
+export function* uniqueJustseen<T>(
+    iterable: Iterable<T>,
+    keyFn: (item: T) => Primitive = primitiveIdentity
+): Iterable<T> {
     let last = undefined;
-    for (let item of iterable) {
-        let key = keyFn(item);
+    for (const item of iterable) {
+        const key = keyFn(item);
         if (key !== last) {
             yield item;
             last = key;

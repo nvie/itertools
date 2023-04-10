@@ -1,13 +1,11 @@
-// @flow strict
-
 import type { Primitive } from './types';
 
-type CmpFn<T> = (T, T) => number;
+type CmpFn<T> = (a: T, b: T) => number;
 
-export function keyToCmp<T>(keyFn: (T) => Primitive): CmpFn<T> {
+export function keyToCmp<T>(keyFn: (item: T) => Primitive): CmpFn<T> {
     return (a: T, b: T) => {
-        let ka = keyFn(a);
-        let kb = keyFn(b);
+        const ka = keyFn(a);
+        const kb = keyFn(b);
         // istanbul ignore else
         if (typeof ka === 'boolean' && typeof kb === 'boolean') {
             return ka === kb ? 0 : !ka && kb ? -1 : 1;
@@ -21,11 +19,11 @@ export function keyToCmp<T>(keyFn: (T) => Primitive): CmpFn<T> {
     };
 }
 
-export function identityPredicate(x: mixed): boolean {
+export function identityPredicate(x: unknown): boolean {
     return !!x;
 }
 
-export function numberIdentity(x: mixed): number {
+export function numberIdentity(x: unknown): number {
     /* istanbul ignore if */
     if (typeof x !== 'number') {
         throw new Error('Inputs must be numbers');
@@ -33,7 +31,9 @@ export function numberIdentity(x: mixed): number {
     return x;
 }
 
-export function primitiveIdentity(x: mixed): Primitive {
+export function primitiveIdentity<P extends Primitive>(x: P): P;
+export function primitiveIdentity(x: unknown): Primitive;
+export function primitiveIdentity(x: unknown): Primitive {
     /* istanbul ignore if */
     if (typeof x !== 'string' && typeof x !== 'number' && typeof x !== 'boolean') {
         throw new Error('Please provide a key function that can establish object identity');

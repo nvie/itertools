@@ -28,7 +28,7 @@ if git is-dirty; then
 fi
 
 npm run test
-./bin/build.sh
+npm run build
 
 # Read the version from the package.json file, we don't need to re-enter it
 VERSION="$(cat package.json | jq -r .version)"

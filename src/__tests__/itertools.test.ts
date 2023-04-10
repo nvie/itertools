@@ -1,5 +1,4 @@
-// @flow strict
-
+import { describe, it, expect } from 'vitest';
 import { all, range } from '../builtins';
 import {
     chain,
@@ -20,8 +19,8 @@ import {
 } from '../itertools';
 import { take } from '../more-itertools';
 
-const isEven = (x) => x % 2 === 0;
-const isPositive = (x) => x >= 0;
+const isEven = (x: number) => x % 2 === 0;
+const isPositive = (x: number) => x >= 0;
 
 describe('chain', () => {
     it('chains empty iterables', () => {
@@ -103,7 +102,8 @@ describe('dropwhile', () => {
 });
 
 describe('groupby', () => {
-    const countValues = (grouped) => Array.from(imap(grouped, ([k, v]) => [k, Array.from(v).length]));
+    const countValues = <K, V>(grouped: Iterable<[K, Iterable<V>]>) =>
+        Array.from(imap(grouped, ([k, v]) => [k, Array.from(v).length]));
 
     it('groupby with empty list', () => {
         expect(Array.from(groupby([]))).toEqual([]);
@@ -141,16 +141,13 @@ describe('groupby', () => {
         // Flow does not like that I use next on an iterable (it is actually
         // a generator but the Generator type is awful.
 
-        // $FlowFixMe[prop-missing]
-        const [, v1] = it.next().value;
-        // $FlowFixMe[prop-missing]
-        const [, v2] = it.next().value;
-        // $FlowFixMe[prop-missing]
-        const [, v3] = it.next().value;
+        const [, v1] = it.next().value!;
+        const [, v2] = it.next().value!;
+        const [, v3] = it.next().value!;
 
         expect([...v1]).toEqual([]);
         expect([...v2]).toEqual([]);
-        expect(v3.next().value).toEqual('c');
+        expect(v3.next().value!).toEqual('c');
         Array.from(it); // exhaust the groupby iterator
         expect([...v3]).toEqual([]);
     });
@@ -269,12 +266,14 @@ describe('permutations', () => {
 });
 
 describe('repeat', () => {
-    it('repeat indefinitely', () => {
+    it('repeat indefinitely #1', () => {
         // practically limit it to something (in this case 99)
-        let items = take(99, repeat(123));
+        const items = take(99, repeat(123));
         expect(all(items, (n) => n === 123)).toEqual(true);
+    });
 
-        items = take(99, repeat('foo'));
+    it('repeat indefinitely #2', () => {
+        const items = take(99, repeat('foo'));
         expect(all(items, (n) => n === 'foo')).toEqual(true);
     });
 

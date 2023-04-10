@@ -1,5 +1,4 @@
-// @flow strict
-
+import { describe, it, expect } from 'vitest';
 import { range } from '../builtins';
 import { first } from '../custom';
 import {
@@ -15,8 +14,8 @@ import {
     uniqueJustseen,
 } from '../more-itertools';
 
-const isEven = (x) => x % 2 === 0;
-const isPositive = (x) => x >= 0;
+const isEven = (x: number) => x % 2 === 0;
+const isPositive = (x: number) => x >= 0;
 
 describe('chunked', () => {
     it('does nothing for empty array', () => {

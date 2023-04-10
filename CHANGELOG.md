@@ -1,6 +1,17 @@
-## vNEXT
+## v2.0.0
 
--   Drop support for Node 10.x
+**Breaking changes:**
+
+-   `icompact`, `compact`, and `compactObject` functions will now also remove
+    `null` values, not only `undefined`
+-   Support only Node >= 12.x
+-   Support only TypeScript versions >= 4.3
+-   Drop Flow support
+
+Changes:
+
+-   Modern ESM and CJS dual exports
+-   Rewrite the source code in TypeScript
 
 ## v1.7.1
 
