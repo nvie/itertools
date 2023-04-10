@@ -5,12 +5,12 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/nvie/itertools.js.git"
+        "url": "git+https://github.com/nvie/itertools.git"
     },
     "author": "Vincent Driessen",
-    "homepage": "https://github.com/nvie/itertools.js#readme",
+    "homepage": "https://github.com/nvie/itertools#readme",
     "bugs": {
-        "url": "https://github.com/nvie/itertools.js/issues"
+        "url": "https://github.com/nvie/itertools/issues"
     },
     "types": "./dist/index.d.ts",
     "main": "./dist/index.js",
@@ -59,6 +59,6 @@
         "typescript": "^4.3.5",
         "vitest": "^0.29.8"
     },
-    "githubUrl": "https://github.com/nvie/itertools.js",
+    "githubUrl": "https://github.com/nvie/itertools",
     "sideEffects": false
 }
