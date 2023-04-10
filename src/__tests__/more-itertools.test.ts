@@ -23,8 +23,18 @@ function isNum(value: unknown): value is number {
 }
 
 describe('chunked', () => {
-    it('does nothing for empty array', () => {
+    it('empty', () => {
         expect(Array.from(chunked([], 3))).toEqual([]);
+        expect(Array.from(chunked([], 1337))).toEqual([]);
+    });
+
+    it('fails with invalid chunk size', () => {
+        expect(() => Array.from(chunked([3, 2, 1], 0))).toThrow();
+        expect(() => Array.from(chunked([3, 2, 1], -3))).toThrow();
+    });
+
+    it('works with chunk size of 1', () => {
+        expect(Array.from(chunked([5, 4, 3, 2, 1], 1))).toEqual([[5], [4], [3], [2], [1]]);
     });
 
     it('works with array smaller than chunk size', () => {
