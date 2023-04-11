@@ -48,8 +48,8 @@
         "node-itertools"
     ],
     "devDependencies": {
-        "@typescript-eslint/eslint-plugin": "^5.57.1",
-        "@typescript-eslint/parser": "^5.57.1",
+        "@typescript-eslint/eslint-plugin": "^5.58.0",
+        "@typescript-eslint/parser": "^5.58.0",
         "@vitest/coverage-istanbul": "^0.29.8",
         "eslint": "^8.38.0",
         "fast-check": "^3.8.0",
