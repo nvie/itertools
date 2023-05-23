@@ -57,7 +57,7 @@
         "prettier": "^2.8.7",
         "tsup": "^6.7.0",
         "typescript": "^4.3.5",
-        "vitest": "^0.29.8"
+        "vitest": "^0.31.1"
     },
     "githubUrl": "https://github.com/nvie/itertools",
     "sideEffects": false
