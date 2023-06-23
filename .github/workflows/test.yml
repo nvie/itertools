@@ -38,3 +38,6 @@ jobs:
 
       - name: Run linters
         run: npm run lint
+
+      - name: Run NPM package lints
+        run: npm run lint:package
