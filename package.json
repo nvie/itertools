@@ -34,7 +34,7 @@
         "lint": "npm run lint:eslint && npm run lint:prettier",
         "lint:eslint": "npx eslint --report-unused-disable-directives src/",
         "lint:prettier": "npx prettier --list-different src/",
-        "lint:package": "npx publint@latest --strict && npx @arethetypeswrong/cli@latest /tmp/$( npm pack -q --pack-destination /tmp )",
+        "lint:package": "npx -y publint@latest --strict && npx -y @arethetypeswrong/cli@latest /tmp/$( npm pack -q --pack-destination /tmp )",
         "prepublish": "in-publish && npm run actually-prepublish || not-in-publish",
         "test": "vitest run --coverage"
     },
