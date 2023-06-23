@@ -41,4 +41,4 @@ jobs:
 
       - name: Run NPM package lints
         run: npm run lint:package
-        if: ${{ matrix.node-version != "12.x" }}
+        if: ${{ matrix.node-version != '12.x' }}
