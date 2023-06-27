@@ -43,4 +43,6 @@ jobs:
         run: |
           npm run build
           npm run lint:package
-        if: ${{ matrix.node-version != '12.x' && matrix.node-version != '14.x' }}
+        # @arethetypeswrong/cli requires Node 18+, it seems?
+        # See https://github.com/arethetypeswrong/arethetypeswrong.github.io/issues/52
+        if: ${{ matrix.node-version == '18.x' || matrix.node-version == 'latest' }}

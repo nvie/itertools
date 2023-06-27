@@ -28,7 +28,7 @@
     },
     "scripts": {
         "actually-prepublish": "echo \"\\n\\nPlease run \\`bin/publish.sh <options>\\` instead.\\n\\n\" && exit 2",
-        "build": "tsup && cp dist/index.d.ts dist/index.d.mts",
+        "build": "tsup",
         "clean": "rimraf dist",
         "format": "npx prettier --write src/",
         "lint": "npm run lint:eslint && npm run lint:prettier",
@@ -56,7 +56,7 @@
         "fast-check": "^3.8.0",
         "in-publish": "^2.0.1",
         "prettier": "^2.8.7",
-        "tsup": "^6.7.0",
+        "tsup": "^7.1.0",
         "typescript": "^4.3.5",
         "vitest": "^0.29.8"
     },
