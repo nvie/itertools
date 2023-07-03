@@ -30,11 +30,11 @@
         "actually-prepublish": "echo \"\\n\\nPlease run \\`bin/publish.sh <options>\\` instead.\\n\\n\" && exit 2",
         "build": "tsup",
         "clean": "rimraf dist",
-        "format": "npx prettier --write src/",
+        "format": "prettier --write src/",
         "lint": "npm run lint:eslint && npm run lint:prettier",
-        "lint:eslint": "npx eslint --report-unused-disable-directives src/",
-        "lint:prettier": "npx prettier --list-different src/",
-        "lint:package": "npx -y publint@latest --strict && npx -y @arethetypeswrong/cli@latest /tmp/$( npm pack -q --pack-destination /tmp )",
+        "lint:eslint": "eslint --report-unused-disable-directives src/",
+        "lint:prettier": "prettier --list-different src/",
+        "lint:package": "publint --strict && attw --pack",
         "prepublish": "in-publish && npm run actually-prepublish || not-in-publish",
         "test": "vitest run --coverage"
     },
@@ -49,6 +49,7 @@
         "node-itertools"
     ],
     "devDependencies": {
+        "@arethetypeswrong/cli": "^0.4.2",
         "@typescript-eslint/eslint-plugin": "^5.58.0",
         "@typescript-eslint/parser": "^5.58.0",
         "@vitest/coverage-istanbul": "^0.29.8",
@@ -56,6 +57,7 @@
         "fast-check": "^3.8.0",
         "in-publish": "^2.0.1",
         "prettier": "^2.8.7",
+        "publint": "^0.1.15",
         "tsup": "^7.1.0",
         "typescript": "^4.3.5",
         "vitest": "^0.29.8"
