@@ -1,3 +1,7 @@
+## v2.1.2
+
+-   Improve tree-shakability when used in bundlers
+
 ## v2.1.1
 
 -   Improve documentation
