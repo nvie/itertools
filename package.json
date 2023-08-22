@@ -61,7 +61,7 @@
         "publint": "^0.1.15",
         "tsup": "^7.1.0",
         "typescript": "^4.3.5",
-        "vitest": "^0.32.3"
+        "vitest": "^0.34.2"
     },
     "githubUrl": "https://github.com/nvie/itertools",
     "sideEffects": false
