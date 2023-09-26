@@ -53,7 +53,7 @@
         "@arethetypeswrong/cli": "^0.4.2",
         "@typescript-eslint/eslint-plugin": "^5.58.0",
         "@typescript-eslint/parser": "^5.58.0",
-        "@vitest/coverage-istanbul": "^0.32.4",
+        "@vitest/coverage-istanbul": "^0.34.5",
         "eslint": "^8.44.0",
         "fast-check": "^3.8.0",
         "in-publish": "^2.0.1",
