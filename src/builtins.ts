@@ -1,7 +1,7 @@
-import { find } from "./custom.js";
-import { count, ifilter, imap, izip, izip3, takewhile } from "./itertools.js";
-import type { Predicate, Primitive } from "./types.js";
-import { identityPredicate, keyToCmp, numberIdentity, primitiveIdentity } from "./utils.js";
+import { find } from "./custom";
+import { count, ifilter, imap, izip, izip3, takewhile } from "./itertools";
+import type { Predicate, Primitive } from "./types";
+import { identityPredicate, keyToCmp, numberIdentity, primitiveIdentity } from "./utils";
 
 /**
  * Returns true when all of the items in iterable are truthy.  An optional key

@@ -16,8 +16,8 @@ import {
   sum,
   zip,
   zip3,
-} from "~/builtins.js";
-import { first } from "~/custom.js";
+} from "~/builtins";
+import { first } from "~/custom";
 
 const isEven = (n: number) => n % 2 === 0;
 

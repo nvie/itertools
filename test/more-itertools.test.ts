@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { range } from "~/builtins.js";
-import { find, first } from "~/custom.js";
+import { range } from "~/builtins";
+import { find, first } from "~/custom";
 import {
   chunked,
   flatten,
@@ -12,7 +12,7 @@ import {
   take,
   uniqueEverseen,
   uniqueJustseen,
-} from "~/more-itertools.js";
+} from "~/more-itertools";
 import * as fc from "fast-check";
 
 const isEven = (x: number) => x % 2 === 0;

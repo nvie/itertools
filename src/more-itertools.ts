@@ -1,7 +1,7 @@
-import { iter, map } from "./builtins.js";
-import { izip, repeat } from "./itertools.js";
-import type { Predicate, Primitive } from "./types.js";
-import { primitiveIdentity } from "./utils.js";
+import { iter, map } from "./builtins";
+import { izip, repeat } from "./itertools";
+import type { Predicate, Primitive } from "./types";
+import { primitiveIdentity } from "./utils";
 
 /**
  * Break iterable into lists of length `size`:

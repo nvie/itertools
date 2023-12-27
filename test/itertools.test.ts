@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { all, range } from "~/builtins.js";
+import { all, range } from "~/builtins";
 import {
   chain,
   compress,
@@ -16,8 +16,8 @@ import {
   zipLongest,
   zipLongest3,
   zipMany,
-} from "~/itertools.js";
-import { take } from "~/more-itertools.js";
+} from "~/itertools";
+import { take } from "~/more-itertools";
 
 const isEven = (x: number) => x % 2 === 0;
 const isPositive = (x: number) => x >= 0;
