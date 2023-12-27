@@ -1,5 +1,6 @@
 ## v2.2.0
 
+- Move to ESM by default
 - Drop support for node 12.x and 14.x  
   (they probably still work, but they're EoL)
 
