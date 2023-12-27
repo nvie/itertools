@@ -29,7 +29,6 @@
     }
   },
   "scripts": {
-    "actually-prepublish": "echo \"\\n\\nPlease run \\`bin/publish.sh <options>\\` instead.\\n\\n\" && exit 2",
     "build": "tsup",
     "clean": "rimraf dist",
     "format": "prettier --write src/ test/",
@@ -37,7 +36,6 @@
     "lint:eslint": "eslint --report-unused-disable-directives src/ test/",
     "lint:prettier": "prettier --list-different src/ test/",
     "lint:package": "publint --strict && attw --pack",
-    "prepublish": "in-publish && npm run actually-prepublish || not-in-publish",
     "test": "vitest run --coverage",
     "release": "release-it"
   },
