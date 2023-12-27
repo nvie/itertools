@@ -38,7 +38,8 @@
     "lint:prettier": "prettier --list-different src/ test/",
     "lint:package": "publint --strict && attw --pack",
     "prepublish": "in-publish && npm run actually-prepublish || not-in-publish",
-    "test": "vitest run --coverage"
+    "test": "vitest run --coverage",
+    "release": "release-it"
   },
   "files": [
     "dist/",
@@ -60,6 +61,7 @@
     "in-publish": "^2.0.1",
     "prettier": "^3.1.1",
     "publint": "^0.2.7",
+    "release-it": "^17.0.1",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3",
     "vite-tsconfig-paths": "^4.2.2",
