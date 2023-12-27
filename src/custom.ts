@@ -1,13 +1,13 @@
-import { ifilter, imap } from './itertools';
-import { flatten } from './more-itertools';
-import type { Predicate } from './types';
+import { ifilter, imap } from "./itertools";
+import { flatten } from "./more-itertools";
+import type { Predicate } from "./types";
 
 function isNullish<T>(x: T): x is NonNullable<T> {
-    return x != null;
+  return x != null;
 }
 
 function isDefined<T>(x: T): boolean {
-    return x !== undefined;
+  return x !== undefined;
 }
 
 /**
@@ -19,7 +19,7 @@ function isDefined<T>(x: T): boolean {
  * For an eager version, @see compact().
  */
 export function icompact<T>(iterable: Iterable<T | null | undefined>): Iterable<T> {
-    return ifilter(iterable, isNullish);
+  return ifilter(iterable, isNullish);
 }
 
 /**
@@ -31,7 +31,7 @@ export function icompact<T>(iterable: Iterable<T | null | undefined>): Iterable<
  * For a lazy version, @see icompact().
  */
 export function compact<T>(iterable: Iterable<T | null | undefined>): T[] {
-    return Array.from(icompact(iterable));
+  return Array.from(icompact(iterable));
 }
 
 /**
@@ -42,14 +42,14 @@ export function compact<T>(iterable: Iterable<T | null | undefined>): T[] {
  *
  */
 export function compactObject<K extends string, V>(obj: Record<K, V | null | undefined>): Record<K, V> {
-    const result = {} as Record<K, V>;
-    for (const [key, value_] of Object.entries(obj)) {
-        const value = value_ as V | null | undefined;
-        if (value != null) {
-            result[key as K] = value;
-        }
+  const result = {} as Record<K, V>;
+  for (const [key, value_] of Object.entries(obj)) {
+    const value = value_ as V | null | undefined;
+    if (value != null) {
+      result[key as K] = value;
     }
-    return result;
+  }
+  return result;
 }
 
 /**
@@ -58,19 +58,19 @@ export function compactObject<K extends string, V>(obj: Record<K, V | null | und
  * the iterable.
  */
 export function find<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): T | undefined {
-    if (keyFn === undefined) {
-        for (const value of iterable) {
-            return value;
-        }
-        return undefined;
-    } else {
-        for (const value of iterable) {
-            if (keyFn(value)) {
-                return value;
-            }
-        }
-        return undefined;
+  if (keyFn === undefined) {
+    for (const value of iterable) {
+      return value;
     }
+    return undefined;
+  } else {
+    for (const value of iterable) {
+      if (keyFn(value)) {
+        return value;
+      }
+    }
+    return undefined;
+  }
 }
 
 /**
@@ -80,7 +80,7 @@ export function find<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): T | undefi
  * iterable.
  */
 export function first<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): T | undefined {
-    return find(iterable, keyFn ?? isDefined);
+  return find(iterable, keyFn ?? isDefined);
 }
 
 /**
@@ -98,5 +98,5 @@ export function first<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): T | undef
  *
  */
 export function flatmap<T, S>(iterable: Iterable<T>, mapper: (item: T) => Iterable<S>): Iterable<S> {
-    return flatten(imap(iterable, mapper));
+  return flatten(imap(iterable, mapper));
 }

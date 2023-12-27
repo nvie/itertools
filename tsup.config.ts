@@ -1,14 +1,11 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from "tsup";
 
 export default defineConfig({
-    entry: ['src/index.ts'],
-    dts: true,
-    splitting: true,
-    clean: true,
-    target: 'es2015',
-    format: ['cjs', 'esm'],
-
-    // Perhaps enable later?
-    minify: true,
-    sourcemap: true,
+  entry: ["src/index.ts"],
+  dts: true,
+  splitting: true,
+  clean: true,
+  // target: /* what tsconfig specifies */,
+  format: ["esm", "cjs"],
+  sourcemap: true,
 });

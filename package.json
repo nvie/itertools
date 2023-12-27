@@ -1,68 +1,70 @@
 {
-    "name": "itertools",
-    "version": "2.1.2",
-    "description": "A JavaScript port of Python's awesome itertools standard library",
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/nvie/itertools.git"
-    },
-    "author": "Vincent Driessen",
-    "homepage": "https://github.com/nvie/itertools#readme",
-    "bugs": {
-        "url": "https://github.com/nvie/itertools/issues"
-    },
-    "types": "./dist/index.d.ts",
-    "main": "./dist/index.js",
-    "exports": {
-        ".": {
-            "import": {
-                "types": "./dist/index.d.mts",
-                "default": "./dist/index.mjs"
-            },
-            "require": {
-                "types": "./dist/index.d.ts",
-                "module": "./dist/index.mjs",
-                "default": "./dist/index.js"
-            }
-        }
-    },
-    "scripts": {
-        "actually-prepublish": "echo \"\\n\\nPlease run \\`bin/publish.sh <options>\\` instead.\\n\\n\" && exit 2",
-        "build": "tsup",
-        "clean": "rimraf dist",
-        "format": "prettier --write src/",
-        "lint": "npm run lint:eslint && npm run lint:prettier",
-        "lint:eslint": "eslint --report-unused-disable-directives src/",
-        "lint:prettier": "prettier --list-different src/",
-        "lint:package": "publint --strict && attw --pack",
-        "prepublish": "in-publish && npm run actually-prepublish || not-in-publish",
-        "test": "vitest run --coverage"
-    },
-    "files": [
-        "dist/",
-        "LICENSE",
-        "README.md"
-    ],
-    "keywords": [
-        "itertool",
-        "itertools",
-        "node-itertools"
-    ],
-    "devDependencies": {
-        "@arethetypeswrong/cli": "^0.4.2",
-        "@typescript-eslint/eslint-plugin": "^5.58.0",
-        "@typescript-eslint/parser": "^5.58.0",
-        "@vitest/coverage-istanbul": "^0.32.4",
-        "eslint": "^8.44.0",
-        "fast-check": "^3.8.0",
-        "in-publish": "^2.0.1",
-        "prettier": "^2.8.7",
-        "publint": "^0.1.15",
-        "tsup": "^7.1.0",
-        "typescript": "^4.3.5",
-        "vitest": "^0.32.3"
-    },
-    "githubUrl": "https://github.com/nvie/itertools",
-    "sideEffects": false
+  "name": "itertools",
+  "version": "2.1.2",
+  "description": "A JavaScript port of Python's awesome itertools standard library",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nvie/itertools.git"
+  },
+  "author": "Vincent Driessen",
+  "homepage": "https://github.com/nvie/itertools#readme",
+  "bugs": {
+    "url": "https://github.com/nvie/itertools/issues"
+  },
+  "type": "module",
+  "types": "./dist/index.d.cts",
+  "main": "./dist/index.cjs",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "module": "./dist/index.js",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "scripts": {
+    "actually-prepublish": "echo \"\\n\\nPlease run \\`bin/publish.sh <options>\\` instead.\\n\\n\" && exit 2",
+    "build": "tsup",
+    "clean": "rimraf dist",
+    "format": "prettier --write src/ test/",
+    "lint": "npm run lint:eslint && npm run lint:prettier",
+    "lint:eslint": "eslint --report-unused-disable-directives src/ test/",
+    "lint:prettier": "prettier --list-different src/ test/",
+    "lint:package": "publint --strict && attw --pack",
+    "prepublish": "in-publish && npm run actually-prepublish || not-in-publish",
+    "test": "vitest run --coverage"
+  },
+  "files": [
+    "dist/",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "itertool",
+    "itertools",
+    "node-itertools"
+  ],
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.13.5",
+    "@typescript-eslint/eslint-plugin": "^6.16.0",
+    "@typescript-eslint/parser": "^6.16.0",
+    "@vitest/coverage-istanbul": "^1.1.0",
+    "eslint": "^8.56.0",
+    "fast-check": "^3.15.0",
+    "in-publish": "^2.0.1",
+    "prettier": "^3.1.1",
+    "publint": "^0.2.7",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "vite-tsconfig-paths": "^4.2.2",
+    "vitest": "^1.1.0"
+  },
+  "githubUrl": "https://github.com/nvie/itertools",
+  "sideEffects": false
 }
