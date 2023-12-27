@@ -30,14 +30,13 @@
   },
   "scripts": {
     "build": "tsup",
-    "clean": "rimraf dist",
     "format": "prettier --write src/ test/",
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "lint:eslint": "eslint --report-unused-disable-directives src/ test/",
     "lint:prettier": "prettier --list-different src/ test/",
     "lint:package": "publint --strict && attw --pack",
     "test": "vitest run --coverage",
-    "release": "release-it"
+    "release": "npm run test && npm run lint && npm run build && npm run lint:package && release-it"
   },
   "files": [
     "dist/",
