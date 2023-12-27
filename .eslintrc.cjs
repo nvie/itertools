@@ -14,7 +14,7 @@ module.exports = {
 
   overrides: [
     {
-      files: ["src/**/__tests__/**"],
+      files: ["test/**"],
 
       // Special config for test files
       rules: {
