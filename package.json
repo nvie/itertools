@@ -12,6 +12,7 @@
   "bugs": {
     "url": "https://github.com/nvie/itertools/issues"
   },
+  "type": "commonjs",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "exports": {
