@@ -64,7 +64,12 @@
 
         /* Advanced Options */
         "skipLibCheck": true /* Skip type checking of declaration files. */,
-        "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
+        "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
+        "paths": {
+            "~": ["./src"],
+            "~/*": ["./src/*"]
+        }
     },
-    "include": ["./src/"]
+    "include": ["src", "test"],
+    "exclude": ["node_modules", "dist"]
 }
