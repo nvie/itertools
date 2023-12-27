@@ -1,3 +1,8 @@
+## v2.2.0
+
+- Drop support for node 12.x and 14.x  
+  (they probably still work, but they're EoL)
+
 ## v2.1.2
 
 - Improve tree-shakability when used in bundlers
