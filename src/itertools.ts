@@ -6,26 +6,26 @@ import { primitiveIdentity } from './utils';
 const SENTINEL = Symbol();
 
 function composeAnd(f1: (v1: number) => boolean, f2: (v2: number) => boolean): (v3: number) => boolean {
-    return (n: number) => f1(n) && f2(n);
+  return (n: number) => f1(n) && f2(n);
 }
 
 function slicePredicate(start: number, stop: number | null, step: number) {
-    if (start < 0) throw new Error('start cannot be negative');
-    if (stop !== null && stop < 0) throw new Error('stop cannot be negative');
-    if (step <= 0) throw new Error('step cannot be negative');
+  if (start < 0) throw new Error('start cannot be negative');
+  if (stop !== null && stop < 0) throw new Error('stop cannot be negative');
+  if (step <= 0) throw new Error('step cannot be negative');
 
-    let pred = (n: number) => n >= start;
+  let pred = (n: number) => n >= start;
 
-    if (stop !== null) {
-        const definedStop = stop;
-        pred = composeAnd(pred, (n: number) => n < definedStop);
-    }
+  if (stop !== null) {
+    const definedStop = stop;
+    pred = composeAnd(pred, (n: number) => n < definedStop);
+  }
 
-    if (step > 1) {
-        pred = composeAnd(pred, (n: number) => (n - start) % step === 0);
-    }
+  if (step > 1) {
+    pred = composeAnd(pred, (n: number) => (n - start) % step === 0);
+  }
 
-    return pred;
+  return pred;
 }
 
 /**
@@ -35,7 +35,7 @@ function slicePredicate(start: number, stop: number | null, step: number) {
  * sequence.
  */
 export function chain<T>(...iterables: Iterable<T>[]): Iterable<T> {
-    return flatten(iterables);
+  return flatten(iterables);
 }
 
 /**
@@ -44,18 +44,18 @@ export function chain<T>(...iterables: Iterable<T>[]): Iterable<T> {
  * number.
  */
 export function* count(start = 0, step = 1): Iterable<number> {
-    let n = start;
-    for (;;) {
-        yield n;
-        n += step;
-    }
+  let n = start;
+  for (;;) {
+    yield n;
+    n += step;
+  }
 }
 
 /**
  * Non-lazy version of icompress().
  */
 export function compress<T>(data: Iterable<T>, selectors: Iterable<boolean>): T[] {
-    return Array.from(icompress(data, selectors));
+  return Array.from(icompress(data, selectors));
 }
 
 /**
@@ -64,17 +64,17 @@ export function compress<T>(data: Iterable<T>, selectors: Iterable<boolean>): T[
  * copy.  Repeats indefinitely.
  */
 export function* cycle<T>(iterable: Iterable<T>): Iterable<T> {
-    const saved = [];
-    for (const element of iterable) {
-        yield element;
-        saved.push(element);
-    }
+  const saved = [];
+  for (const element of iterable) {
+    yield element;
+    saved.push(element);
+  }
 
-    while (saved.length > 0) {
-        for (const element of saved) {
-            yield element;
-        }
+  while (saved.length > 0) {
+    for (const element of saved) {
+      yield element;
     }
+  }
 }
 
 /**
@@ -84,56 +84,56 @@ export function* cycle<T>(iterable: Iterable<T>): Iterable<T> {
  * false.
  */
 export function* dropwhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> {
-    const it = iter(iterable);
-    for (const value of it) {
-        if (!predicate(value)) {
-            yield value;
-            break;
-        }
+  const it = iter(iterable);
+  for (const value of it) {
+    if (!predicate(value)) {
+      yield value;
+      break;
     }
+  }
 
-    for (const value of it) {
-        yield value;
-    }
+  for (const value of it) {
+    yield value;
+  }
 }
 
 export function* groupby<T, K extends Primitive>(
-    iterable: Iterable<T>,
-    keyFn: (item: T) => K = primitiveIdentity
+  iterable: Iterable<T>,
+  keyFn: (item: T) => K = primitiveIdentity,
 ): Generator<[K, Generator<T, undefined>], undefined> {
-    const it = iter(iterable);
+  const it = iter(iterable);
 
-    let currentValue: T;
-    let currentKey: K = SENTINEL as unknown as K;
-    //                           ^^^^^^^^^^^^^^^ Hack!
-    let targetKey: K = currentKey;
+  let currentValue: T;
+  let currentKey: K = SENTINEL as unknown as K;
+  //                           ^^^^^^^^^^^^^^^ Hack!
+  let targetKey: K = currentKey;
 
-    const grouper = function* grouper(tgtKey: K): Generator<T, undefined> {
-        while (currentKey === tgtKey) {
-            yield currentValue;
+  const grouper = function* grouper(tgtKey: K): Generator<T, undefined> {
+    while (currentKey === tgtKey) {
+      yield currentValue;
 
-            const nextVal = it.next();
-            if (nextVal.done) return;
-            currentValue = nextVal.value;
-            currentKey = keyFn(currentValue);
-        }
-    };
-
-    for (;;) {
-        while (currentKey === targetKey) {
-            const nextVal = it.next();
-            if (nextVal.done) {
-                currentKey = SENTINEL as unknown as K;
-                //                    ^^^^^^^^^^^^^^^ Hack!
-                return;
-            }
-            currentValue = nextVal.value;
-            currentKey = keyFn(currentValue);
-        }
-
-        targetKey = currentKey;
-        yield [currentKey, grouper(targetKey)];
+      const nextVal = it.next();
+      if (nextVal.done) return;
+      currentValue = nextVal.value;
+      currentKey = keyFn(currentValue);
     }
+  };
+
+  for (;;) {
+    while (currentKey === targetKey) {
+      const nextVal = it.next();
+      if (nextVal.done) {
+        currentKey = SENTINEL as unknown as K;
+        //                    ^^^^^^^^^^^^^^^ Hack!
+        return;
+      }
+      currentValue = nextVal.value;
+      currentKey = keyFn(currentValue);
+    }
+
+    targetKey = currentKey;
+    yield [currentKey, grouper(targetKey)];
+  }
 }
 
 /**
@@ -142,11 +142,11 @@ export function* groupby<T, K extends Primitive>(
  * Stops when either the data or selectors iterables has been exhausted.
  */
 export function* icompress<T>(data: Iterable<T>, selectors: Iterable<boolean>): Iterable<T> {
-    for (const [d, s] of izip(data, selectors)) {
-        if (s) {
-            yield d;
-        }
+  for (const [d, s] of izip(data, selectors)) {
+    if (s) {
+      yield d;
     }
+  }
 }
 
 /**
@@ -156,11 +156,11 @@ export function* icompress<T>(data: Iterable<T>, selectors: Iterable<boolean>): 
 export function ifilter<T, N extends T>(iterable: Iterable<T>, predicate: (item: T) => item is N): Iterable<N>;
 export function ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T>;
 export function* ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> {
-    for (const value of iterable) {
-        if (predicate(value)) {
-            yield value;
-        }
+  for (const value of iterable) {
+    if (predicate(value)) {
+      yield value;
     }
+  }
 }
 
 /**
@@ -168,9 +168,9 @@ export function* ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Ite
  * from each of the iterables.
  */
 export function* imap<T, V>(iterable: Iterable<T>, mapper: (item: T) => V): Iterable<V> {
-    for (const value of iterable) {
-        yield mapper(value);
-    }
+  for (const value of iterable) {
+    yield mapper(value);
+  }
 }
 
 /**
@@ -185,28 +185,28 @@ export function* imap<T, V>(iterable: Iterable<T>, mapper: (item: T) => V): Iter
 export function islice<T>(iterable: Iterable<T>, stop: number): Iterable<T>;
 export function islice<T>(iterable: Iterable<T>, start: number, stop?: number | null, step?: number): Iterable<T>;
 export function* islice<T>(
-    iterable: Iterable<T>,
-    stopOrStart: number,
-    possiblyStop?: number | null,
-    step = 1
+  iterable: Iterable<T>,
+  stopOrStart: number,
+  possiblyStop?: number | null,
+  step = 1,
 ): Iterable<T> {
-    let start, stop;
-    if (possiblyStop !== undefined) {
-        // islice(iterable, start, stop[, step])
-        start = stopOrStart;
-        stop = possiblyStop;
-    } else {
-        // islice(iterable, stop)
-        start = 0;
-        stop = stopOrStart;
-    }
+  let start, stop;
+  if (possiblyStop !== undefined) {
+    // islice(iterable, start, stop[, step])
+    start = stopOrStart;
+    stop = possiblyStop;
+  } else {
+    // islice(iterable, stop)
+    start = 0;
+    stop = stopOrStart;
+  }
 
-    const pred = slicePredicate(start, stop, step);
-    for (const [i, value] of enumerate(iterable)) {
-        if (pred(i)) {
-            yield value;
-        }
+  const pred = slicePredicate(start, stop, step);
+  for (const [i, value] of enumerate(iterable)) {
+    if (pred(i)) {
+      yield value;
     }
+  }
 }
 
 /**
@@ -216,38 +216,38 @@ export function* islice<T>(
  * iterables, use `izip3`, etc.  `izip` is an alias for `izip2`.
  */
 export function* izip2<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): Iterable<[T1, T2]> {
-    const ixs = iter(xs);
-    const iys = iter(ys);
-    for (;;) {
-        const x = ixs.next();
-        const y = iys.next();
-        if (!x.done && !y.done) {
-            yield [x.value, y.value];
-        } else {
-            // One of the iterables exhausted
-            return;
-        }
+  const ixs = iter(xs);
+  const iys = iter(ys);
+  for (;;) {
+    const x = ixs.next();
+    const y = iys.next();
+    if (!x.done && !y.done) {
+      yield [x.value, y.value];
+    } else {
+      // One of the iterables exhausted
+      return;
     }
+  }
 }
 
 /**
  * Like izip2, but for three input iterables.
  */
 export function* izip3<T1, T2, T3>(xs: Iterable<T1>, ys: Iterable<T2>, zs: Iterable<T3>): Iterable<[T1, T2, T3]> {
-    const ixs = iter(xs);
-    const iys = iter(ys);
-    const izs = iter(zs);
-    for (;;) {
-        const x = ixs.next();
-        const y = iys.next();
-        const z = izs.next();
-        if (!x.done && !y.done && !z.done) {
-            yield [x.value, y.value, z.value];
-        } else {
-            // One of the iterables exhausted
-            return;
-        }
+  const ixs = iter(xs);
+  const iys = iter(ys);
+  const izs = iter(zs);
+  for (;;) {
+    const x = ixs.next();
+    const y = iys.next();
+    const z = izs.next();
+    if (!x.done && !y.done && !z.done) {
+      yield [x.value, y.value, z.value];
+    } else {
+      // One of the iterables exhausted
+      return;
     }
+  }
 }
 
 export const izip = izip2;
@@ -258,45 +258,45 @@ export const izip = izip2;
  * fillvalue.  Iteration continues until the longest iterable is exhausted.
  */
 export function* izipLongest2<T1, T2, D>(xs: Iterable<T1>, ys: Iterable<T2>, filler?: D): Iterable<[T1 | D, T2 | D]> {
-    const filler_ = filler as D;
-    const ixs = iter(xs);
-    const iys = iter(ys);
-    for (;;) {
-        const x = ixs.next();
-        const y = iys.next();
-        if (x.done && y.done) {
-            // All iterables exhausted
-            return;
-        } else {
-            yield [!x.done ? x.value : filler_, !y.done ? y.value : filler_];
-        }
+  const filler_ = filler as D;
+  const ixs = iter(xs);
+  const iys = iter(ys);
+  for (;;) {
+    const x = ixs.next();
+    const y = iys.next();
+    if (x.done && y.done) {
+      // All iterables exhausted
+      return;
+    } else {
+      yield [!x.done ? x.value : filler_, !y.done ? y.value : filler_];
     }
+  }
 }
 
 /**
  * See izipLongest2, but for three.
  */
 export function* izipLongest3<T1, T2, T3, D = undefined>(
-    xs: Iterable<T1>,
-    ys: Iterable<T2>,
-    zs: Iterable<T3>,
-    filler?: D
+  xs: Iterable<T1>,
+  ys: Iterable<T2>,
+  zs: Iterable<T3>,
+  filler?: D,
 ): Iterable<[T1 | D, T2 | D, T3 | D]> {
-    const filler_ = filler as D;
-    const ixs = iter(xs);
-    const iys = iter(ys);
-    const izs = iter(zs);
-    for (;;) {
-        const x = ixs.next();
-        const y = iys.next();
-        const z = izs.next();
-        if (x.done && y.done && z.done) {
-            // All iterables exhausted
-            return;
-        } else {
-            yield [!x.done ? x.value : filler_, !y.done ? y.value : filler_, !z.done ? z.value : filler_];
-        }
+  const filler_ = filler as D;
+  const ixs = iter(xs);
+  const iys = iter(ys);
+  const izs = iter(zs);
+  for (;;) {
+    const x = ixs.next();
+    const y = iys.next();
+    const z = izs.next();
+    if (x.done && y.done && z.done) {
+      // All iterables exhausted
+      return;
+    } else {
+      yield [!x.done ? x.value : filler_, !y.done ? y.value : filler_, !z.done ? z.value : filler_];
     }
+  }
 }
 
 /**
@@ -308,18 +308,18 @@ export function* izipLongest3<T1, T2, T3, D = undefined>(
  * you can with izip2().
  */
 export function* izipMany<T>(...iters: Iterable<T>[]): Iterable<T[]> {
-    // Make them all iterables
-    const iterables = iters.map(iter);
+  // Make them all iterables
+  const iterables = iters.map(iter);
 
-    for (;;) {
-        const heads: Array<IteratorResult<T, undefined>> = iterables.map((xs) => xs.next());
-        if (every(heads, (h) => !h.done)) {
-            yield heads.map((h) => h.value as T);
-        } else {
-            // One of the iterables exhausted
-            return;
-        }
+  for (;;) {
+    const heads: Array<IteratorResult<T, undefined>> = iterables.map((xs) => xs.next());
+    if (every(heads, (h) => !h.done)) {
+      yield heads.map((h) => h.value as T);
+    } else {
+      // One of the iterables exhausted
+      return;
     }
+  }
 }
 
 /**
@@ -336,46 +336,46 @@ export function* izipMany<T>(...iters: Iterable<T>[]): Iterable<T[]> {
  * permutation.
  */
 export function* permutations<T>(iterable: Iterable<T>, r?: number): Iterable<T[]> {
-    const pool = Array.from(iterable);
-    const n = pool.length;
-    const x = r === undefined ? n : r;
+  const pool = Array.from(iterable);
+  const n = pool.length;
+  const x = r === undefined ? n : r;
 
-    if (x > n) {
-        return;
+  if (x > n) {
+    return;
+  }
+
+  let indices: number[] = Array.from(range(n));
+  const cycles: number[] = Array.from(range(n, n - x, -1));
+  const poolgetter = (i: number) => pool[i];
+
+  yield indices.slice(0, x).map(poolgetter);
+
+  while (n > 0) {
+    let cleanExit = true;
+    for (const i of range(x - 1, -1, -1)) {
+      cycles[i] -= 1;
+      if (cycles[i] === 0) {
+        indices = indices
+          .slice(0, i)
+          .concat(indices.slice(i + 1))
+          .concat(indices.slice(i, i + 1));
+        cycles[i] = n - i;
+      } else {
+        const j: number = cycles[i];
+
+        const [p, q] = [indices[indices.length - j], indices[i]];
+        indices[i] = p;
+        indices[indices.length - j] = q;
+        yield indices.slice(0, x).map(poolgetter);
+        cleanExit = false;
+        break;
+      }
     }
 
-    let indices: number[] = Array.from(range(n));
-    const cycles: number[] = Array.from(range(n, n - x, -1));
-    const poolgetter = (i: number) => pool[i];
-
-    yield indices.slice(0, x).map(poolgetter);
-
-    while (n > 0) {
-        let cleanExit = true;
-        for (const i of range(x - 1, -1, -1)) {
-            cycles[i] -= 1;
-            if (cycles[i] === 0) {
-                indices = indices
-                    .slice(0, i)
-                    .concat(indices.slice(i + 1))
-                    .concat(indices.slice(i, i + 1));
-                cycles[i] = n - i;
-            } else {
-                const j: number = cycles[i];
-
-                const [p, q] = [indices[indices.length - j], indices[i]];
-                indices[i] = p;
-                indices[indices.length - j] = q;
-                yield indices.slice(0, x).map(poolgetter);
-                cleanExit = false;
-                break;
-            }
-        }
-
-        if (cleanExit) {
-            return;
-        }
+    if (cleanExit) {
+      return;
     }
+  }
 }
 
 /**
@@ -383,15 +383,15 @@ export function* permutations<T>(iterable: Iterable<T>, r?: number): Iterable<T[
  * indefinitely unless the times argument is specified.
  */
 export function* repeat<T>(thing: T, times?: number): Iterable<T> {
-    if (times === undefined) {
-        for (;;) {
-            yield thing;
-        }
-    } else {
-        for (const _ of range(times)) {
-            yield thing;
-        }
+  if (times === undefined) {
+    for (;;) {
+      yield thing;
     }
+  } else {
+    for (const _ of range(times)) {
+      yield thing;
+    }
+  }
 }
 
 /**
@@ -399,28 +399,28 @@ export function* repeat<T>(thing: T, times?: number): Iterable<T> {
  * predicate is true.
  */
 export function* takewhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> {
-    for (const value of iterable) {
-        if (!predicate(value)) return;
-        yield value;
-    }
+  for (const value of iterable) {
+    if (!predicate(value)) return;
+    yield value;
+  }
 }
 
 export function zipLongest2<T1, T2, D>(xs: Iterable<T1>, ys: Iterable<T2>, filler?: D): Array<[T1 | D, T2 | D]> {
-    return Array.from(izipLongest2(xs, ys, filler));
+  return Array.from(izipLongest2(xs, ys, filler));
 }
 
 export function zipLongest3<T1, T2, T3, D>(
-    xs: Iterable<T1>,
-    ys: Iterable<T2>,
-    zs: Iterable<T3>,
-    filler?: D
+  xs: Iterable<T1>,
+  ys: Iterable<T2>,
+  zs: Iterable<T3>,
+  filler?: D,
 ): Array<[T1 | D, T2 | D, T3 | D]> {
-    return Array.from(izipLongest3(xs, ys, zs, filler));
+  return Array.from(izipLongest3(xs, ys, zs, filler));
 }
 
 export const izipLongest = izipLongest2;
 export const zipLongest = zipLongest2;
 
 export function zipMany<T>(...iters: Iterable<T>[]): T[][] {
-    return Array.from(izipMany(...iters));
+  return Array.from(izipMany(...iters));
 }

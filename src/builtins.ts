@@ -22,13 +22,13 @@ import { identityPredicate, keyToCmp, numberIdentity, primitiveIdentity } from '
  *
  */
 export function every<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
-    for (const item of iterable) {
-        if (!keyFn(item)) {
-            return false;
-        }
+  for (const item of iterable) {
+    if (!keyFn(item)) {
+      return false;
     }
+  }
 
-    return true;
+  return true;
 }
 
 /**
@@ -49,13 +49,13 @@ export function every<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPr
  *
  */
 export function some<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
-    for (const item of iterable) {
-        if (keyFn(item)) {
-            return true;
-        }
+  for (const item of iterable) {
+    if (keyFn(item)) {
+      return true;
     }
+  }
 
-    return false;
+  return false;
 }
 
 /**
@@ -80,7 +80,7 @@ export const any = some;
  *
  */
 export function contains<T>(haystack: Iterable<T>, needle: T): boolean {
-    return some(haystack, (x) => x === needle);
+  return some(haystack, (x) => x === needle);
 }
 
 /**
@@ -97,10 +97,10 @@ export function contains<T>(haystack: Iterable<T>, needle: T): boolean {
  *     // [0, 'hello'], [1, 'world']]
  */
 export function* enumerate<T>(iterable: Iterable<T>, start = 0): Iterable<[number, T]> {
-    let index: number = start;
-    for (const value of iterable) {
-        yield [index++, value];
-    }
+  let index: number = start;
+  for (const value of iterable) {
+    yield [index++, value];
+  }
 }
 
 /**
@@ -109,7 +109,7 @@ export function* enumerate<T>(iterable: Iterable<T>, start = 0): Iterable<[numbe
 export function filter<T, N extends T>(iterable: Iterable<T>, predicate: (item: T) => item is N): N[];
 export function filter<T>(iterable: Iterable<T>, predicate: Predicate<T>): T[];
 export function filter<T>(iterable: Iterable<T>, predicate: Predicate<T>): T[] {
-    return Array.from(ifilter(iterable, predicate));
+  return Array.from(ifilter(iterable, predicate));
 }
 
 /**
@@ -119,29 +119,29 @@ export function filter<T>(iterable: Iterable<T>, predicate: Predicate<T>): T[] {
  * state, think of it as a "cursor") which can only be consumed once.
  */
 export function iter<T>(iterable: Iterable<T>): IterableIterator<T> {
-    // class SelfIter implements IterableIterator<T> {
-    //     #iterator: Iterator<T>;
-    //     constructor(orig: Iterable<T>) {
-    //         this.#iterator = orig[Symbol.iterator]();
-    //     }
-    //     [Symbol.iterator]() {
-    //         return this;
-    //     }
-    //     next() {
-    //         return this.#iterator.next();
-    //     }
-    // }
-    // return new SelfIter(iterable);
+  // class SelfIter implements IterableIterator<T> {
+  //     #iterator: Iterator<T>;
+  //     constructor(orig: Iterable<T>) {
+  //         this.#iterator = orig[Symbol.iterator]();
+  //     }
+  //     [Symbol.iterator]() {
+  //         return this;
+  //     }
+  //     next() {
+  //         return this.#iterator.next();
+  //     }
+  // }
+  // return new SelfIter(iterable);
 
-    return iterable[Symbol.iterator]() as IterableIterator<T>;
-    //                                 ^^^^^^^^^^^^^^^^^^^^^^ Not safe!
+  return iterable[Symbol.iterator]() as IterableIterator<T>;
+  //                                 ^^^^^^^^^^^^^^^^^^^^^^ Not safe!
 }
 
 /**
  * Non-lazy version of imap().
  */
 export function map<T, V>(iterable: Iterable<T>, mapper: (item: T) => V): V[] {
-    return Array.from(imap(iterable, mapper));
+  return Array.from(imap(iterable, mapper));
 }
 
 /**
@@ -156,7 +156,7 @@ export function map<T, V>(iterable: Iterable<T>, mapper: (item: T) => V): V[] {
  * which one is not defined.
  */
 export function max<T>(iterable: Iterable<T>, keyFn: (item: T) => number = numberIdentity): T | undefined {
-    return reduce2(iterable, (x, y) => (keyFn(x) > keyFn(y) ? x : y));
+  return reduce2(iterable, (x, y) => (keyFn(x) > keyFn(y) ? x : y));
 }
 
 /**
@@ -171,16 +171,16 @@ export function max<T>(iterable: Iterable<T>, keyFn: (item: T) => number = numbe
  * which one is not defined.
  */
 export function min<T>(iterable: Iterable<T>, keyFn: (item: T) => number = numberIdentity): T | undefined {
-    return reduce2(iterable, (x, y) => (keyFn(x) < keyFn(y) ? x : y));
+  return reduce2(iterable, (x, y) => (keyFn(x) < keyFn(y) ? x : y));
 }
 
 /**
  * Internal helper for the range function
  */
 function range_(start: number, stop: number, step: number): Iterable<number> {
-    const counter = count(start, step);
-    const pred = step >= 0 ? (n: number) => n < stop : (n: number) => n > stop;
-    return takewhile(counter, pred);
+  const counter = count(start, step);
+  const pred = step >= 0 ? (n: number) => n < stop : (n: number) => n > stop;
+  return takewhile(counter, pred);
 }
 
 /**
@@ -211,11 +211,11 @@ function range_(start: number, stop: number, step: number): Iterable<number> {
 export function range(stop: number): Iterable<number>;
 export function range(start: number, stop: number, step?: number): Iterable<number>;
 export function range(startOrStop: number, definitelyStop?: number, step = 1): Iterable<number> {
-    if (definitelyStop !== undefined) {
-        return range_(startOrStop /* as start */, definitelyStop, step);
-    } else {
-        return range_(0, startOrStop /* as stop */, step);
-    }
+  if (definitelyStop !== undefined) {
+    return range_(startOrStop /* as start */, definitelyStop, step);
+  } else {
+    return range_(0, startOrStop /* as stop */, step);
+  }
 }
 
 /**
@@ -242,34 +242,34 @@ export function range(startOrStop: number, definitelyStop?: number, step = 1): I
 export function reduce<T>(iterable: Iterable<T>, reducer: (agg: T, item: T, index: number) => T): T | undefined;
 export function reduce<T, O>(iterable: Iterable<T>, reducer: (agg: O, item: T, index: number) => O, start: O): O;
 export function reduce<T, O>(
-    iterable: Iterable<T>,
-    reducer: ((agg: T, item: T, index: number) => T) | ((agg: O, item: T, index: number) => O),
-    start?: O
+  iterable: Iterable<T>,
+  reducer: ((agg: T, item: T, index: number) => T) | ((agg: O, item: T, index: number) => O),
+  start?: O,
 ): O | (T | undefined) {
-    if (start === undefined) {
-        return reduce2(iterable, reducer as (agg: T, item: T, index: number) => T);
-    } else {
-        return reduce3(iterable, reducer as (agg: O, item: T, index: number) => O, start);
-    }
+  if (start === undefined) {
+    return reduce2(iterable, reducer as (agg: T, item: T, index: number) => T);
+  } else {
+    return reduce3(iterable, reducer as (agg: O, item: T, index: number) => O, start);
+  }
 }
 
 function reduce3<T, O>(iterable: Iterable<T>, reducer: (agg: O, item: T, index: number) => O, start: O): O {
-    let output = start;
-    let index = 0;
-    for (const item of iterable) {
-        output = reducer(output, item, index++);
-    }
-    return output;
+  let output = start;
+  let index = 0;
+  for (const item of iterable) {
+    output = reducer(output, item, index++);
+  }
+  return output;
 }
 
 function reduce2<T>(iterable: Iterable<T>, reducer: (agg: T, item: T, index: number) => T): T | undefined {
-    const it = iter(iterable);
-    const start = find(it);
-    if (start === undefined) {
-        return undefined;
-    } else {
-        return reduce3(it, reducer, start);
-    }
+  const it = iter(iterable);
+  const start = find(it);
+  if (start === undefined) {
+    return undefined;
+  } else {
+    return reduce3(it, reducer, start);
+  }
 }
 
 /**
@@ -286,18 +286,18 @@ function reduce2<T>(iterable: Iterable<T>, reducer: (agg: T, item: T, index: num
  *   sorted as if each comparison were reversed.
  */
 export function sorted<T>(
-    iterable: Iterable<T>,
-    keyFn: (item: T) => Primitive = primitiveIdentity,
-    reverse = false
+  iterable: Iterable<T>,
+  keyFn: (item: T) => Primitive = primitiveIdentity,
+  reverse = false,
 ): T[] {
-    const result = Array.from(iterable);
-    result.sort(keyToCmp(keyFn)); // sort in-place
+  const result = Array.from(iterable);
+  result.sort(keyToCmp(keyFn)); // sort in-place
 
-    if (reverse) {
-        result.reverse(); // reverse in-place
-    }
+  if (reverse) {
+    result.reverse(); // reverse in-place
+  }
 
-    return result;
+  return result;
 }
 
 /**
@@ -305,19 +305,19 @@ export function sorted<T>(
  * sum will defaults to 0 if the iterable is empty.
  */
 export function sum(iterable: Iterable<number>): number {
-    return reduce(iterable, (x, y) => x + y, 0);
+  return reduce(iterable, (x, y) => x + y, 0);
 }
 
 /**
  * See izip.
  */
 export function zip<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): Array<[T1, T2]> {
-    return Array.from(izip(xs, ys));
+  return Array.from(izip(xs, ys));
 }
 
 /**
  * See izip3.
  */
 export function zip3<T1, T2, T3>(xs: Iterable<T1>, ys: Iterable<T2>, zs: Iterable<T3>): Array<[T1, T2, T3]> {
-    return Array.from(izip3(xs, ys, zs));
+  return Array.from(izip3(xs, ys, zs));
 }
