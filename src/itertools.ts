@@ -185,7 +185,7 @@ export function* islice<T>(
   for (const [i, value] of enumerate(iterable)) {
     if (i < start) continue;
     if (stop !== null && i >= stop) break;
-    if (step === 1 || (i - start) % step === 0) {
+    if ((i - start) % step === 0) {
       yield value;
     }
   }
