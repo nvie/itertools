@@ -208,6 +208,16 @@ describe("islice", () => {
     expect(Array.from(islice("ABCDEFG", /*start*/ 1, /*stop*/ null, /*step*/ 2))).toEqual(["B", "D", "F"]);
   });
 
+  it("islice with infinite inputs", () => {
+    expect(Array.from(islice(count(1), 0))).toEqual([]);
+    expect(Array.from(islice(count(1), 0, 0))).toEqual([]);
+    expect(Array.from(islice(count(1), 3, 2))).toEqual([]);
+    expect(Array.from(islice(count(1), 5))).toEqual([1, 2, 3, 4, 5]);
+    expect(Array.from(islice(count(1), 3, 7))).toEqual([4, 5, 6, 7]);
+    expect(Array.from(islice(count(1), 4, 32, 5))).toEqual([5, 10, 15, 20, 25, 30]);
+    expect(Array.from(islice(count(69), 18, 391, 81))).toEqual([87, 168, 249, 330, 411]);
+  });
+
   it("islice invalid stop argument", () => {
     expect(() => Array.from(islice("ABCDEFG", /*stop*/ -2))).toThrow();
     expect(() => Array.from(islice("ABCDEFG", -2, -3))).toThrow();
