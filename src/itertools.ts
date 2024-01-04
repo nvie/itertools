@@ -5,29 +5,6 @@ import { primitiveIdentity } from "./utils";
 
 const SENTINEL = Symbol();
 
-function composeAnd(f1: (v1: number) => boolean, f2: (v2: number) => boolean): (v3: number) => boolean {
-  return (n: number) => f1(n) && f2(n);
-}
-
-function slicePredicate(start: number, stop: number | null, step: number) {
-  if (start < 0) throw new Error("start cannot be negative");
-  if (stop !== null && stop < 0) throw new Error("stop cannot be negative");
-  if (step <= 0) throw new Error("step cannot be negative");
-
-  let pred = (n: number) => n >= start;
-
-  if (stop !== null) {
-    const definedStop = stop;
-    pred = composeAnd(pred, (n: number) => n < definedStop);
-  }
-
-  if (step > 1) {
-    pred = composeAnd(pred, (n: number) => (n - start) % step === 0);
-  }
-
-  return pred;
-}
-
 /**
  * Returns an iterator that returns elements from the first iterable until it
  * is exhausted, then proceeds to the next iterable, until all of the iterables
@@ -201,9 +178,14 @@ export function* islice<T>(
     stop = stopOrStart;
   }
 
-  const pred = slicePredicate(start, stop, step);
+  if (start < 0) throw new Error("start cannot be negative");
+  if (stop !== null && stop < 0) throw new Error("stop cannot be negative");
+  if (step <= 0) throw new Error("step cannot be negative");
+
   for (const [i, value] of enumerate(iterable)) {
-    if (pred(i)) {
+    if (i < start) continue;
+    if (stop !== null && i >= stop) break;
+    if ((i - start) % step === 0) {
       yield value;
     }
   }

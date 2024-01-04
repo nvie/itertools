@@ -1,3 +1,8 @@
+## [Unreleased]
+
+- Fix `islice()` regression where it wasn't stopping on infinite iterables
+  (thanks for finding, @Kareem-Medhat 🙏!)
+
 ## v2.2.0
 
 - Move to ESM by default
