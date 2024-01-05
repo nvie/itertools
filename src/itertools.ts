@@ -5,6 +5,36 @@ import { primitiveIdentity } from "./utils";
 
 const SENTINEL = Symbol();
 
+function* take<T>(iterable: Iterable<T>, n: number): Iterable<T> {
+  if (n <= 0) return;
+
+  for (const item of iterable) {
+    yield item;
+    n--;
+    if (n <= 0) return;
+  }
+}
+
+function* skip<T>(iterable: Iterable<T>, n: number): Iterable<T> {
+  for (const item of iterable) {
+    if (n > 0) {
+      n--;
+      continue;
+    }
+
+    yield item;
+  }
+}
+
+function* nth<T>(iterable: Iterable<T>, n: number): Iterable<T> {
+  let i = 0;
+  for (const item of iterable) {
+    if (i++ % n === 0) {
+      yield item;
+    }
+  }
+}
+
 /**
  * Returns an iterator that returns elements from the first iterable until it
  * is exhausted, then proceeds to the next iterable, until all of the iterables
@@ -161,7 +191,7 @@ export function* imap<T, V>(iterable: Iterable<T>, mapper: (item: T) => V): Iter
  */
 export function islice<T>(iterable: Iterable<T>, stop: number): Iterable<T>;
 export function islice<T>(iterable: Iterable<T>, start: number, stop?: number | null, step?: number): Iterable<T>;
-export function* islice<T>(
+export function islice<T>(
   iterable: Iterable<T>,
   stopOrStart: number,
   possiblyStop?: number | null,
@@ -182,13 +212,14 @@ export function* islice<T>(
   if (stop !== null && stop < 0) throw new Error("stop cannot be negative");
   if (step <= 0) throw new Error("step cannot be negative");
 
-  for (const [i, value] of enumerate(iterable)) {
-    if (i < start) continue;
-    if (stop !== null && i >= stop) break;
-    if ((i - start) % step === 0) {
-      yield value;
-    }
+  let i = skip(iterable, start);
+  if (stop !== null) {
+    const length = stop - start;
+    const maxMultipleIdx = Math.floor((length - 1 + step) / step);
+    i = take(i, step * (maxMultipleIdx - 1) + 1);
   }
+
+  return nth(i, step);
 }
 
 /**
