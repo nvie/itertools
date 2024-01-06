@@ -215,8 +215,7 @@ export function islice<T>(
   let i = skip(iterable, start);
   if (stop !== null) {
     const length = stop - start;
-    const maxMultipleIdx = Math.floor((length - 1 + step) / step);
-    i = take(i, step * (maxMultipleIdx - 1) + 1);
+    i = take(i, length - ((length - 1) % step));
   }
 
   return nth(i, step);
