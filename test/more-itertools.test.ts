@@ -22,6 +22,12 @@ function isNum(value: unknown): value is number {
   return typeof value === "number";
 }
 
+function* gen<T>(values: T[]): Iterable<T> {
+  for (const value of values) {
+    yield value;
+  }
+}
+
 describe("chunked", () => {
   it("empty", () => {
     expect(Array.from(chunked([], 3))).toEqual([]);
@@ -64,6 +70,12 @@ describe("chunked", () => {
       [6, 7, 8, 9, 10],
     ]);
     expect(Array.from(chunked(numbers, 9999))).toEqual([numbers]);
+  });
+
+  it("chunked on lazy iterable", () => {
+    const lazy = gen([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    expect(Array.from(chunked(lazy, 3))).toEqual([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]]);
+    expect(Array.from(chunked(lazy, 5))).toEqual([]); // lazy input all consumed
   });
 
   it("no chunk will be larger than the chunk size", () => {
@@ -130,6 +142,14 @@ describe("find", () => {
     expect(find([0, 1, 2, 3, 4], (n) => n > 1)).toBe(2);
     expect(find([0, 1, 2, 3, 4], (n) => n < 0)).toBeUndefined();
     expect(find([false, true], (x) => x)).toBe(true);
+  });
+
+  it("find on lazy iterable", () => {
+    const lazy = gen([1, 2, 3]);
+    expect(find(lazy)).toBe(1);
+    expect(find(lazy)).toBe(2);
+    expect(find(lazy)).toBe(3);
+    expect(find(lazy)).toBe(undefined);
   });
 });
 

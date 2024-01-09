@@ -25,6 +25,12 @@ function isNum(value: unknown): value is number {
   return typeof value === "number";
 }
 
+function* gen<T>(values: T[]): Iterable<T> {
+  for (const value of values) {
+    yield value;
+  }
+}
+
 function predicate(): fc.Arbitrary<(a: unknown) => boolean> {
   return fc.oneof(
     fc.constant(() => true),
@@ -351,13 +357,13 @@ describe("reduce", () => {
     expect(reduce([13, 2, 3, 4], firstOne)).toEqual(13);
     expect(reduce([undefined, null, 1, 2, 3, 4], firstOne)).toEqual(undefined);
   });
-  it("reduce on iterable (lazily-evaluated)", () => {
-    function* myLazyList() {
-      yield 1;
-      yield 2;
-      yield 3;
-    }
-    expect(reduce(myLazyList(), adder)).toEqual(6);
+
+  it("reduce on lazy iterable", () => {
+    expect(reduce(gen([1, 2, 3]), adder)).toEqual(6);
+  });
+
+  it("reduce on lazy iterable", () => {
+    expect(reduce(gen([1, 2, 3]), adder, 100)).toEqual(106);
   });
 });
 
@@ -386,6 +392,10 @@ describe("sorted", () => {
 
   it("sorted in reverse", () => {
     expect(sorted([2, 1, 3, 4, 5], undefined, true)).toEqual([5, 4, 3, 2, 1]);
+  });
+
+  it("sorted on lazy iterable", () => {
+    expect(sorted(gen([2, 3, 1, 2]))).toEqual([1, 2, 2, 3]);
   });
 });
 

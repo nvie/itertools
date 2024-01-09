@@ -26,6 +26,12 @@ function isNum(value: unknown): value is number {
   return typeof value === "number";
 }
 
+function* gen<T>(values: T[]): Iterable<T> {
+  for (const value of values) {
+    yield value;
+  }
+}
+
 describe("chain", () => {
   it("chains empty iterables", () => {
     expect(Array.from(chain([], []))).toEqual([]);
@@ -102,6 +108,11 @@ describe("dropwhile", () => {
 
     expect(Array.from(dropwhile([0, 2, 4, 6, 7, 8, 10], isEven))).toEqual([7, 8, 10]);
     expect(Array.from(dropwhile([0, 1, 2, -2, 3, 4, 5, 6, 7], isPositive))).toEqual([-2, 3, 4, 5, 6, 7]);
+  });
+
+  it("dropwhile on lazy iterable", () => {
+    const lazy = dropwhile(gen([0, 1, 2, -2, 3, 4, 5, 6, 7]), isPositive);
+    expect(Array.from(lazy)).toEqual([-2, 3, 4, 5, 6, 7]);
   });
 });
 
