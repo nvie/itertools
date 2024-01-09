@@ -1,8 +1,45 @@
 ## [Unreleased]
 
+Fixes a bug where some iterators would render an inputted generator unusable,
+causing it to no longer be consumable after the iterable returns.
+
+Example:
+
+```tsx
+function* gen() {
+  yield 1;
+  yield 2;
+  yield 3;
+  yield 4;
+}
+
+const lazy = gen();
+
+// [1, 2]
+Array.from(islice(lazy, 0, 2));
+
+Array.from(lazy);
+// ❌ Previously:    []
+// ✅ Now correctly: [3, 4]
+```
+
+This bug only happened when the source was a generator. It did not happen on
+a normal iterable.
+
+Similar bugs were present in:
+
+- `find()`
+- `islice()`
+- `takewhile()`
+- `dropwhile()`
+
+No other iterables were affected by this bug. This is the same bug that was
+fixed in 2.2.2 for `reduce()`, so many thanks again for surfacing this edge
+case, @quangloc99! 🙏
+
 ## [2.2.2] - 2024-01-09
 
-- Fix `reduce()` bug where using it on a lazy iterable would produce the wrong
+- Fix `reduce()` bug where using it on a lazy generator would produce the wrong
   result (thanks for finding, @quangloc99 🙏!)
 
 ## [2.2.1] - 2024-01-04
