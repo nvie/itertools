@@ -1,3 +1,4 @@
+import { find } from "./builtins";
 import { ifilter, imap } from "./itertools";
 import { flatten } from "./more-itertools";
 import type { Predicate } from "./types";
@@ -50,27 +51,6 @@ export function compactObject<K extends string, V>(obj: Record<K, V | null | und
     }
   }
   return result;
-}
-
-/**
- * Returns the first item in the iterable for which the predicate holds, if
- * any. If no predicate is given, it will return the first value returned by
- * the iterable.
- */
-export function find<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): T | undefined {
-  if (keyFn === undefined) {
-    for (const value of iterable) {
-      return value;
-    }
-    return undefined;
-  } else {
-    for (const value of iterable) {
-      if (keyFn(value)) {
-        return value;
-      }
-    }
-    return undefined;
-  }
 }
 
 /**

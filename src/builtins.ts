@@ -1,7 +1,28 @@
-import { find } from "./custom";
 import { count, ifilter, imap, izip, izip3, takewhile } from "./itertools";
 import type { Predicate, Primitive } from "./types";
 import { identityPredicate, keyToCmp, numberIdentity, primitiveIdentity } from "./utils";
+
+/**
+ * Returns the first item in the iterable for which the predicate holds, if
+ * any. If no predicate is given, it will return the first value returned by
+ * the iterable.
+ */
+export function find<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): T | undefined {
+  const it = iter(iterable);
+  if (keyFn === undefined) {
+    const value = it.next();
+    return value.done ? value.value : value.value;
+  } else {
+    let res: IteratorResult<T>;
+    while (!(res = it.next()).done) {
+      const value = res.value;
+      if (keyFn(value)) {
+        return value;
+      }
+    }
+    return undefined;
+  }
+}
 
 /**
  * Returns true when all of the items in iterable are truthy.  An optional key
@@ -264,11 +285,11 @@ function reduce3<T, O>(iterable: Iterable<T>, reducer: (agg: O, item: T, index: 
 
 function reduce2<T>(iterable: Iterable<T>, reducer: (agg: T, item: T, index: number) => T): T | undefined {
   const it = iter(iterable);
-  const start = it.next();
-  if (start.done) {
+  const start = find(it);
+  if (start === undefined) {
     return undefined;
   } else {
-    return reduce3(it, reducer, start.value);
+    return reduce3(it, reducer, start);
   }
 }
 

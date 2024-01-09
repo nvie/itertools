@@ -7,6 +7,7 @@ export {
   enumerate,
   every,
   filter,
+  find,
   iter,
   map,
   max,
@@ -52,4 +53,4 @@ export {
   uniqueEverseen,
   uniqueJustseen,
 } from "./more-itertools";
-export { compact, compactObject, find, first, flatmap, icompact } from "./custom";
+export { compact, compactObject, first, flatmap, icompact } from "./custom";
