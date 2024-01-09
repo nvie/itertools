@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+- Fix `reduce()` bug where using it on a lazy iterable would produce the wrong
+  result (thanks for finding, @quangloc99 🙏!)
+
 ## [2.2.1] - 2024-01-04
 
 - Fix `islice()` regression where it wasn't stopping on infinite iterables
