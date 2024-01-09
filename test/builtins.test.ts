@@ -351,6 +351,14 @@ describe("reduce", () => {
     expect(reduce([13, 2, 3, 4], firstOne)).toEqual(13);
     expect(reduce([undefined, null, 1, 2, 3, 4], firstOne)).toEqual(undefined);
   });
+  it("reduce on iterable (lazily-evaluated)", () => {
+    function* myLazyList() {
+      yield 1;
+      yield 2;
+      yield 3;
+    }
+    expect(reduce(myLazyList(), adder)).toEqual(6);
+  });
 });
 
 describe("sorted", () => {
