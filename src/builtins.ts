@@ -264,11 +264,11 @@ function reduce3<T, O>(iterable: Iterable<T>, reducer: (agg: O, item: T, index: 
 
 function reduce2<T>(iterable: Iterable<T>, reducer: (agg: T, item: T, index: number) => T): T | undefined {
   const it = iter(iterable);
-  const start = find(it);
-  if (start === undefined) {
+  const start = it.next();
+  if (start.done) {
     return undefined;
   } else {
-    return reduce3(it, reducer, start);
+    return reduce3(it, reducer, start.value);
   }
 }
 
