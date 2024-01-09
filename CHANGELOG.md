@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [2.2.3] - 2024-01-09
+
 Fixes a bug where some iterators would render an inputted generator unusable,
 causing it to no longer be consumable after the iterable returns.
 
