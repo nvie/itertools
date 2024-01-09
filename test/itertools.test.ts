@@ -235,6 +235,12 @@ describe("islice", () => {
     expect(() => Array.from(islice("ABCDEFG", 0, 3, 0))).toThrow();
     expect(() => Array.from(islice("ABCDEFG", 0, 3, -1))).toThrow();
   });
+
+  it("continuation after islice", () => {
+    const lazy = gen(take(10, count(1)));
+    expect(Array.from(islice(lazy, 2, 5))).toEqual([3, 4, 5]);
+    expect(Array.from(lazy)).toEqual([6, 7, 8, 9, 10]);
+  });
 });
 
 describe("izip", () => {

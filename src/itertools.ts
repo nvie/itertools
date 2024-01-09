@@ -184,11 +184,19 @@ export function* islice<T>(
   if (stop !== null && stop < 0) throw new Error("stop cannot be negative");
   if (step <= 0) throw new Error("step cannot be negative");
 
-  for (const [i, value] of enumerate(iterable)) {
+  let i = -1;
+  const it = iter(iterable);
+  let res: IteratorResult<T>;
+  while (true) {
+    i++;
+    if (stop !== null && i >= stop) return; // early returns, so we cannot use a for..of loop!
+
+    res = it.next();
+    if (res.done) return;
+
     if (i < start) continue;
-    if (stop !== null && i >= stop) break;
     if ((i - start) % step === 0) {
-      yield value;
+      yield res.value;
     }
   }
 }
