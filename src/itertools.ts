@@ -62,10 +62,12 @@ export function* cycle<T>(iterable: Iterable<T>): Iterable<T> {
  */
 export function* dropwhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> {
   const it = iter(iterable);
-  for (const value of it) {
+  let res: IteratorResult<T>;
+  while (!(res = it.next()).done) {
+    const value = res.value;
     if (!predicate(value)) {
       yield value;
-      break;
+      break; // we break, so we cannot use a for..of loop!
     }
   }
 
