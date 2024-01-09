@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [2.2.2] - 2024-01-09
+
 - Fix `reduce()` bug where using it on a lazy iterable would produce the wrong
   result (thanks for finding, @quangloc99 🙏!)
 
