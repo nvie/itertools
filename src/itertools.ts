@@ -383,8 +383,11 @@ export function* repeat<T>(thing: T, times?: number): Iterable<T> {
  * predicate is true.
  */
 export function* takewhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> {
-  for (const value of iterable) {
-    if (!predicate(value)) return;
+  const it = iter(iterable);
+  let res: IteratorResult<T>;
+  while (!(res = it.next()).done) {
+    const value = res.value;
+    if (!predicate(value)) return; // early return, so we cannot use for..of loop!
     yield value;
   }
 }

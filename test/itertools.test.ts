@@ -338,6 +338,18 @@ describe("takewhile", () => {
     expect(Array.from(takewhile([0, 2, 4, 6, 7, 8, 10], isEven))).toEqual([0, 2, 4, 6]);
     expect(Array.from(takewhile([0, 1, 2, -2, 3, 4, 5, 6, 7], isPositive))).toEqual([0, 1, 2]);
   });
+
+  it("takewhile on lazy iterable", () => {
+    const lazy = gen([0, 1, 2, -2, 4, 6, 8, 7]);
+    const lazy1 = takewhile(lazy, isPositive);
+    const lazy2 = takewhile(lazy, isEven);
+
+    expect(Array.from(lazy1)).toEqual([0, 1, 2]);
+
+    // By now, the -2 from the original input has been consumed, but we should
+    // be able to continue pulling more values from the same input
+    expect(Array.from(lazy2)).toEqual([4, 6, 8]);
+  });
 });
 
 describe("zipMany", () => {
