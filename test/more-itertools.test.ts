@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { find, range } from "~/builtins";
+import { iter, find, range } from "~/builtins";
 import { first } from "~/custom";
 import {
   chunked,
@@ -326,6 +326,31 @@ describe("take", () => {
     expect(take(0, range(999)).length).toEqual(0);
     expect(take(1, range(999)).length).toEqual(1);
     expect(take(99, range(999)).length).toEqual(99);
+  });
+
+  it("take multiple times from collection will create new iterators every time", () => {
+    const coll = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    expect(take(0, coll)).toEqual([]);
+    expect(take(3, coll)).toEqual([0, 1, 2]);
+    expect(take(3, coll)).toEqual([0, 1, 2]);
+    expect(take(3, coll)).toEqual([0, 1, 2]);
+    expect(take(5, coll)).toEqual([0, 1, 2, 3, 4]);
+  });
+
+  it("take multiple times from an iterator", () => {
+    const it = iter([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    expect(take(0, it)).toEqual([]);
+    expect(take(3, it)).toEqual([0, 1, 2]);
+    expect(take(3, it)).toEqual([3, 4, 5]);
+    expect(take(5, it)).toEqual([6, 7, 8, 9]);
+  });
+
+  it("take multiple times from lazy", () => {
+    const lazy = gen([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    expect(take(0, lazy)).toEqual([]);
+    expect(take(3, lazy)).toEqual([0, 1, 2]);
+    expect(take(3, lazy)).toEqual([3, 4, 5]);
+    expect(take(5, lazy)).toEqual([6, 7, 8, 9]);
   });
 });
 
