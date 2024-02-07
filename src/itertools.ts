@@ -1,4 +1,4 @@
-import { enumerate, every, iter, range } from "./builtins";
+import { every, iter, range } from "./builtins";
 import { flatten } from "./more-itertools";
 import type { Predicate, Primitive } from "./types";
 import { primitiveIdentity } from "./utils";
