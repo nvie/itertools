@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- Type output types of all itertools more precisely
+
 ## [2.2.3] - 2024-01-09
 
 Fixes a bug where some iterators would render an inputted generator unusable,
