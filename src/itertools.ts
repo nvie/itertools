@@ -207,7 +207,7 @@ export function* islice<T>(
  * iterating over two iterables, use `izip2`.  When iterating over three
  * iterables, use `izip3`, etc.  `izip` is an alias for `izip2`.
  */
-export function* izip2<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): Iterable<[T1, T2]> {
+export function* izip<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): Iterable<[T1, T2]> {
   const ixs = iter(xs);
   const iys = iter(ys);
   for (;;) {
@@ -242,7 +242,7 @@ export function* izip3<T1, T2, T3>(xs: Iterable<T1>, ys: Iterable<T2>, zs: Itera
   }
 }
 
-export const izip = izip2;
+export const izip2 = izip;
 
 /**
  * Returns an iterator that aggregates elements from each of the iterables.  If
