@@ -209,6 +209,11 @@ describe("intersperse", () => {
     expect(Array.from(intersperse(null, [13, 14]))).toEqual([13, null, 14]);
     expect(Array.from(intersperse("foo", [1, 2, 3, 4]))).toEqual([1, "foo", 2, "foo", 3, "foo", 4]);
   });
+
+  it("intersperse (lazy)", () => {
+    const lazy = gen([1, 2, 3, 4]);
+    expect(Array.from(intersperse("foo", lazy))).toEqual([1, "foo", 2, "foo", 3, "foo", 4]);
+  });
 });
 
 describe("itake", () => {
