@@ -19,7 +19,7 @@ function isDefined<T>(x: T): boolean {
  *
  * For an eager version, @see compact().
  */
-export function icompact<T>(iterable: Iterable<T | null | undefined>): Iterable<T> {
+export function icompact<T>(iterable: Iterable<T | null | undefined>): IterableIterator<T> {
   return ifilter(iterable, isNullish);
 }
 
@@ -77,6 +77,6 @@ export function first<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): T | undef
  *     [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]  // note: no 0
  *
  */
-export function flatmap<T, S>(iterable: Iterable<T>, mapper: (item: T) => Iterable<S>): Iterable<S> {
+export function flatmap<T, S>(iterable: Iterable<T>, mapper: (item: T) => Iterable<S>): IterableIterator<S> {
   return flatten(imap(iterable, mapper));
 }

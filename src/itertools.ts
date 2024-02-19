@@ -11,7 +11,7 @@ const SENTINEL = Symbol();
  * are exhausted.  Used for treating consecutive sequences as a single
  * sequence.
  */
-export function chain<T>(...iterables: Iterable<T>[]): Iterable<T> {
+export function chain<T>(...iterables: Iterable<T>[]): IterableIterator<T> {
   return flatten(iterables);
 }
 
@@ -20,7 +20,7 @@ export function chain<T>(...iterables: Iterable<T>[]): Iterable<T> {
  * (default 0), incrementing by `step`.  To decrement, use a negative step
  * number.
  */
-export function* count(start = 0, step = 1): Iterable<number> {
+export function* count(start = 0, step = 1): IterableIterator<number> {
   let n = start;
   for (;;) {
     yield n;
@@ -40,7 +40,7 @@ export function compress<T>(data: Iterable<T>, selectors: Iterable<boolean>): T[
  * of each.  When the iterable is exhausted, return elements from the saved
  * copy.  Repeats indefinitely.
  */
-export function* cycle<T>(iterable: Iterable<T>): Iterable<T> {
+export function* cycle<T>(iterable: Iterable<T>): IterableIterator<T> {
   const saved = [];
   for (const element of iterable) {
     yield element;
@@ -60,7 +60,7 @@ export function* cycle<T>(iterable: Iterable<T>): Iterable<T> {
  * iterator does not produce any output until the predicate first becomes
  * false.
  */
-export function* dropwhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> {
+export function* dropwhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): IterableIterator<T> {
   const it = iter(iterable);
   let res: IteratorResult<T>;
   while (!(res = it.next()).done) {
@@ -120,7 +120,7 @@ export function* groupby<T, K extends Primitive>(
  * that have a corresponding element in selectors that evaluates to `true`.
  * Stops when either the data or selectors iterables has been exhausted.
  */
-export function* icompress<T>(data: Iterable<T>, selectors: Iterable<boolean>): Iterable<T> {
+export function* icompress<T>(data: Iterable<T>, selectors: Iterable<boolean>): IterableIterator<T> {
   for (const [d, s] of izip(data, selectors)) {
     if (s) {
       yield d;
@@ -132,9 +132,9 @@ export function* icompress<T>(data: Iterable<T>, selectors: Iterable<boolean>): 
  * Returns an iterator that filters elements from iterable returning only those
  * for which the predicate is true.
  */
-export function ifilter<T, N extends T>(iterable: Iterable<T>, predicate: (item: T) => item is N): Iterable<N>;
-export function ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T>;
-export function* ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> {
+export function ifilter<T, N extends T>(iterable: Iterable<T>, predicate: (item: T) => item is N): IterableIterator<N>;
+export function ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): IterableIterator<T>;
+export function* ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): IterableIterator<T> {
   for (const value of iterable) {
     if (predicate(value)) {
       yield value;
@@ -146,7 +146,7 @@ export function* ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): Ite
  * Returns an iterator that computes the given mapper function using arguments
  * from each of the iterables.
  */
-export function* imap<T, V>(iterable: Iterable<T>, mapper: (item: T) => V): Iterable<V> {
+export function* imap<T, V>(iterable: Iterable<T>, mapper: (item: T) => V): IterableIterator<V> {
   for (const value of iterable) {
     yield mapper(value);
   }
@@ -161,14 +161,19 @@ export function* imap<T, V>(iterable: Iterable<T>, mapper: (item: T) => V): Iter
  * otherwise, the iterable will be fully exhausted.  `islice()` does not
  * support negative values for `start`, `stop`, or `step`.
  */
-export function islice<T>(iterable: Iterable<T>, stop: number): Iterable<T>;
-export function islice<T>(iterable: Iterable<T>, start: number, stop?: number | null, step?: number): Iterable<T>;
+export function islice<T>(iterable: Iterable<T>, stop: number): IterableIterator<T>;
+export function islice<T>(
+  iterable: Iterable<T>,
+  start: number,
+  stop?: number | null,
+  step?: number,
+): IterableIterator<T>;
 export function* islice<T>(
   iterable: Iterable<T>,
   stopOrStart: number,
   possiblyStop?: number | null,
   step = 1,
-): Iterable<T> {
+): IterableIterator<T> {
   let start, stop;
   if (possiblyStop !== undefined) {
     // islice(iterable, start, stop[, step])
@@ -207,7 +212,7 @@ export function* islice<T>(
  * iterating over two iterables, use `izip2`.  When iterating over three
  * iterables, use `izip3`, etc.  `izip` is an alias for `izip2`.
  */
-export function* izip<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): Iterable<[T1, T2]> {
+export function* izip<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): IterableIterator<[T1, T2]> {
   const ixs = iter(xs);
   const iys = iter(ys);
   for (;;) {
@@ -225,7 +230,11 @@ export function* izip<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): Iterable<[T1,
 /**
  * Like izip2, but for three input iterables.
  */
-export function* izip3<T1, T2, T3>(xs: Iterable<T1>, ys: Iterable<T2>, zs: Iterable<T3>): Iterable<[T1, T2, T3]> {
+export function* izip3<T1, T2, T3>(
+  xs: Iterable<T1>,
+  ys: Iterable<T2>,
+  zs: Iterable<T3>,
+): IterableIterator<[T1, T2, T3]> {
   const ixs = iter(xs);
   const iys = iter(ys);
   const izs = iter(zs);
@@ -249,7 +258,11 @@ export const izip2 = izip;
  * the iterables are of uneven length, missing values are filled-in with
  * fillvalue.  Iteration continues until the longest iterable is exhausted.
  */
-export function* izipLongest2<T1, T2, D>(xs: Iterable<T1>, ys: Iterable<T2>, filler?: D): Iterable<[T1 | D, T2 | D]> {
+export function* izipLongest2<T1, T2, D>(
+  xs: Iterable<T1>,
+  ys: Iterable<T2>,
+  filler?: D,
+): IterableIterator<[T1 | D, T2 | D]> {
   const filler_ = filler as D;
   const ixs = iter(xs);
   const iys = iter(ys);
@@ -273,7 +286,7 @@ export function* izipLongest3<T1, T2, T3, D = undefined>(
   ys: Iterable<T2>,
   zs: Iterable<T3>,
   filler?: D,
-): Iterable<[T1 | D, T2 | D, T3 | D]> {
+): IterableIterator<[T1 | D, T2 | D, T3 | D]> {
   const filler_ = filler as D;
   const ixs = iter(xs);
   const iys = iter(ys);
@@ -299,7 +312,7 @@ export function* izipLongest3<T1, T2, T3, D = undefined>(
  * iterables with homogeneous types, so you cannot mix types like <A, B> like
  * you can with izip2().
  */
-export function* izipMany<T>(...iters: Iterable<T>[]): Iterable<T[]> {
+export function* izipMany<T>(...iters: Iterable<T>[]): IterableIterator<T[]> {
   // Make them all iterables
   const iterables = iters.map(iter);
 
@@ -327,7 +340,7 @@ export function* izipMany<T>(...iters: Iterable<T>[]): Iterable<T[]> {
  * So if the input elements are unique, there will be no repeat values in each
  * permutation.
  */
-export function* permutations<T>(iterable: Iterable<T>, r?: number): Iterable<T[]> {
+export function* permutations<T>(iterable: Iterable<T>, r?: number): IterableIterator<T[]> {
   const pool = Array.from(iterable);
   const n = pool.length;
   const x = r === undefined ? n : r;
@@ -374,7 +387,7 @@ export function* permutations<T>(iterable: Iterable<T>, r?: number): Iterable<T[
  * Returns an iterator that produces values over and over again.  Runs
  * indefinitely unless the times argument is specified.
  */
-export function* repeat<T>(thing: T, times?: number): Iterable<T> {
+export function* repeat<T>(thing: T, times?: number): IterableIterator<T> {
   if (times === undefined) {
     for (;;) {
       yield thing;
@@ -390,7 +403,7 @@ export function* repeat<T>(thing: T, times?: number): Iterable<T> {
  * Returns an iterator that produces elements from the iterable as long as the
  * predicate is true.
  */
-export function* takewhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> {
+export function* takewhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): IterableIterator<T> {
   const it = iter(iterable);
   let res: IteratorResult<T>;
   while (!(res = it.next()).done) {

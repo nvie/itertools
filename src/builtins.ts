@@ -117,7 +117,7 @@ export function contains<T>(haystack: Iterable<T>, needle: T): boolean {
  *     console.log([...enumerate(['hello', 'world'])]);
  *     // [0, 'hello'], [1, 'world']]
  */
-export function* enumerate<T>(iterable: Iterable<T>, start = 0): Iterable<[number, T]> {
+export function* enumerate<T>(iterable: Iterable<T>, start = 0): IterableIterator<[number, T]> {
   let index: number = start;
   for (const value of iterable) {
     yield [index++, value];
@@ -198,7 +198,7 @@ export function min<T>(iterable: Iterable<T>, keyFn: (item: T) => number = numbe
 /**
  * Internal helper for the range function
  */
-function range_(start: number, stop: number, step: number): Iterable<number> {
+function range_(start: number, stop: number, step: number): IterableIterator<number> {
   const counter = count(start, step);
   const pred = step >= 0 ? (n: number) => n < stop : (n: number) => n > stop;
   return takewhile(counter, pred);
@@ -229,9 +229,9 @@ function range_(start: number, stop: number, step: number): Iterable<number> {
  * not meet the value constraint.
  */
 
-export function range(stop: number): Iterable<number>;
-export function range(start: number, stop: number, step?: number): Iterable<number>;
-export function range(startOrStop: number, definitelyStop?: number, step = 1): Iterable<number> {
+export function range(stop: number): IterableIterator<number>;
+export function range(start: number, stop: number, step?: number): IterableIterator<number>;
+export function range(startOrStop: number, definitelyStop?: number, step = 1): IterableIterator<number> {
   if (definitelyStop !== undefined) {
     return range_(startOrStop /* as start */, definitelyStop, step);
   } else {

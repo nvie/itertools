@@ -15,7 +15,7 @@ import { primitiveIdentity } from "./utils";
  *     [...chunked([1, 2, 3, 4, 5, 6, 7, 8], 3)]
  *     // [[1, 2, 3], [4, 5, 6], [7, 8]]
  */
-export function* chunked<T>(iterable: Iterable<T>, size: number): Iterable<T[]> {
+export function* chunked<T>(iterable: Iterable<T>, size: number): IterableIterator<T[]> {
   if (size < 1) {
     throw new Error(`Invalid chunk size: ${size}`);
   }
@@ -39,7 +39,7 @@ export function* chunked<T>(iterable: Iterable<T>, size: number): Iterable<T[]> 
  *     // [0, 1, 2, 3]
  *
  */
-export function* flatten<T>(iterableOfIterables: Iterable<Iterable<T>>): Iterable<T> {
+export function* flatten<T>(iterableOfIterables: Iterable<Iterable<T>>): IterableIterator<T> {
   for (const iterable of iterableOfIterables) {
     for (const item of iterable) {
       yield item;
@@ -54,9 +54,9 @@ export function* flatten<T>(iterableOfIterables: Iterable<Iterable<T>>): Iterabl
  *     [1, -1, 2, -1, 3, -1, 4]
  *
  */
-export function intersperse<T, V>(value: V, iterable: Iterable<T>): Iterable<T | V> {
-  const stream = flatten(izip(repeat(value), iterable));
-  take(1, stream); // eat away and discard the first value from the output
+export function intersperse<T, V>(value: V, iterable: Iterable<T>): IterableIterator<T | V> {
+  const stream = flatten<T | V>(izip(repeat(value), iterable));
+  stream.next(); // eat away and discard the first value from the output
   return stream;
 }
 
@@ -64,7 +64,7 @@ export function intersperse<T, V>(value: V, iterable: Iterable<T>): Iterable<T |
  * Returns an iterable containing only the first `n` elements of the given
  * iterable.
  */
-export function* itake<T>(n: number, iterable: Iterable<T>): Iterable<T> {
+export function* itake<T>(n: number, iterable: Iterable<T>): IterableIterator<T> {
   const it = iter(iterable);
   let count = n;
   while (count-- > 0) {
@@ -87,7 +87,7 @@ export function* itake<T>(n: number, iterable: Iterable<T>): Iterable<T> {
  *     [(8, 2), (2, 0), (0, 7)]
  *
  */
-export function* pairwise<T>(iterable: Iterable<T>): Iterable<[T, T]> {
+export function* pairwise<T>(iterable: Iterable<T>): IterableIterator<[T, T]> {
   const it = iter(iterable);
   const first = it.next();
   if (first.done) {
@@ -142,7 +142,7 @@ export function partition<T>(iterable: Iterable<T>, predicate: Predicate<T>): [T
  *     >>> [...roundrobin([1, 2, 3], [4], [5, 6, 7, 8])]
  *     [1, 4, 5, 2, 6, 3, 7, 8]
  */
-export function* roundrobin<T>(...iters: Iterable<T>[]): Iterable<T> {
+export function* roundrobin<T>(...iters: Iterable<T>[]): IterableIterator<T> {
   // We'll only keep lazy versions of the input iterables in here that we'll
   // slowly going to exhaust.  Once an iterable is exhausted, it will be
   // removed from this list.  Once the entire list is empty, this algorithm
@@ -179,7 +179,7 @@ export function* roundrobin<T>(...iters: Iterable<T>[]): Iterable<T> {
  * This is also different from `zipLongest()`, since the number of items in
  * each round can decrease over time, rather than being filled with a filler.
  */
-export function* heads<T>(...iters: Array<Iterable<T>>): Iterable<T[]> {
+export function* heads<T>(...iters: Array<Iterable<T>>): IterableIterator<T[]> {
   // We'll only keep lazy versions of the input iterables in here that we'll
   // slowly going to exhaust.  Once an iterable is exhausted, it will be
   // removed from this list.  Once the entire list is empty, this algorithm
@@ -228,7 +228,7 @@ export function take<T>(n: number, iterable: Iterable<T>): T[] {
 export function* uniqueEverseen<T>(
   iterable: Iterable<T>,
   keyFn: (item: T) => Primitive = primitiveIdentity,
-): Iterable<T> {
+): IterableIterator<T> {
   const seen = new Set();
   for (const item of iterable) {
     const key = keyFn(item);
@@ -251,7 +251,7 @@ export function* uniqueEverseen<T>(
 export function* uniqueJustseen<T>(
   iterable: Iterable<T>,
   keyFn: (item: T) => Primitive = primitiveIdentity,
-): Iterable<T> {
+): IterableIterator<T> {
   let last = undefined;
   for (const item of iterable) {
     const key = keyFn(item);
