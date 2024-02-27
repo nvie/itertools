@@ -49,7 +49,7 @@
     "node-itertools"
   ],
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.13.10",
+    "@arethetypeswrong/cli": "^0.14.1",
     "@release-it/keep-a-changelog": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
