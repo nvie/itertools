@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- Add missing export for `repeat`
+
 ## [2.2.4] - 2024-02-19
 
 - Type output types of all itertools more precisely
