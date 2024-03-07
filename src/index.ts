@@ -37,6 +37,7 @@ export {
   izipMany,
   izipLongest,
   permutations,
+  repeat,
   takewhile,
   zipLongest,
   zipMany,
