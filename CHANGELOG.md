@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [2.3.0] - 2024-04-05
+
 - Add new `dupes(iterable, keyFn?)` function, which returns groups of all
   duplicate items in iterable.
 
