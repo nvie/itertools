@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- Actually export the new itertool at the top level
+
 ## [2.3.0] - 2024-04-05
 
 - Add new `dupes(iterable, keyFn?)` function, which returns groups of all

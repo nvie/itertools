@@ -44,6 +44,7 @@ export {
 } from "./itertools";
 export {
   chunked,
+  dupes,
   flatten,
   heads,
   itake,
