@@ -432,6 +432,7 @@ Eager version of [izipMany](#izipMany).
 -   [take](#take)
 -   [uniqueEverseen](#uniqueEverseen)
 -   [uniqueJustseen](#uniqueJustseen)
+-   [dupes](#dupes)
 
 <a name="chunked" href="#chunked">#</a> <b>chunked</b>(iterable: <i>Iterable&lt;T&gt;</i>, size: <i>number</i>): <i>Iterable&lt;T[]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js 'Source')
 
@@ -524,6 +525,15 @@ Yields elements in order, ignoring serial duplicates.
     ['A', 'B', 'C', 'D', 'A', 'B']
     >>> [...uniqueJustseen('AbBCcAB', s => s.toLowerCase())]
     ['A', 'b', 'C', 'A', 'B']
+
+<a name="dupes" href="#dupes">#</a> <b>dupes</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn?: <i>(item: T) =&gt; Primitive</i></i>): <i>Iterable&lt;T[]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/more-itertools.js 'Source')
+
+Yield only elements from the input that occur more than once. Needs to consume the entire input before being able to produce the first result.
+
+    >>> [...dupes('AAAABCDEEEFABG')]
+    [['A', 'A', 'A', 'A', 'A'], ['E', 'E', 'E'], ['B', 'B']]
+    >>> [...dupes('AbBCcAB', s => s.toLowerCase())]
+    [['b', 'B', 'B'], ['C', 'c'], ['A', 'A']]
 
 ### Additions
 

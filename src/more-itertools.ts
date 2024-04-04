@@ -240,6 +240,40 @@ export function* uniqueEverseen<T>(
 }
 
 /**
+ * Yield only elements from the input that occur more than once. Needs to
+ * consume the entire input before being able to produce the first result.
+ *
+ *     >>> [...dupes('AAAABCDEEEFABG')]
+ *     [['A', 'A', 'A', 'A', 'A'], ['E', 'E', 'E'], ['B', 'B']]
+ *     >>> [...dupes('AbBCcAB', s => s.toLowerCase())]
+ *     [['b', 'B', 'B'], ['C', 'c'], ['A', 'A']]
+ *
+ */
+export function dupes<T>(
+  iterable: Iterable<T>,
+  keyFn: (item: T) => Primitive = primitiveIdentity,
+): IterableIterator<T[]> {
+  const multiples = new Map<Primitive, T[]>();
+
+  {
+    const singles = new Map<Primitive, T>();
+    for (const item of iterable) {
+      const key = keyFn(item);
+      if (multiples.has(key)) {
+        multiples.get(key)!.push(item);
+      } else if (singles.has(key)) {
+        multiples.set(key, [singles.get(key)!, item]);
+        singles.delete(key);
+      } else {
+        singles.set(key, item);
+      }
+    }
+  }
+
+  return multiples.values();
+}
+
+/**
  * Yields elements in order, ignoring serial duplicates.
  *
  *     >>> [...uniqueJustseen('AAAABBBCCDAABBB')]

@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+- Add new `dupes(iterable, keyFn?)` function, which returns groups of all
+  duplicate items in iterable.
+
 ## [2.2.5] - 2024-03-07
 
 - Add missing export for `repeat`

@@ -3,6 +3,7 @@ import { iter, find, range } from "~/builtins";
 import { first } from "~/custom";
 import {
   chunked,
+  dupes,
   flatten,
   heads,
   intersperse,
@@ -390,5 +391,68 @@ describe("uniqueEverseen", () => {
     expect(Array.from(uniqueEverseen("AAAABBBCCDAABBB"))).toEqual(["A", "B", "C", "D"]);
     expect(Array.from(uniqueEverseen("ABCcAb", (s) => s.toLowerCase()))).toEqual(["A", "B", "C"]);
     expect(Array.from(uniqueEverseen("AbCBBcAb", (s) => s.toLowerCase()))).toEqual(["A", "b", "C"]);
+  });
+});
+
+describe("dupes", () => {
+  it("dupes w/ empty list", () => {
+    expect(Array.from(dupes([]))).toEqual([]);
+  });
+
+  it("dupes on a list without dupes", () => {
+    expect(Array.from(dupes([1, 2, 3, 4, 5]))).toEqual([]);
+  });
+
+  it("dupes on a list with dupes", () => {
+    expect(Array.from(dupes(Array.from("Hello")))).toEqual([["l", "l"]]);
+    expect(Array.from(dupes(Array.from("AAAABCDEEEFABG")))).toEqual([
+      ["A", "A", "A", "A", "A"],
+      ["E", "E", "E"],
+      ["B", "B"],
+    ]);
+  });
+
+  it("dupes with a key function", () => {
+    expect(Array.from(dupes(Array.from("AbBCcABdE"), (s) => s.toLowerCase()))).toEqual([
+      ["b", "B", "B"],
+      ["C", "c"],
+      ["A", "A"],
+    ]);
+  });
+
+  it("dupes with complex objects and a key function", () => {
+    expect(
+      Array.from(
+        dupes(
+          [
+            { name: "Charlie", surname: "X" },
+            { name: "Alice", surname: "Rubrik" },
+            { name: "Alice", surname: "Doe" },
+            { name: "Bob" },
+          ],
+          (p) => p.name,
+        ),
+      ),
+    ).toEqual([
+      [
+        { name: "Alice", surname: "Rubrik" },
+        { name: "Alice", surname: "Doe" },
+      ],
+    ]);
+
+    expect(
+      Array.from(
+        dupes(
+          [{ name: "Bob" }, { name: "Alice", surname: "Rubrik" }, { name: "Alice", surname: "Doe" }, { name: "Bob" }],
+          (p) => p.name,
+        ),
+      ),
+    ).toEqual([
+      [
+        { name: "Alice", surname: "Rubrik" },
+        { name: "Alice", surname: "Doe" },
+      ],
+      [{ name: "Bob" }, { name: "Bob" }],
+    ]);
   });
 });
