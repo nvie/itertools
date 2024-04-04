@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [2.3.1] - 2024-04-05
+
 - Actually export the new itertool at the top level
 
 ## [2.3.0] - 2024-04-05
