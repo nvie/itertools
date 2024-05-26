@@ -36,10 +36,12 @@ export {
   izip3,
   izipMany,
   izipLongest,
+  izipLongest3,
   permutations,
   repeat,
   takewhile,
   zipLongest,
+  zipLongest3,
   zipMany,
 } from "./itertools";
 export {
