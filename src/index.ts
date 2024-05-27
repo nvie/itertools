@@ -49,6 +49,7 @@ export {
   dupes,
   flatten,
   heads,
+  intersperse,
   itake,
   pairwise,
   partition,

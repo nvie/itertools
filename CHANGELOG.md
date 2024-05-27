@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- Fix missing top-level exports for `izipLongest3` and `intersperse`
+
 ## [2.3.1] - 2024-04-05
 
 - Actually export the new itertool at the top level
