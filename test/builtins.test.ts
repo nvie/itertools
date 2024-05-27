@@ -5,6 +5,7 @@ import {
   enumerate,
   every,
   filter,
+  first,
   iter,
   map,
   max,
@@ -16,8 +17,7 @@ import {
   sum,
   zip,
   zip3,
-} from "~/builtins";
-import { first } from "~/custom";
+} from "~";
 
 const isEven = (n: number) => n % 2 === 0;
 

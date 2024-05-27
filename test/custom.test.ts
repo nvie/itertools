@@ -1,6 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { compact, compactObject, flatmap } from "~/custom";
-import { repeat } from "~/itertools";
+import { compact, compactObject, flatmap, repeat } from "~";
 
 describe("compact", () => {
   it("compact w/ empty list", () => {

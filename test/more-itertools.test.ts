@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest";
 import { iter, find, range } from "~/builtins";
-import { first } from "~/custom";
 import {
   chunked,
   dupes,
+  first,
   flatten,
   heads,
   intersperse,
@@ -13,7 +13,7 @@ import {
   take,
   uniqueEverseen,
   uniqueJustseen,
-} from "~/more-itertools";
+} from "~";
 import * as fc from "fast-check";
 
 const isEven = (x: number) => x % 2 === 0;

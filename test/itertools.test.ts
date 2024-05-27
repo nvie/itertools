@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { all, range } from "~/builtins";
 import {
+  all,
   chain,
   compress,
   count,
@@ -11,13 +11,14 @@ import {
   imap,
   islice,
   permutations,
+  range,
   repeat,
+  take,
   takewhile,
   zipLongest,
   zipLongest3,
   zipMany,
-} from "~/itertools";
-import { take } from "~/more-itertools";
+} from "~";
 
 const isEven = (x: number) => x % 2 === 0;
 const isPositive = (x: number) => x >= 0;
@@ -263,6 +264,12 @@ describe("izipMany", () => {
 
 describe("izipLongest", () => {
   it("izipLongest is tested through zipLongest() tests", () => {
+    // This is okay
+  });
+});
+
+describe("izipLongest3", () => {
+  it("izipLongest3 is tested through zipLongest3() tests", () => {
     // This is okay
   });
 });
