@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [2.3.2] - 2024-05-27
+
 - Fix missing top-level exports for `izipLongest3` and `intersperse`
 
 ## [2.3.1] - 2024-04-05
