@@ -42,7 +42,7 @@ map(items, fn)
 
 The rationale for this flipping of argument order is because in practice, the
 function bodies can span multiple lines, in which case the following block will
-remaing aesthetically pleasing:
+remain aesthetically pleasing:
 
 ```ts
 import { map } from 'itertools';
