@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- Officially drop Node 16 support (it may still work)
+
 ## [2.3.2] - 2024-05-27
 
 - Fix missing top-level exports for `izipLongest3` and `intersperse`
