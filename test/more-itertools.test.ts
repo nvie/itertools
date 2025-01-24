@@ -260,7 +260,7 @@ describe("partition", () => {
     ]);
   });
 
-  it("parition retains rich type info", () => {
+  it("partition retains rich type info", () => {
     const values = ["hi", 3, null, "foo", -7];
     const [good, bad] = partition(values, isNum);
     expect(good).toEqual([3, -7]);
