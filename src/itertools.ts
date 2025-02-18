@@ -61,11 +61,12 @@ export function* cycle<T>(iterable: Iterable<T>): IterableIterator<T> {
  * false.
  */
 export function* dropwhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): IterableIterator<T> {
+  let index = 0;
   const it = iter(iterable);
   let res: IteratorResult<T>;
   while (!(res = it.next()).done) {
     const value = res.value;
-    if (!predicate(value)) {
+    if (!predicate(value, index++)) {
       yield value;
       break; // we break, so we cannot use a for..of loop!
     }
@@ -135,8 +136,9 @@ export function* icompress<T>(data: Iterable<T>, selectors: Iterable<boolean>): 
 export function ifilter<T, N extends T>(iterable: Iterable<T>, predicate: (item: T) => item is N): IterableIterator<N>;
 export function ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): IterableIterator<T>;
 export function* ifilter<T>(iterable: Iterable<T>, predicate: Predicate<T>): IterableIterator<T> {
+  let index = 0;
   for (const value of iterable) {
-    if (predicate(value)) {
+    if (predicate(value, index++)) {
       yield value;
     }
   }
@@ -404,11 +406,12 @@ export function* repeat<T>(thing: T, times?: number): IterableIterator<T> {
  * predicate is true.
  */
 export function* takewhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): IterableIterator<T> {
+  let index = 0;
   const it = iter(iterable);
   let res: IteratorResult<T>;
   while (!(res = it.next()).done) {
     const value = res.value;
-    if (!predicate(value)) return; // early return, so we cannot use for..of loop!
+    if (!predicate(value, index++)) return; // early return, so we cannot use for..of loop!
     yield value;
   }
 }

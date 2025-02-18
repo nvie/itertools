@@ -20,6 +20,7 @@ import {
 } from "~";
 
 const isEven = (n: number) => n % 2 === 0;
+const isEvenIndex = (_, index: number) => index % 2 === 0;
 
 function isNum(value: unknown): value is number {
   return typeof value === "number";
@@ -169,10 +170,13 @@ describe("enumerate", () => {
 describe("filter", () => {
   it("filters empty list", () => {
     expect(filter([], isEven)).toEqual([]);
+    expect(filter([], isEvenIndex)).toEqual([]);
   });
 
   it("ifilter works like Array.filter, but lazy", () => {
     expect(filter([0, 1, 2, 3], isEven)).toEqual([0, 2]);
+    expect(filter([0, 1, 2, 3], isEvenIndex)).toEqual([0, 2]);
+    expect(filter([9, 0, 1, 2, 3], isEvenIndex)).toEqual([9, 1, 3]);
   });
 
   it("filter retains rich type info", () => {

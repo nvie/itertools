@@ -1,4 +1,4 @@
-import { iter, map } from "./builtins";
+import { enumerate, iter, map } from "./builtins";
 import { izip, repeat } from "./itertools";
 import type { Predicate, Primitive } from "./types";
 import { primitiveIdentity } from "./utils";
@@ -117,15 +117,16 @@ export function* pairwise<T>(iterable: Iterable<T>): IterableIterator<[T, T]> {
  */
 export function partition<T, N extends T>(
   iterable: Iterable<T>,
-  predicate: (item: T) => item is N,
+  predicate: (item: T, index: number) => item is N,
 ): [N[], Exclude<T, N>[]];
 export function partition<T>(iterable: Iterable<T>, predicate: Predicate<T>): [T[], T[]];
 export function partition<T>(iterable: Iterable<T>, predicate: Predicate<T>): [T[], T[]] {
   const good = [];
   const bad = [];
 
+  let index = 0;
   for (const item of iterable) {
-    if (predicate(item)) {
+    if (predicate(item, index++)) {
       good.push(item);
     } else {
       bad.push(item);

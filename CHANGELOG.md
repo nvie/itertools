@@ -1,5 +1,14 @@
 ## [Unreleased]
 
+- Add second param `index` to all predicates. This will make operations like
+  partitioning a list based on the element position as easy as partitioning
+  based on the element value, for example:
+  ```ts
+  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const [thirds, rest] = partition(items, (item, index) => index % 3 === 0);
+  console.log(thirds); // [1, 4, 7]
+  console.log(rest); // [2, 3, 5, 6, 8, 9]
+  ```
 - Officially drop Node 16 support (it may still work)
 
 ## [2.3.2] - 2024-05-27

@@ -21,6 +21,7 @@ import {
 } from "~";
 
 const isEven = (x: number) => x % 2 === 0;
+const isEvenIndex = (_, index: number) => index % 2 === 0;
 const isPositive = (x: number) => x >= 0;
 
 function isNum(value: unknown): value is number {
@@ -95,19 +96,24 @@ describe("cycle", () => {
 describe("dropwhile", () => {
   it("dropwhile on empty list", () => {
     expect(Array.from(dropwhile([], isEven))).toEqual([]);
+    expect(Array.from(dropwhile([], isEvenIndex))).toEqual([]);
     expect(Array.from(dropwhile([], isPositive))).toEqual([]);
   });
 
   it("dropwhile on list", () => {
     expect(Array.from(dropwhile([1], isEven))).toEqual([1]);
+    expect(Array.from(dropwhile([1], isEvenIndex))).toEqual([]);
     expect(Array.from(dropwhile([1], isPositive))).toEqual([]);
 
     expect(Array.from(dropwhile([-1, 0, 1], isEven))).toEqual([-1, 0, 1]);
     expect(Array.from(dropwhile([4, -1, 0, 1], isEven))).toEqual([-1, 0, 1]);
+    expect(Array.from(dropwhile([-1, 0, 1], isEvenIndex))).toEqual([0, 1]);
+    expect(Array.from(dropwhile([4, -1, 0, 1], isEvenIndex))).toEqual([-1, 0, 1]);
     expect(Array.from(dropwhile([-1, 0, 1], isPositive))).toEqual([-1, 0, 1]);
     expect(Array.from(dropwhile([7, -1, 0, 1], isPositive))).toEqual([-1, 0, 1]);
 
     expect(Array.from(dropwhile([0, 2, 4, 6, 7, 8, 10], isEven))).toEqual([7, 8, 10]);
+    expect(Array.from(dropwhile([0, 2, 4, 6, 7, 8, 10], isEvenIndex))).toEqual([2, 4, 6, 7, 8, 10]);
     expect(Array.from(dropwhile([0, 1, 2, -2, 3, 4, 5, 6, 7], isPositive))).toEqual([-2, 3, 4, 5, 6, 7]);
   });
 
@@ -182,6 +188,7 @@ describe("ifilter", () => {
 
   it("ifilter can handle infinite inputs", () => {
     expect(take(5, ifilter(range(9999), isEven))).toEqual([0, 2, 4, 6, 8]);
+    expect(take(5, ifilter(range(9999), isEvenIndex))).toEqual([0, 2, 4, 6, 8]);
   });
 
   it("ifilter retains rich type info", () => {
@@ -338,30 +345,39 @@ describe("repeat", () => {
 describe("takewhile", () => {
   it("takewhile on empty list", () => {
     expect(Array.from(takewhile([], isEven))).toEqual([]);
+    expect(Array.from(takewhile([], isEvenIndex))).toEqual([]);
     expect(Array.from(takewhile([], isPositive))).toEqual([]);
   });
 
   it("takewhile on list", () => {
     expect(Array.from(takewhile([1], isEven))).toEqual([]);
+    expect(Array.from(takewhile([1], isEvenIndex))).toEqual([1]);
     expect(Array.from(takewhile([1], isPositive))).toEqual([1]);
 
     expect(Array.from(takewhile([-1, 0, 1], isEven))).toEqual([]);
+    expect(Array.from(takewhile([-1, 0, 1], isEvenIndex))).toEqual([-1]);
     expect(Array.from(takewhile([-1, 0, 1], isPositive))).toEqual([]);
 
     expect(Array.from(takewhile([0, 2, 4, 6, 7, 8, 10], isEven))).toEqual([0, 2, 4, 6]);
+    expect(Array.from(takewhile([0, 2, 4, 6, 7, 8, 10], isEvenIndex))).toEqual([0]);
     expect(Array.from(takewhile([0, 1, 2, -2, 3, 4, 5, 6, 7], isPositive))).toEqual([0, 1, 2]);
   });
 
   it("takewhile on lazy iterable", () => {
     const lazy = gen([0, 1, 2, -2, 4, 6, 8, 7]);
     const lazy1 = takewhile(lazy, isPositive);
-    const lazy2 = takewhile(lazy, isEven);
+    const lazy2 = takewhile(lazy, isEvenIndex);
+    const lazy3 = takewhile(lazy, isEven);
 
     expect(Array.from(lazy1)).toEqual([0, 1, 2]);
 
     // By now, the -2 from the original input has been consumed, but we should
     // be able to continue pulling more values from the same input
-    expect(Array.from(lazy2)).toEqual([4, 6, 8]);
+    expect(Array.from(lazy2)).toEqual([4]);
+
+    // By now, the 6 from the original input has been consumed, but we should
+    // be able to continue pulling more values from the same input
+    expect(Array.from(lazy3)).toEqual([8]);
   });
 });
 

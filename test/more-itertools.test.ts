@@ -17,6 +17,7 @@ import {
 import * as fc from "fast-check";
 
 const isEven = (x: number) => x % 2 === 0;
+const isEvenIndex = (_, index: number) => index % 2 === 0;
 const isPositive = (x: number) => x >= 0;
 
 function isNum(value: unknown): value is number {
@@ -246,6 +247,7 @@ describe("pairwise", () => {
 describe("partition", () => {
   it("partition empty list", () => {
     expect(partition([], isEven)).toEqual([[], []]);
+    expect(partition([], isEvenIndex)).toEqual([[], []]);
   });
 
   it("partition splits input list into two lists", () => {
@@ -253,6 +255,10 @@ describe("partition", () => {
     expect(partition(values, isEven)).toEqual([
       [-2, 4, 6, 8, 8, 0, -2],
       [1, 3, 5, -3],
+    ]);
+    expect(partition(values, isEvenIndex)).toEqual([
+      [1, 3, 5, 8, 0, -3],
+      [-2, 4, 6, 8, -2],
     ]);
     expect(partition(values, isPositive)).toEqual([
       [1, 3, 4, 5, 6, 8, 8, 0],

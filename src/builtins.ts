@@ -7,16 +7,17 @@ import { identityPredicate, keyToCmp, numberIdentity, primitiveIdentity } from "
  * any. If no predicate is given, it will return the first value returned by
  * the iterable.
  */
-export function find<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): T | undefined {
+export function find<T>(iterable: Iterable<T>, predicate?: Predicate<T>): T | undefined {
   const it = iter(iterable);
-  if (keyFn === undefined) {
+  if (predicate === undefined) {
     const value = it.next();
     return value.done ? value.value : value.value;
   } else {
     let res: IteratorResult<T>;
+    let i = 0;
     while (!(res = it.next()).done) {
       const value = res.value;
-      if (keyFn(value)) {
+      if (predicate(value, i++)) {
         return value;
       }
     }
@@ -42,13 +43,13 @@ export function find<T>(iterable: Iterable<T>, keyFn?: Predicate<T>): T | undefi
  *     all([2, 4, 5], n => n % 2 === 0)  // => false
  *
  */
-export function every<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
+export function every<T>(iterable: Iterable<T>, predicate: Predicate<T> = identityPredicate): boolean {
+  let index = 0;
   for (const item of iterable) {
-    if (!keyFn(item)) {
+    if (!predicate(item, index++)) {
       return false;
     }
   }
-
   return true;
 }
 
@@ -69,13 +70,13 @@ export function every<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPr
  *     some([{name: 'Bob'}, {name: 'Alice'}], person => person.name.startsWith('C'))  // => false
  *
  */
-export function some<T>(iterable: Iterable<T>, keyFn: Predicate<T> = identityPredicate): boolean {
+export function some<T>(iterable: Iterable<T>, predicate: Predicate<T> = identityPredicate): boolean {
+  let index = 0;
   for (const item of iterable) {
-    if (keyFn(item)) {
+    if (predicate(item, index++)) {
       return true;
     }
   }
-
   return false;
 }
 
@@ -127,7 +128,7 @@ export function* enumerate<T>(iterable: Iterable<T>, start = 0): IterableIterato
 /**
  * Non-lazy version of ifilter().
  */
-export function filter<T, N extends T>(iterable: Iterable<T>, predicate: (item: T) => item is N): N[];
+export function filter<T, N extends T>(iterable: Iterable<T>, predicate: (item: T, index: number) => item is N): N[];
 export function filter<T>(iterable: Iterable<T>, predicate: Predicate<T>): T[];
 export function filter<T>(iterable: Iterable<T>, predicate: Predicate<T>): T[] {
   return Array.from(ifilter(iterable, predicate));
@@ -140,20 +141,6 @@ export function filter<T>(iterable: Iterable<T>, predicate: Predicate<T>): T[] {
  * state, think of it as a "cursor") which can only be consumed once.
  */
 export function iter<T>(iterable: Iterable<T>): IterableIterator<T> {
-  // class SelfIter implements IterableIterator<T> {
-  //     #iterator: Iterator<T>;
-  //     constructor(orig: Iterable<T>) {
-  //         this.#iterator = orig[Symbol.iterator]();
-  //     }
-  //     [Symbol.iterator]() {
-  //         return this;
-  //     }
-  //     next() {
-  //         return this.#iterator.next();
-  //     }
-  // }
-  // return new SelfIter(iterable);
-
   return iterable[Symbol.iterator]() as IterableIterator<T>;
   //                                 ^^^^^^^^^^^^^^^^^^^^^^ Not safe!
 }
