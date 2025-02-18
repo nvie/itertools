@@ -20,7 +20,7 @@ import {
 } from "~";
 
 const isEven = (n: number) => n % 2 === 0;
-const isEvenIndex = (_, index: number) => index % 2 === 0;
+const isEvenIndex = (_: unknown, index: number) => index % 2 === 0;
 
 function isNum(value: unknown): value is number {
   return typeof value === "number";

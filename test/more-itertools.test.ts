@@ -17,7 +17,7 @@ import {
 import * as fc from "fast-check";
 
 const isEven = (x: number) => x % 2 === 0;
-const isEvenIndex = (_, index: number) => index % 2 === 0;
+const isEvenIndex = (_: unknown, index: number) => index % 2 === 0;
 const isPositive = (x: number) => x >= 0;
 
 function isNum(value: unknown): value is number {
