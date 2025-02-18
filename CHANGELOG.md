@@ -1,5 +1,15 @@
 ## [Unreleased]
 
+- Add new `partitionN()` function, which is like `partition()` but
+  allows partitioning items into more than two buckets.
+  The reason the `partition()` isn't extended to support more than one
+  predicate is that the type signature is significantly more complex,
+  and I'm not sure yet if I want to pay that price for the most common case.
+  ```ts
+  const [matches1, nonMatches] = partitionN(items, pred1);
+  const [matches1, matches2, rest] = partitionN(items, pred1, pred2);
+  const [matches1, matches2, matches3, rest] = partitionN(items, pred1, pred2, pred3);
+  ```
 - Add second param `index` to all predicates. This will make operations like
   partitioning a list based on the element position as easy as partitioning
   based on the element value, for example:

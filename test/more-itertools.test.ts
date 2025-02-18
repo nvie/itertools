@@ -9,6 +9,7 @@ import {
   intersperse,
   pairwise,
   partition,
+  partitionN,
   roundrobin,
   take,
   uniqueEverseen,
@@ -19,6 +20,10 @@ import * as fc from "fast-check";
 const isEven = (x: number) => x % 2 === 0;
 const isEvenIndex = (_: unknown, index: number) => index % 2 === 0;
 const isPositive = (x: number) => x >= 0;
+
+function isString(value: unknown): value is string {
+  return typeof value === "string";
+}
 
 function isNum(value: unknown): value is number {
   return typeof value === "number";
@@ -272,6 +277,45 @@ describe("partition", () => {
     expect(good).toEqual([3, -7]);
     //     ^^^^ number[]
     expect(bad).toEqual(["hi", null, "foo"]);
+    //     ^^^ (string | null)[]
+  });
+});
+
+describe("partitionN", () => {
+  it("partitionN without predicates throws error", () => {
+    expect(() => partitionN([])).toThrow("Must provide at least one predicate");
+  });
+
+  it("partitionN empty list", () => {
+    expect(partitionN([], isEven)).toEqual([[], []]);
+    expect(partitionN([], isEvenIndex)).toEqual([[], []]);
+    expect(partitionN([], isPositive)).toEqual([[], []]);
+    expect(partitionN([], isPositive, isEven)).toEqual([[], [], []]);
+    expect(partitionN([], isEven, isEvenIndex, isPositive)).toEqual([[], [], [], []]);
+  });
+
+  it("partitionN splits input list into N lists", () => {
+    const values = [1, -2, 3, 4, 5, 6, 8, 8, 0, -2, -3];
+    expect(partitionN(values, isEven)).toEqual([
+      [-2, 4, 6, 8, 8, 0, -2],
+      [1, 3, 5, -3],
+    ]);
+    expect(partitionN(values, isPositive)).toEqual([
+      [1, 3, 4, 5, 6, 8, 8, 0],
+      [-2, -2, -3],
+    ]);
+    expect(partitionN(values, isEven, isPositive)).toEqual([[-2, 4, 6, 8, 8, 0, -2], [1, 3, 5], [-3]]);
+    expect(partitionN(values, isPositive, isEven)).toEqual([[1, 3, 4, 5, 6, 8, 8, 0], [-2, -2], [-3]]);
+  });
+
+  it("partitionN retains rich type info", () => {
+    const values = ["hi", 3, null, "foo", -7];
+    const [nums, strings, rest] = partitionN(values, isNum, isString);
+    expect(nums).toEqual([3, -7]);
+    //     ^^^^ number[]
+    expect(strings).toEqual(["hi", "foo"]);
+    //     ^^^^ number[]
+    expect(rest).toEqual([null]);
     //     ^^^ (string | null)[]
   });
 });

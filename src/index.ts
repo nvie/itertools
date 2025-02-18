@@ -53,6 +53,7 @@ export {
   itake,
   pairwise,
   partition,
+  partitionN,
   roundrobin,
   take,
   uniqueEverseen,
