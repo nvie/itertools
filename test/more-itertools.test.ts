@@ -20,6 +20,7 @@ import * as fc from "fast-check";
 const isEven = (x: number) => x % 2 === 0;
 const isEvenIndex = (_: unknown, index: number) => index % 2 === 0;
 const isPositive = (x: number) => x >= 0;
+const isPositiveNum = (x: unknown): x is number => isNum(x) && x >= 0;
 
 function isString(value: unknown): value is string {
   return typeof value === "string";
@@ -317,6 +318,14 @@ describe("partitionN", () => {
     //     ^^^^ number[]
     expect(rest).toEqual([null]);
     //     ^^^ (string | null)[]
+  });
+
+  it("partitionN retains complex rich type info", () => {
+    const values = ["hi", 3, null, "foo", -7];
+    const [nums, rest] = partitionN(values, isPositiveNum);
+    expect(nums).toEqual([3]);
+    //     ^^^^ number[]
+    expect(rest).toEqual(["hi", null, "foo", -7]);
   });
 });
 
