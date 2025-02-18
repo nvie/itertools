@@ -35,6 +35,11 @@ jobs:
         env:
           CI: true
 
+      - name: Run type-level tests
+        run: npm run test:types
+        env:
+          CI: true
+
       - name: Run linters
         run: npm run lint
 
