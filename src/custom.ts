@@ -7,7 +7,7 @@ function isNullish<T>(x: T): x is NonNullable<T> {
   return x != null;
 }
 
-function isDefined<T>(x: T): boolean {
+function isDefined(x: unknown): boolean {
   return x !== undefined;
 }
 

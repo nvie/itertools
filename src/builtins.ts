@@ -11,7 +11,7 @@ export function find<T>(iterable: Iterable<T>, predicate?: Predicate<T>): T | un
   const it = iter(iterable);
   if (predicate === undefined) {
     const value = it.next();
-    return value.done ? value.value : value.value;
+    return value.done ? undefined : value.value;
   } else {
     let res: IteratorResult<T>;
     let i = 0;
@@ -215,7 +215,6 @@ function range_(start: number, stop: number, step: number): IterableIterator<num
  * The produced range will be empty if the first value to produce already does
  * not meet the value constraint.
  */
-
 export function range(stop: number): IterableIterator<number>;
 export function range(start: number, stop: number, step?: number): IterableIterator<number>;
 export function range(startOrStop: number, definitelyStop?: number, step = 1): IterableIterator<number> {
@@ -319,13 +318,13 @@ export function sum(iterable: Iterable<number>): number {
 /**
  * See izip.
  */
-export function zip<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): Array<[T1, T2]> {
+export function zip<T1, T2>(xs: Iterable<T1>, ys: Iterable<T2>): [T1, T2][] {
   return Array.from(izip(xs, ys));
 }
 
 /**
  * See izip3.
  */
-export function zip3<T1, T2, T3>(xs: Iterable<T1>, ys: Iterable<T2>, zs: Iterable<T3>): Array<[T1, T2, T3]> {
+export function zip3<T1, T2, T3>(xs: Iterable<T1>, ys: Iterable<T2>, zs: Iterable<T3>): [T1, T2, T3][] {
   return Array.from(izip3(xs, ys, zs));
 }

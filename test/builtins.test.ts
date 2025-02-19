@@ -1,5 +1,6 @@
-import { describe, it, expect } from "vitest";
 import * as fc from "fast-check";
+import { describe, expect, it } from "vitest";
+
 import {
   contains,
   enumerate,
@@ -36,8 +37,8 @@ function predicate(): fc.Arbitrary<(a: unknown) => boolean> {
   return fc.oneof(
     fc.constant(() => true),
     fc.constant(() => false),
-    fc.constant((a: unknown) => (JSON.stringify(a) ?? "").length > 10),
-    fc.constant((a: unknown) => (JSON.stringify(a) ?? "").length !== 0),
+    fc.constant((a: unknown) => JSON.stringify(a ?? "0").length > 10),
+    fc.constant((a: unknown) => JSON.stringify(a ?? "0").length !== 0),
     fc.constant((a: unknown) => typeof a === "number"),
     fc.constant((a: unknown) => typeof a === "string"),
     fc.constant((a: unknown) => typeof a === "object"),

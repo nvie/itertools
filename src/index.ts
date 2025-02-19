@@ -1,5 +1,3 @@
-export type { Predicate, Primitive } from "./types";
-
 export {
   all,
   any,
@@ -20,6 +18,7 @@ export {
   zip,
   zip3,
 } from "./builtins";
+export { compact, compactObject, first, flatmap, icompact } from "./custom";
 export {
   chain,
   compress,
@@ -34,9 +33,9 @@ export {
   izip,
   izip2,
   izip3,
-  izipMany,
   izipLongest,
   izipLongest3,
+  izipMany,
   permutations,
   repeat,
   takewhile,
@@ -58,4 +57,4 @@ export {
   uniqueEverseen,
   uniqueJustseen,
 } from "./more-itertools";
-export { compact, compactObject, first, flatmap, icompact } from "./custom";
+export type { Predicate, Primitive } from "./types";
