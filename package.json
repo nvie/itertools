@@ -50,7 +50,7 @@
     "node-itertools"
   ],
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.16.4",
+    "@arethetypeswrong/cli": "^0.17.3",
     "@eslint/js": "^9.20.0",
     "@release-it/keep-a-changelog": "^5.0.0",
     "@vitest/coverage-istanbul": "^3.0.6",
@@ -59,7 +59,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "fast-check": "^3.22.0",
     "prettier": "^3.3.3",
-    "publint": "^0.2.11",
+    "publint": "^0.3.5",
     "release-it": "^17.6.0",
     "tsd": "^0.31.2",
     "tsup": "^8.3.0",
