@@ -1,4 +1,4 @@
-import { enumerate, iter, map } from "./builtins";
+import { iter, map } from "./builtins";
 import { izip, repeat } from "./itertools";
 import type { Predicate, Primitive } from "./types";
 import { primitiveIdentity } from "./utils";

@@ -11,7 +11,7 @@ export function find<T>(iterable: Iterable<T>, predicate?: Predicate<T>): T | un
   const it = iter(iterable);
   if (predicate === undefined) {
     const value = it.next();
-    return value.done ? value.value : value.value;
+    return value.done ? undefined : value.value;
   } else {
     let res: IteratorResult<T>;
     let i = 0;
@@ -215,7 +215,6 @@ function range_(start: number, stop: number, step: number): IterableIterator<num
  * The produced range will be empty if the first value to produce already does
  * not meet the value constraint.
  */
-
 export function range(stop: number): IterableIterator<number>;
 export function range(start: number, stop: number, step?: number): IterableIterator<number>;
 export function range(startOrStop: number, definitelyStop?: number, step = 1): IterableIterator<number> {

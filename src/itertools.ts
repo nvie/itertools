@@ -345,7 +345,7 @@ export function* izipMany<T>(...iters: Iterable<T>[]): IterableIterator<T[]> {
 export function* permutations<T>(iterable: Iterable<T>, r?: number): IterableIterator<T[]> {
   const pool = Array.from(iterable);
   const n = pool.length;
-  const x = r === undefined ? n : r;
+  const x = r ?? n;
 
   if (x > n) {
     return;

@@ -38,8 +38,9 @@ export default tseslint.config(
 
       "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/explicit-module-boundary-types": "error",
-      "@typescript-eslint/restrict-template-expressions": ["error", { allowNumber: true }],
       "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-unnecessary-condition": ["error", { allowConstantLoopConditions: true }],
+      "@typescript-eslint/restrict-template-expressions": ["error", { allowNumber: true }],
       "@typescript-eslint/no-unused-vars": [
         "warn",
         { args: "all", argsIgnorePattern: "^_.*", varsIgnorePattern: "^_.*" },
@@ -60,12 +61,13 @@ export default tseslint.config(
   // -------------------------------
   {
     rules: {
+      //"@typescript-eslint/consistent-type-definitions": "off",
       //"@typescript-eslint/no-empty-function": "off",
       //"@typescript-eslint/no-inferrable-types": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
-      //"no-constant-condition": "off",
-      //"@typescript-eslint/consistent-type-definitions": "off",
+      "@typescript-eslint/unified-signatures": "off",
       //"@typescript-eslint/use-unknown-in-catch-callback-variable": "off",
+      //"no-constant-condition": "off",
     },
   },
 
