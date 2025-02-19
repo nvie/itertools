@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [2.4.0] - 2025-02-19
+
 - Add second param `index` to all predicates. This will make operations like
   partitioning a list based on the element position as easy as partitioning
   based on the element value, for example:
