@@ -30,7 +30,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "format": "prettier --write src/ test/",
+    "format": "eslint --fix src/ test/ && prettier --write src/ test/",
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "lint:eslint": "eslint --report-unused-disable-directives src/ test/",
     "lint:prettier": "prettier --list-different src/ test/",

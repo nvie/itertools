@@ -319,7 +319,7 @@ export function* izipMany<T>(...iters: Iterable<T>[]): IterableIterator<T[]> {
   const iterables = iters.map(iter);
 
   for (;;) {
-    const heads: Array<IteratorResult<T, undefined>> = iterables.map((xs) => xs.next());
+    const heads: IteratorResult<T, undefined>[] = iterables.map((xs) => xs.next());
     if (every(heads, (h) => !h.done)) {
       yield heads.map((h) => h.value as T);
     } else {
@@ -416,7 +416,7 @@ export function* takewhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): I
   }
 }
 
-export function zipLongest2<T1, T2, D>(xs: Iterable<T1>, ys: Iterable<T2>, filler?: D): Array<[T1 | D, T2 | D]> {
+export function zipLongest2<T1, T2, D>(xs: Iterable<T1>, ys: Iterable<T2>, filler?: D): [T1 | D, T2 | D][] {
   return Array.from(izipLongest2(xs, ys, filler));
 }
 
@@ -425,7 +425,7 @@ export function zipLongest3<T1, T2, T3, D>(
   ys: Iterable<T2>,
   zs: Iterable<T3>,
   filler?: D,
-): Array<[T1 | D, T2 | D, T3 | D]> {
+): [T1 | D, T2 | D, T3 | D][] {
   return Array.from(izipLongest3(xs, ys, zs, filler));
 }
 

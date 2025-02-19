@@ -148,7 +148,7 @@ export function* roundrobin<T>(...iters: Iterable<T>[]): IterableIterator<T> {
   // slowly going to exhaust.  Once an iterable is exhausted, it will be
   // removed from this list.  Once the entire list is empty, this algorithm
   // ends.
-  const iterables: Array<Iterator<T>> = map(iters, iter);
+  const iterables: Iterator<T>[] = map(iters, iter);
 
   while (iterables.length > 0) {
     let index = 0;
@@ -180,12 +180,12 @@ export function* roundrobin<T>(...iters: Iterable<T>[]): IterableIterator<T> {
  * This is also different from `zipLongest()`, since the number of items in
  * each round can decrease over time, rather than being filled with a filler.
  */
-export function* heads<T>(...iters: Array<Iterable<T>>): IterableIterator<T[]> {
+export function* heads<T>(...iters: Iterable<T>[]): IterableIterator<T[]> {
   // We'll only keep lazy versions of the input iterables in here that we'll
   // slowly going to exhaust.  Once an iterable is exhausted, it will be
   // removed from this list.  Once the entire list is empty, this algorithm
   // ends.
-  const iterables: Array<Iterator<T>> = map(iters, iter);
+  const iterables: Iterator<T>[] = map(iters, iter);
 
   while (iterables.length > 0) {
     let index = 0;
