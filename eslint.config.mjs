@@ -34,7 +34,6 @@ export default tseslint.config(
 
     rules: {
       eqeqeq: ["error", "always", { null: "ignore" }],
-      quotes: ["error", "single", "avoid-escape"],
       "object-shorthand": "error",
 
       "@typescript-eslint/consistent-type-imports": "error",
@@ -63,7 +62,7 @@ export default tseslint.config(
     rules: {
       //"@typescript-eslint/no-empty-function": "off",
       //"@typescript-eslint/no-inferrable-types": "off",
-      //"@typescript-eslint/no-non-null-assertion": "off", // Because we have a custom no-restricted-syntax rule for this
+      "@typescript-eslint/no-non-null-assertion": "off",
       //"no-constant-condition": "off",
       //"@typescript-eslint/consistent-type-definitions": "off",
       //"@typescript-eslint/use-unknown-in-catch-callback-variable": "off",
@@ -76,7 +75,7 @@ export default tseslint.config(
 
     // Relax ESLint a bit in tests
     rules: {
-      //"@typescript-eslint/no-confusing-void-expression": "off",
+      "@typescript-eslint/no-confusing-void-expression": "off",
       //"@typescript-eslint/no-deprecated": "off",
       //"@typescript-eslint/no-explicit-any": "off",
       //"@typescript-eslint/no-unsafe-argument": "off",
