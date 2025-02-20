@@ -1,6 +1,6 @@
-import { count, ifilter, imap, izip, izip3, takewhile } from "./itertools";
-import type { Predicate, Primitive } from "./types";
-import { identityPredicate, keyToCmp, numberIdentity, primitiveIdentity } from "./utils";
+import { count, ifilter, imap, izip, izip3, takewhile } from "./itertools.js";
+import type { Predicate, Primitive } from "./types.js";
+import { identityPredicate, keyToCmp, numberIdentity, primitiveIdentity } from "./utils.js";
 
 /**
  * Returns the first item in the iterable for which the predicate holds, if

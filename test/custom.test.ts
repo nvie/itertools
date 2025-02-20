@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { compact, compactObject, flatmap, repeat } from "~";
+import { compact, compactObject, flatmap, repeat } from "~/index.js";
 
 describe("compact", () => {
   it("compact w/ empty list", () => {

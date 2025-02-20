@@ -14,8 +14,8 @@ import {
   take,
   uniqueEverseen,
   uniqueJustseen,
-} from "~";
-import { find, iter, range } from "~/builtins";
+} from "~/index.js";
+import { find, iter, range } from "~/builtins.js";
 
 const isEven = (x: number) => x % 2 === 0;
 const isEvenIndex = (_: unknown, index: number) => index % 2 === 0;

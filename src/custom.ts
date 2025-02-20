@@ -1,7 +1,7 @@
-import { find } from "./builtins";
-import { ifilter, imap } from "./itertools";
-import { flatten } from "./more-itertools";
-import type { Predicate } from "./types";
+import { find } from "./builtins.js";
+import { ifilter, imap } from "./itertools.js";
+import { flatten } from "./more-itertools.js";
+import type { Predicate } from "./types.js";
 
 function isNullish<T>(x: T): x is NonNullable<T> {
   return x != null;
