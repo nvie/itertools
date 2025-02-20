@@ -18,7 +18,7 @@ import {
   sum,
   zip,
   zip3,
-} from "~";
+} from "~/index.js";
 
 const isEven = (n: number) => n % 2 === 0;
 const isEvenIndex = (_: unknown, index: number) => index % 2 === 0;

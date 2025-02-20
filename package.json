@@ -3,18 +3,9 @@
   "version": "2.4.0",
   "description": "A JavaScript port of Python's awesome itertools standard library",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nvie/itertools.git"
-  },
-  "author": "Vincent Driessen",
-  "homepage": "https://github.com/nvie/itertools#readme",
-  "bugs": {
-    "url": "https://github.com/nvie/itertools/issues"
-  },
   "type": "module",
-  "types": "./dist/index.d.cts",
   "main": "./dist/index.cjs",
+  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
       "import": {
@@ -44,11 +35,6 @@
     "LICENSE",
     "README.md"
   ],
-  "keywords": [
-    "itertool",
-    "itertools",
-    "node-itertools"
-  ],
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.17.3",
     "@eslint/js": "^9.20.0",
@@ -68,6 +54,20 @@
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.6"
   },
+  "author": "Vincent Driessen",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nvie/itertools.git"
+  },
+  "homepage": "https://github.com/nvie/itertools#readme",
+  "bugs": {
+    "url": "https://github.com/nvie/itertools/issues"
+  },
+  "keywords": [
+    "itertool",
+    "itertools",
+    "node-itertools"
+  ],
   "githubUrl": "https://github.com/nvie/itertools",
   "sideEffects": false
 }
