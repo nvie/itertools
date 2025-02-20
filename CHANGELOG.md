@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+- Use `node16` module resolution setting (recommended setting for libraries that run in
+  both browsers and Node environments)
+
 ## [2.4.0] - 2025-02-19
 
 - Add second param `index` to all predicates. This will make operations like
