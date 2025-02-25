@@ -1,4 +1,4 @@
-import { partition } from "../dist/index.js";
+import { partition } from "../dist";
 import { expectType } from "tsd";
 
 function isStr(x: unknown): x is string {

@@ -1,7 +1,6 @@
 import * as fc from "fast-check";
 import { describe, expect, it } from "vitest";
 
-import { find, iter, range } from "~/builtins.js";
 import {
   chunked,
   dupes,
@@ -15,7 +14,8 @@ import {
   take,
   uniqueEverseen,
   uniqueJustseen,
-} from "~/index.js";
+} from "~";
+import { find, iter, range } from "~/builtins";
 
 const isEven = (x: number) => x % 2 === 0;
 const isEvenIndex = (_: unknown, index: number) => index % 2 === 0;

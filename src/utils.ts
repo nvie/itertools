@@ -1,4 +1,4 @@
-import type { Primitive } from "./types.js";
+import type { Primitive } from "./types";
 
 type CmpFn<T> = (a: T, b: T) => number;
 

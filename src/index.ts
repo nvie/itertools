@@ -17,8 +17,8 @@ export {
   sum,
   zip,
   zip3,
-} from "./builtins.js";
-export { compact, compactObject, first, flatmap, icompact } from "./custom.js";
+} from "./builtins";
+export { compact, compactObject, first, flatmap, icompact } from "./custom";
 export {
   chain,
   compress,
@@ -42,7 +42,7 @@ export {
   zipLongest,
   zipLongest3,
   zipMany,
-} from "./itertools.js";
+} from "./itertools";
 export {
   chunked,
   dupes,
@@ -56,5 +56,5 @@ export {
   take,
   uniqueEverseen,
   uniqueJustseen,
-} from "./more-itertools.js";
-export type { Predicate, Primitive } from "./types.js";
+} from "./more-itertools";
+export type { Predicate, Primitive } from "./types";
