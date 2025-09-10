@@ -66,6 +66,7 @@ export default tseslint.config(
       //"@typescript-eslint/no-inferrable-types": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/unified-signatures": "off",
+      "@typescript-eslint/no-deprecated": "off",
       //"@typescript-eslint/use-unknown-in-catch-callback-variable": "off",
       //"no-constant-condition": "off",
     },
