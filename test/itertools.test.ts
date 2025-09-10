@@ -180,9 +180,6 @@ describe("igroupby", () => {
 });
 
 describe("groupBy", () => {
-  const countValues = <K extends string | number, V>(record: Record<K, Iterable<V>>) =>
-    Array.from(imap(Object.entries(record), ([k, v]) => [k, Array.from(v).length]));
-
   it("groupBy with empty list", () => {
     expect(groupBy([], () => 0)).toEqual({});
   });
@@ -192,24 +189,24 @@ describe("groupBy", () => {
   });
 
   it("groups elements", () => {
-    expect(countValues(groupBy("aaabbbbcddddaa", primitiveIdentity))).toEqual([
-      ["a", 5],
-      ["b", 4],
-      ["c", 1],
-      ["d", 4],
-    ]);
+    expect(groupBy("aaabbbbcddddaa", primitiveIdentity)).toEqual({
+      a: ["a", "a", "a", "a", "a"],
+      b: ["b", "b", "b", "b"],
+      c: ["c"],
+      d: ["d", "d", "d", "d"],
+    });
   });
 
   it("groups element with key function", () => {
-    expect(countValues(groupBy("aaaAbb", primitiveIdentity))).toEqual([
-      ["a", 3],
-      ["A", 1],
-      ["b", 2],
-    ]);
-    expect(countValues(groupBy("aaaAbb", (val) => val.toUpperCase()))).toEqual([
-      ["A", 4],
-      ["B", 2],
-    ]);
+    expect(groupBy("aaaAbb", primitiveIdentity)).toEqual({
+      a: ["a", "a", "a"],
+      A: ["A"],
+      b: ["b", "b"],
+    });
+    expect(groupBy("aaaAbb", (val) => val.toUpperCase())).toEqual({
+      A: ["a", "a", "a", "A"],
+      B: ["b", "b"],
+    });
   });
 
   it("handles not using the inner iterator", () => {
