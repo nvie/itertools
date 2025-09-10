@@ -5,6 +5,7 @@
 - New itertools: `groupBy` and `indexBy`
 - Renamed `groupby` to `igroupby`
 - Deprecated `groupby` (now an alias to `igroupby`)
+- Drop support for Node 18.x (it probably still works, but it's EoL)
 
 ## [2.4.1] - 2025-02-25
 
