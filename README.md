@@ -281,11 +281,11 @@ Eager version of [izip](#izip) / [izip3](#izip3).
 - [cycle](#cycle)
 - [dropwhile](#dropwhile)
 - [groupBy](#groupBy)
-- [indexBy](#indexBy)
-- [igroupby](#igroupby)
 - [icompress](#icompress)
 - [ifilter](#ifilter)
+- [igroupby](#igroupby)
 - [imap](#imap)
+- [indexBy](#indexBy)
 - [islice](#islice)
 - [izip](#izip)
 - [izip3](#izip3)
@@ -324,24 +324,6 @@ Returns an iterator that drops elements from the iterable as long as the
 predicate is true; afterwards, returns every remaining element. **Note:** the
 iterator does not produce any output until the predicate first becomes false.
 
-<a name="igroupby" href="#igroupby">#</a> <b>igroupby</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn: <i>(item: T) =&gt; Primitive</i>): <i>Iterable&lt;[Primitive, Iterable&lt;T&gt;]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
-
-Make an Iterable that returns consecutive keys and groups from the iterable.
-The key is a function computing a key value for each element. If not specified,
-key defaults to an identity function and returns the element unchanged.
-Generally, the iterable needs to already be sorted on the same key function.
-
-The operation of `igroupby()` is similar to the `uniq` filter in Unix. It
-generates a break or new group every time the value of the key function changes
-(which is why it is usually necessary to have sorted the data using the same
-key function). That behavior differs from `SQL`’s `GROUP BY` which aggregates
-common elements regardless of their input order.
-
-The returned group is itself an iterator that shares the underlying iterable
-with `igroupby()`. Because the source is shared, when the `igroupby()` object is
-advanced, the previous group is no longer visible. So, if that data is needed
-later, it should be stored as an array.
-
 <a name="groupBy" href="#groupBy">#</a> <b>groupBy</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn: <i>(item: T) =&gt; K</i>): <i>Record&lt;K, T[]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 
 Groups elements of the iterable into a record based on the key function. Each
@@ -366,6 +348,40 @@ groupBy(users, (user) => user.department);
 // }
 ```
 
+<a name="icompress" href="#icompress">#</a> <b>icompress</b>(iterable: <i>Iterable&lt;T&gt;</i>, selectors: <i>Iterable&lt;boolean&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Returns an iterator that filters elements from data returning only those that
+have a corresponding element in selectors that evaluates to `true`. Stops when
+either the data or selectors iterables has been exhausted.
+
+<a name="ifilter" href="#ifilter">#</a> <b>ifilter</b>(iterable: <i>Iterable&lt;T&gt;</i>, predicate: <i>Predicate&lt;T&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Returns an iterator that filters elements from iterable returning only those
+for which the predicate is true.
+
+<a name="igroupby" href="#igroupby">#</a> <b>igroupby</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn: <i>(item: T) =&gt; Primitive</i>): <i>Iterable&lt;[Primitive, Iterable&lt;T&gt;]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Make an Iterable that returns consecutive keys and groups from the iterable.
+The key is a function computing a key value for each element. If not specified,
+key defaults to an identity function and returns the element unchanged.
+Generally, the iterable needs to already be sorted on the same key function.
+
+The operation of `igroupby()` is similar to the `uniq` filter in Unix. It
+generates a break or new group every time the value of the key function changes
+(which is why it is usually necessary to have sorted the data using the same
+key function). That behavior differs from `SQL`’s `GROUP BY` which aggregates
+common elements regardless of their input order.
+
+The returned group is itself an iterator that shares the underlying iterable
+with `igroupby()`. Because the source is shared, when the `igroupby()` object is
+advanced, the previous group is no longer visible. So, if that data is needed
+later, it should be stored as an array.
+
+<a name="imap" href="#imap">#</a> <b>imap</b>(iterable: <i>Iterable&lt;T&gt;</i>, mapper: <i>(item: T) =&gt; V</i>): <i>Iterable&lt;V&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
+
+Returns an iterator that computes the given mapper function using arguments
+from each of the iterables.
+
 <a name="indexBy" href="#indexBy">#</a> <b>indexBy</b>(iterable: <i>Iterable&lt;T&gt;</i>, keyFn: <i>(item: T) =&gt; K</i>): <i>Record&lt;K, T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 
 Creates an index (record) from the iterable where each key maps to the last
@@ -386,22 +402,6 @@ indexBy(users, (user) => user.id);
 //   3: { id: 3, name: 'Charlie' }
 // }
 ```
-
-<a name="icompress" href="#icompress">#</a> <b>icompress</b>(iterable: <i>Iterable&lt;T&gt;</i>, selectors: <i>Iterable&lt;boolean&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
-
-Returns an iterator that filters elements from data returning only those that
-have a corresponding element in selectors that evaluates to `true`. Stops when
-either the data or selectors iterables has been exhausted.
-
-<a name="ifilter" href="#ifilter">#</a> <b>ifilter</b>(iterable: <i>Iterable&lt;T&gt;</i>, predicate: <i>Predicate&lt;T&gt;</i>): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
-
-Returns an iterator that filters elements from iterable returning only those
-for which the predicate is true.
-
-<a name="imap" href="#imap">#</a> <b>imap</b>(iterable: <i>Iterable&lt;T&gt;</i>, mapper: <i>(item: T) =&gt; V</i>): <i>Iterable&lt;V&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
-
-Returns an iterator that computes the given mapper function using arguments
-from each of the iterables.
 
 <a name="islice" href="#islice">#</a> <b>islice</b>(iterable: <i>Iterable&lt;T&gt;</i>[start: <i>number</i>], stop: <i>number</i>[, step: <i>number</i>]): <i>Iterable&lt;T&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/itertools.js "Source")
 
