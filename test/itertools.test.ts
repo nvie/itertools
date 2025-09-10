@@ -7,11 +7,13 @@ import {
   count,
   cycle,
   dropwhile,
+  groupBy,
   ifilter,
   igroupby,
   imap,
   islice,
   permutations,
+  Primitive,
   range,
   repeat,
   take,
@@ -20,6 +22,7 @@ import {
   zipLongest3,
   zipMany,
 } from "~";
+import { primitiveIdentity } from "~/utils";
 
 const isEven = (x: number) => x % 2 === 0;
 const isEvenIndex = (_: unknown, index: number) => index % 2 === 0;
@@ -173,6 +176,44 @@ describe("igroupby", () => {
     expect(v3.next().value!).toEqual("c");
     Array.from(it); // exhaust the igroupby iterator
     expect([...v3]).toEqual([]);
+  });
+});
+
+describe("groupBy", () => {
+  const countValues = <K extends string | number, V>(record: Record<K, Iterable<V>>) =>
+    Array.from(imap(Object.entries(record), ([k, v]) => [k, Array.from(v).length]));
+
+  it("groupBy with empty list", () => {
+    expect(groupBy([], () => 0)).toEqual({});
+  });
+
+  it("groupBy uniqueness counting", () => {
+    expect(Object.keys(groupBy("aaabb", primitiveIdentity)).length).toEqual(2);
+  });
+
+  it("groups elements", () => {
+    expect(countValues(groupBy("aaabbbbcddddaa", primitiveIdentity))).toEqual([
+      ["a", 5],
+      ["b", 4],
+      ["c", 1],
+      ["d", 4],
+    ]);
+  });
+
+  it("groups element with key function", () => {
+    expect(countValues(groupBy("aaaAbb", primitiveIdentity))).toEqual([
+      ["a", 3],
+      ["A", 1],
+      ["b", 2],
+    ]);
+    expect(countValues(groupBy("aaaAbb", (val) => val.toUpperCase()))).toEqual([
+      ["A", 4],
+      ["B", 2],
+    ]);
+  });
+
+  it("handles not using the inner iterator", () => {
+    expect(Object.keys(groupBy("aaabbbbcddddaa", primitiveIdentity))).toEqual(["a", "b", "c", "d"]);
   });
 });
 

@@ -1,6 +1,6 @@
 ## [Unreleased]
 
-- New itertools: `groupBy` and `indexBy`
+- New itertool: `groupBy`
 - Renamed `groupby` to `igroupby`
 - Deprecated `groupby` (now an alias to `igroupby`)
 

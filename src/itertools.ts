@@ -119,6 +119,18 @@ export function* igroupby<T, K extends Primitive>(
   }
 }
 
+export function groupBy<T, K extends string | number>(iterable: Iterable<T>, keyFn: (item: T) => K): Record<K, T[]> {
+  const result = {} as Record<K, T[]>;
+  for (const item of iterable) {
+    const key = keyFn(item);
+    if (!Object.hasOwn(result, key)) {
+      result[key] = [];
+    }
+    result[key].push(item);
+  }
+  return result;
+}
+
 /**
  * Returns an iterator that filters elements from data returning only those
  * that have a corresponding element in selectors that evaluates to `true`.
