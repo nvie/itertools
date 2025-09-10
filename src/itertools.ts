@@ -131,6 +131,15 @@ export function groupBy<T, K extends string | number>(iterable: Iterable<T>, key
   return result;
 }
 
+export function indexBy<T, K extends string | number>(iterable: Iterable<T>, keyFn: (item: T) => K): Record<K, T> {
+  const result = {} as Record<K, T>;
+  for (const item of iterable) {
+    const key = keyFn(item);
+    result[key] = item;
+  }
+  return result;
+}
+
 /**
  * Returns an iterator that filters elements from data returning only those
  * that have a corresponding element in selectors that evaluates to `true`.

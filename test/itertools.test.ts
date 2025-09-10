@@ -8,6 +8,7 @@ import {
   cycle,
   dropwhile,
   groupBy,
+  indexBy,
   ifilter,
   igroupby,
   imap,
@@ -214,6 +215,58 @@ describe("groupBy", () => {
 
   it("handles not using the inner iterator", () => {
     expect(Object.keys(groupBy("aaabbbbcddddaa", primitiveIdentity))).toEqual(["a", "b", "c", "d"]);
+  });
+});
+
+describe("indexBy", () => {
+  it("indexBy with empty list", () => {
+    expect(indexBy([], () => 0)).toEqual({});
+  });
+
+  it("indexBy uniqueness counting", () => {
+    expect(Object.keys(indexBy("aaabb", primitiveIdentity)).length).toEqual(2);
+  });
+
+  it("indexes elements", () => {
+    expect(indexBy("aaabbbbcddddaa", primitiveIdentity)).toEqual({
+      a: "a",
+      b: "b",
+      c: "c",
+      d: "d",
+    });
+  });
+
+  it("indexes elements with key function", () => {
+    expect(indexBy("aaaAbb", primitiveIdentity)).toEqual({
+      a: "a",
+      A: "A",
+      b: "b",
+    });
+    expect(indexBy("aaaAbb", (val) => val.toUpperCase())).toEqual({
+      A: "A", // Last element that maps to 'A' is the actual 'A' at position 3
+      B: "b", // Last element that maps to 'B' is 'b' at position 5
+    });
+  });
+
+  it("handles duplicate keys by keeping last value", () => {
+    const numbers = [42, 13, 379, 7, 22, 3, 99];
+    expect(indexBy(numbers, (n) => n % 2)).toEqual({
+      0: 22,
+      1: 99,
+    });
+  });
+
+  it("works with numbers as keys", () => {
+    const items = [
+      { pos: 0, value: "first" },
+      { pos: 1, value: "second" },
+      { pos: 2, value: "third" },
+    ];
+    expect(indexBy(items, (item) => item.pos)).toEqual({
+      0: { pos: 0, value: "first" },
+      1: { pos: 1, value: "second" },
+      2: { pos: 2, value: "third" },
+    });
   });
 });
 
