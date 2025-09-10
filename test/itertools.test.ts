@@ -14,7 +14,6 @@ import {
   imap,
   islice,
   permutations,
-  Primitive,
   range,
   repeat,
   take,
