@@ -26,6 +26,7 @@ export {
   cycle,
   dropwhile,
   groupby,
+  igroupby,
   icompress,
   ifilter,
   imap,

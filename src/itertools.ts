@@ -77,7 +77,10 @@ export function* dropwhile<T>(iterable: Iterable<T>, predicate: Predicate<T>): I
   }
 }
 
-export function* groupby<T, K extends Primitive>(
+/** @deprecated Please rename to `igroupby`, or use the new eager version `groupBy`. */
+export const groupby = igroupby;
+
+export function* igroupby<T, K extends Primitive>(
   iterable: Iterable<T>,
   keyFn: (item: T) => K = primitiveIdentity,
 ): Generator<[K, Generator<T, undefined>], undefined> {

@@ -7,8 +7,8 @@ import {
   count,
   cycle,
   dropwhile,
-  groupby,
   ifilter,
+  igroupby,
   imap,
   islice,
   permutations,
@@ -124,16 +124,16 @@ describe("dropwhile", () => {
   });
 });
 
-describe("groupby", () => {
+describe("igroupby", () => {
   const countValues = <K, V>(grouped: Iterable<[K, Iterable<V>]>) =>
     Array.from(imap(grouped, ([k, v]) => [k, Array.from(v).length]));
 
-  it("groupby with empty list", () => {
-    expect(Array.from(groupby([]))).toEqual([]);
+  it("igroupby with empty list", () => {
+    expect(Array.from(igroupby([]))).toEqual([]);
   });
 
   it("groups elements", () => {
-    expect(countValues(groupby("aaabbbbcddddaa"))).toEqual([
+    expect(countValues(igroupby("aaabbbbcddddaa"))).toEqual([
       ["a", 3],
       ["b", 4],
       ["c", 1],
@@ -143,24 +143,24 @@ describe("groupby", () => {
   });
 
   it("groups element with key function", () => {
-    expect(countValues(groupby("aaaAbb"))).toEqual([
+    expect(countValues(igroupby("aaaAbb"))).toEqual([
       ["a", 3],
       ["A", 1],
       ["b", 2],
     ]);
-    expect(countValues(groupby("aaaAbb", (val) => val.toUpperCase()))).toEqual([
+    expect(countValues(igroupby("aaaAbb", (val) => val.toUpperCase()))).toEqual([
       ["A", 4],
       ["B", 2],
     ]);
   });
 
   it("handles not using the inner iterator", () => {
-    expect(Array.from(imap(groupby("aaabbbbcddddaa"), ([k]) => k))).toEqual(["a", "b", "c", "d", "a"]);
+    expect(Array.from(imap(igroupby("aaabbbbcddddaa"), ([k]) => k))).toEqual(["a", "b", "c", "d", "a"]);
   });
 
   it("handles using the inner iterator after the iteration has advanced", () => {
-    expect(Array.from(groupby("aaabb")).map(([, v]) => Array.from(v))).toEqual([[], []]);
-    const it = groupby("aaabbccc");
+    expect(Array.from(igroupby("aaabb")).map(([, v]) => Array.from(v))).toEqual([[], []]);
+    const it = igroupby("aaabbccc");
     // Flow does not like that I use next on an iterable (it is actually
     // a generator but the Generator type is awful.
 
@@ -171,7 +171,7 @@ describe("groupby", () => {
     expect([...v1]).toEqual([]);
     expect([...v2]).toEqual([]);
     expect(v3.next().value!).toEqual("c");
-    Array.from(it); // exhaust the groupby iterator
+    Array.from(it); // exhaust the igroupby iterator
     expect([...v3]).toEqual([]);
   });
 });

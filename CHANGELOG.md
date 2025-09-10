@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+- New itertools: `groupBy` and `indexBy`
+- Renamed `groupby` to `igroupby`
+- Deprecated `groupby` (now an alias to `igroupby`)
+
 ## [2.4.1] - 2025-02-25
 
 - Use `bundler` module resolution setting (recommended setting for libraries
