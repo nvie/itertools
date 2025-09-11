@@ -225,6 +225,16 @@ export function range(startOrStop: number, definitelyStop?: number, step = 1): I
   }
 }
 
+export function xrange(stop: number): number[];
+export function xrange(start: number, stop: number, step?: number): number[];
+export function xrange(startOrStop: number, definitelyStop?: number, step = 1): number[] {
+  if (definitelyStop !== undefined) {
+    return Array.from(range_(startOrStop /* as start */, definitelyStop, step));
+  } else {
+    return Array.from(range_(0, startOrStop /* as stop */, step));
+  }
+}
+
 /**
  * Apply function of two arguments cumulatively to the items of sequence, from
  * left to right, so as to reduce the sequence to a single value.  For example:

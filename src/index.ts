@@ -15,6 +15,7 @@ export {
   some,
   sorted,
   sum,
+  xrange,
   zip,
   zip3,
 } from "./builtins";

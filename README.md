@@ -80,6 +80,7 @@ The `itertools` package consists of a few building blocks:
 - [range](#range)
 - [reduce](#reduce)
 - [sorted](#sorted)
+- [xrange](#xrange)
 - [sum](#sum)
 - [zip](#zip)
 - [zip3](#zip3)
@@ -207,11 +208,12 @@ starting from `start` (default 0), as long as `i < stop`, in increments of
 
 Various valid invocations:
 
-    range(5)           // [0, 1, 2, 3, 4]
-    range(0, 5)        // [0, 1, 2, 3, 4]
-    range(0, 5, 2)     // [0, 2, 4]
-    range(5, 0, -1)    // [5, 4, 3, 2, 1]
-    range(-3)          // []
+    range(5)           // 0, 1, 2, 3, 4
+    range(0, 5)        // 0, 1, 2, 3, 4
+    range(0, 5, 2)     // 0, 2, 4
+    range(5, 0, -1)    // 5, 4, 3, 2, 1
+    range(5, 0)        // (empty)
+    range(-3)          // (empty)
 
 For a positive `step`, the iterator will keep producing values `n` as long as
 the stop condition `n < stop` is satisfied.
@@ -221,6 +223,35 @@ the stop condition `n > stop` is satisfied.
 
 The produced range will be empty if the first value to produce already does not
 meet the value constraint.
+
+<a name="xrange" href="#xrange">#</a> <b>xrange</b>(stop: <i>number</i>): <i>number[]</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")<br />
+<a name="xrange" href="#xrange">#</a> <b>xrange</b>(start: <i>number</i>, stop: <i>number</i>, step: <i>number</i> = 1): <i>number[]</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")
+
+Returns an array with all the numbers in the given range, starting from
+`start` (default 0), as long as `i < stop`, in increments of `step`
+(default 1).
+
+`xrange(5)` is a convenient shorthand for `Array.from(range(5))`.
+
+Various valid invocations:
+
+    xrange(5)           // [0, 1, 2, 3, 4]
+    xrange(2, 5)        // [2, 3, 4]
+    xrange(0, 5, 2)     // [0, 2, 4]
+    xrange(5, 0, -1)    // [5, 4, 3, 2, 1]
+    xrange(5, 0)        // []
+
+For a positive `step`, the iterator will keep producing values `n` as long as
+the stop condition `n < stop` is satisfied.
+
+For a negative `step`, the iterator will keep producing values `n` as long as
+the stop condition `n > stop` is satisfied.
+
+The produced range will be empty if the first value to produce already does not
+meet the value constraint.
+
+Don't use this on large or infinite ranges, as it will allocate a large array
+in memory.
 
 <a name="reduce" href="#reduce">#</a> <b>reduce</b>(iterable: <i>Iterable&lt;T&gt;</i>, reducer: <i>(O, T, number) =&gt; O</i>, start: <i>O</i>): <i>O</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")<br />
 <a name="reduce" href="#reduce">#</a> <b>reduce</b>(iterable: <i>Iterable&lt;T&gt;</i>, reducer: <i>(T, T, number) =&gt; T</i>): <i>T | undefined</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/builtins.js "Source")

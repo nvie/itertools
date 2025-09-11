@@ -16,6 +16,7 @@ import {
   some,
   sorted,
   sum,
+  xrange,
   zip,
   zip3,
 } from "~";
@@ -330,6 +331,31 @@ describe("range", () => {
     expect(Array.from(range(3, 10, 3))).toEqual([3, 6, 9]);
     expect(Array.from(range(5, 1, -1))).toEqual([5, 4, 3, 2]);
     expect(Array.from(range(5, -3, -2))).toEqual([5, 3, 1, -1]);
+  });
+});
+
+describe("xrange", () => {
+  it("xrange with end", () => {
+    expect(xrange(0)).toEqual([]);
+    expect(xrange(1)).toEqual([0]);
+    expect(xrange(2)).toEqual([0, 1]);
+    expect(xrange(5)).toEqual([0, 1, 2, 3, 4]);
+    expect(xrange(-1)).toEqual([]);
+  });
+
+  it("xrange with start and end", () => {
+    expect(xrange(3, 5)).toEqual([3, 4]);
+    expect(xrange(4, 7)).toEqual([4, 5, 6]);
+
+    // If end < start, then range is empty
+    expect(xrange(5, 1)).toEqual([]);
+  });
+
+  it("xrange with start, end, and step", () => {
+    expect(xrange(3, 9, 3)).toEqual([3, 6]);
+    expect(xrange(3, 10, 3)).toEqual([3, 6, 9]);
+    expect(xrange(5, 1, -1)).toEqual([5, 4, 3, 2]);
+    expect(xrange(5, -3, -2)).toEqual([5, 3, 1, -1]);
   });
 });
 

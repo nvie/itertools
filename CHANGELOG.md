@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+- Add new `xrange`, which is like `range` but returns an array directly
+  instead of an iterable.
+
 ## [2.5.0] - 2025-09-10
 
 - New itertools: `groupBy` and `indexBy`
