@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [2.6.0-0] - 2025-09-11
+
 - Add new `xrange`, which is like `range` but returns an array directly
   instead of an iterable.
 
