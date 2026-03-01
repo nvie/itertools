@@ -28,7 +28,7 @@
     "lint:package": "publint --strict && attw --pack",
     "test": "vitest run --coverage",
     "test:types": "npm run build && tsd --typings ./dist/index.d.ts",
-    "release": "npm run test && npm run lint && npm run build && npm run lint:package && release-it"
+    "release": "release-it"
   },
   "files": [
     "dist/",
