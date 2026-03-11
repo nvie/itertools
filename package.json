@@ -37,7 +37,7 @@
   ],
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
-    "@eslint/js": "^9.35.0",
+    "@eslint/js": "^10.0.1",
     "@release-it/keep-a-changelog": "^7.0.1",
     "@vitest/coverage-istanbul": "^4.0.18",
     "eslint": "^9.35.0",
