@@ -23,6 +23,7 @@ export { compact, compactObject, first, flatmap, icompact } from "./custom";
 export {
   chain,
   compress,
+  combinations,
   count,
   cycle,
   dropwhile,
