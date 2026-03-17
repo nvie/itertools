@@ -36,6 +36,57 @@ export function compress<T>(data: Iterable<T>, selectors: Iterable<boolean>): T[
 }
 
 /**
+ * Return successive r-length combinations of elements in the iterable.
+ * 
+ * If `r` is not specified, then `r` defaults to the length of the iterable and
+ * all possible full-length combinations are generated.
+*/
+export function* combinations<T>(iterable: Iterable<T>, r?: number): IterableIterator<T[]>  {
+  const pool = Array.from(iterable);
+  const n = pool.length;
+  const x = r ?? n;
+
+  if (x < 0) {
+    throw Error("r must be non-negative");
+  }
+
+  if (x > n) {
+    return;
+  }
+
+  const indices: number[] = Array.from(range(n));
+  const result = Array(x);
+
+  let i: number;
+
+  while(true) {
+    for (i = 0; i < x; i++) {
+      const index = indices[i];
+      result[i] = pool[index];
+    }
+      
+    yield result.slice(0, x);
+
+    for (i = x-1; i >= 0 && indices[i] == i+pool.length-x; i--);
+
+    if (i < 0) {
+      break;
+    }
+
+    indices[i]++;
+
+    for (let j = i+1; j<x; j++) {
+      indices[j] = indices[j-1] + 1;
+    }
+
+    for (; i < x; i++) {
+      const index = indices[i];
+      result[i] = pool[index];
+    }
+  }
+}
+
+/**
  * Returns an iterator producing elements from the iterable and saving a copy
  * of each.  When the iterable is exhausted, return elements from the saved
  * copy.  Repeats indefinitely.
