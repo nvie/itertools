@@ -40,7 +40,7 @@
     "@eslint/js": "^9.35.0",
     "@release-it/keep-a-changelog": "^7.0.1",
     "@vitest/coverage-istanbul": "^4.0.18",
-    "eslint": "^9.35.0",
+    "eslint": "^10.1.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "fast-check": "^4.6.0",
