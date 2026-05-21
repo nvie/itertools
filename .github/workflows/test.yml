@@ -18,34 +18,38 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Use Node ${{ matrix.node-version }}
         uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node-version }}
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Check TypeScript
-        run: npx tsc
+        run: pnpm exec tsc
 
       - name: Run tests
-        run: npm run test
+        run: pnpm run test
         env:
           CI: true
 
       - name: Run type-level tests
-        run: npm run test:types
+        run: pnpm run test:types
         env:
           CI: true
 
       - name: Run linters
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Run NPM package lints
         run: |
-          npm run build
-          npm run lint:package
+          pnpm run build
+          pnpm run lint:package
         # @arethetypeswrong/cli requires Node 18+, it seems?
         # See https://github.com/arethetypeswrong/arethetypeswrong.github.io/issues/52
         if: ${{ matrix.node-version == '18.x' || matrix.node-version == 'latest' }}

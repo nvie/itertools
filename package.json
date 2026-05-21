@@ -22,23 +22,26 @@
   "scripts": {
     "build": "tsup",
     "format": "eslint --fix src/ test/ && prettier --write src/ test/",
-    "lint": "npm run lint:eslint && npm run lint:prettier",
+    "lint": "pnpm run lint:eslint && pnpm run lint:prettier",
     "lint:eslint": "eslint --report-unused-disable-directives src/ test/",
     "lint:prettier": "prettier --list-different src/ test/",
     "lint:package": "publint --strict && attw --pack",
     "test": "vitest run --coverage",
-    "test:types": "npm run build && tsd --typings ./dist/index.d.ts",
-    "release": "release-it"
+    "test:types": "pnpm run build && tsd --typings ./dist/index.d.ts",
+    "release": "release-it",
+    "postinstall": "syncpack lint"
   },
   "files": [
     "dist/",
     "LICENSE",
     "README.md"
   ],
+  "packageManager": "pnpm@10.33.1",
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
     "@eslint/js": "^9.35.0",
     "@release-it/keep-a-changelog": "^7.0.1",
+    "@typescript-eslint/parser": "^8.59.4",
     "@vitest/coverage-istanbul": "^4.1.7",
     "eslint": "^9.35.0",
     "eslint-plugin-import": "^2.32.0",
@@ -47,6 +50,7 @@
     "prettier": "^3.8.3",
     "publint": "^0.3.21",
     "release-it": "^19.2.4",
+    "syncpack": "^14.3.0",
     "tsd": "^0.33.0",
     "tsup": "^8.5.1",
     "typescript": "^6.0.3",

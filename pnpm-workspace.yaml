@@ -1,0 +1,7 @@
+allowBuilds:
+  esbuild: true
+
+peerDependencyRules:
+  allowedVersions:
+    # This can go once https://github.com/release-it/keep-a-changelog/pull/42 is merged
+    "@release-it/keep-a-changelog>release-it": "19"

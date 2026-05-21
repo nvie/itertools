@@ -1,0 +1,11 @@
+{
+  "$schema": "https://unpkg.com/syncpack@14/schema.json",
+  "versionGroups": [
+    {
+      "label": "Peer dependencies are intentionally wider ranges",
+      "dependencyTypes": ["peer"],
+      "preferVersion": "highestSemver"
+    },
+    { "label": "Default fallback", "preferVersion": "highestSemver" }
+  ]
+}
