@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [2.7.0] - 2026-05-21
+
 - New custom helper: `chunkedByCost(items, costOf, maxCost, minCost?)`, groups
   a stream of items into chunks bounded by a hard `maxCost` cap and an optional
   `minCost` soft target.
