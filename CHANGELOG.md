@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+- Packaging fix: no longer trigger pnpm's "Ignored build scripts" warning in
+  consumer projects.
+
 ## [2.7.0] - 2026-05-21
 
 - New custom helper: `chunkedByCost(items, costOf, maxCost, minCost?)`, groups

@@ -29,7 +29,7 @@
     "test": "vitest run --coverage",
     "test:types": "pnpm run build && tsd --typings ./dist/index.d.ts",
     "release": "release-it",
-    "postinstall": "syncpack lint"
+    "prepare": "syncpack lint"
   },
   "files": [
     "dist/",
