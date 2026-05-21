@@ -1,0 +1,37 @@
+diff --git a/dist/createPackage.js b/dist/createPackage.js
+index 1b8fb1c65a9ccd0fa6448af0781297beeeae9772..68d1492ebb46f89d548355aa8cf300f2f1085b7b 100644
+--- a/dist/createPackage.js
++++ b/dist/createPackage.js
+@@ -11,7 +11,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
+ };
+ var _Package_files;
+ import { untar } from "@andrewbranch/untar.js";
+-import { Gunzip } from "fflate";
++import { Gunzip, FlateErrorCode } from "fflate";
+ import { major, maxSatisfying, minor, valid, validRange } from "semver";
+ import ts from "typescript";
+ import { parsePackageSpec } from "./utils.js";
+@@ -224,8 +224,21 @@ export function createPackageFromTarballData(tarball) {
+ function extractTarball(tarball) {
+     var _a;
+     // Use streaming API to work around https://github.com/101arrowz/fflate/issues/207
+-    let unzipped;
+-    new Gunzip((chunk) => (unzipped = chunk)).push(tarball, /*final*/ true);
++    const chunks = [];
++    try {
++        new Gunzip((chunk) => chunks.push(chunk)).push(tarball, /*final*/ true);
++    } catch (err) {
++        // this happens for zero-padded tarballs; can safely ignore
++        if (err.code != FlateErrorCode.InvalidHeader) {
++            throw err;
++        }
++    }
++    const unzipped = new Uint8Array(chunks.reduce((a, b) => a + b.length, 0));
++    let offset = 0;
++    for (const chunk of chunks) {
++        unzipped.set(chunk, offset);
++        offset += chunk.length;
++    }
+     const data = untar(unzipped);
+     const prefix = data[0].filename.substring(0, data[0].filename.indexOf("/") + 1);
+     const packageJsonText = (_a = data.find((f) => f.filename === `${prefix}package.json`)) === null || _a === void 0 ? void 0 : _a.fileData;
