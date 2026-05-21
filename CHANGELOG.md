@@ -3,6 +3,7 @@
 - New custom helper: `chunkedByCost(items, costOf, maxCost, minCost?)`, groups
   a stream of items into chunks bounded by a hard `maxCost` cap and an optional
   `minCost` soft target.
+- Drop support for Node 20.x (it probably still works, but it's EoL)
 
 ## [2.6.0] - 2026-03-01
 
