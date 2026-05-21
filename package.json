@@ -36,6 +36,9 @@
     "LICENSE",
     "README.md"
   ],
+  "engines": {
+    "node": ">=22"
+  },
   "packageManager": "pnpm@10.33.1",
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
