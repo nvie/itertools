@@ -55,7 +55,6 @@
     "tsup": "^8.5.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.4",
-    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.7"
   },
   "author": "Vincent Driessen",
