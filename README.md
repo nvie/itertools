@@ -713,12 +713,44 @@ Yield only elements from the input that occur more than once. Needs to consume t
 
 ### Additions
 
+- [chunkedByCost](#chunkedByCost)
 - [compact](#compact)
 - [compactObject](#compactObject)
 - [find](#find)
 - [first](#first)
 - [flatmap](#flatmap)
 - [icompact](#icompact)
+
+---
+
+<a name="chunkedByCost" href="#chunkedByCost">#</a> <b>chunkedByCost</b>(items: <i>Iterable&lt;T&gt;</i>, costOf: <i>(item: T, index: number) =&gt; number</i>, maxCost: <i>number</i>, minCost?: <i>number</i>): <i>Iterable&lt;T[]&gt;</i> [&lt;&gt;](https://github.com/nvie/itertools.js/blob/master/src/custom.js "Source")
+
+Group items from a stream into chunks, where each chunk's total cost stays
+under `maxCost` (hard cap) and optionally reaches `minCost` (soft target).
+
+`maxCost` is a hard cap: a chunk is flushed before adding an item that would
+push the running cost to or past `maxCost`. `minCost` is an optional soft
+target: when provided, a chunk is flushed as soon as the running cost exceeds
+it (overshooting by at most one item's cost). When omitted, chunks grow as
+large as `maxCost` allows.
+
+    >>> // Pack rows into batches of <= 100 KB
+    >>> const rows = ["aaaa", "bbbb", "cc", "dddddd", "ee"];
+    >>> [...chunkedByCost(rows, (s) => s.length, 10)]
+    [["aaaa", "bbbb", "cc"], ["dddddd", "ee"]]
+
+With a `minCost` soft target, the chunker flushes early to keep chunks
+roughly that size — useful when you want predictable chunk sizes without
+locking them to a fixed item count:
+
+    >>> [...chunkedByCost(rows, (s) => s.length, 100, 6)]
+    [["aaaa", "bbbb"], ["cc", "dddddd"], ["ee"]]
+
+`costOf` receives the item and its 0-based index in the input stream, so
+position-dependent costs are possible.
+
+If a single item's cost alone is >= `maxCost`, it is still emitted as its own
+chunk. Only in this edge case can an output chunk exceed the hard cap.
 
 ---
 

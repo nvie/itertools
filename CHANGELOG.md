@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+- New custom helper: `chunkedByCost(items, costOf, maxCost, minCost?)`, groups
+  a stream of items into chunks bounded by a hard `maxCost` cap and an optional
+  `minCost` soft target.
+
 ## [2.6.0] - 2026-03-01
 
 - Add new `xrange`, which is like `range` but returns an array directly

@@ -19,7 +19,7 @@ export {
   zip,
   zip3,
 } from "./builtins";
-export { compact, compactObject, first, flatmap, icompact } from "./custom";
+export { chunkedByCost, compact, compactObject, first, flatmap, icompact } from "./custom";
 export {
   chain,
   compress,
