@@ -11,7 +11,10 @@
     "paths": {
       "~": ["./src"],
       "~/*": ["./src/*"]
-    }
+    },
+
+    // NOTE Only temporarily needed, until https://github.com/egoist/tsup/pull/1390 gets merged
+    "ignoreDeprecations": "6.0"
   },
   "include": ["src", "test"]
 }
