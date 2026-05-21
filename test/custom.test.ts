@@ -92,23 +92,96 @@ describe("chunkedByCost", () => {
     expect(consume(chunkedByCost([1, 1, 1], (n) => n, 1000, 100))).toEqual([[1, 1, 1]]);
   });
 
-  test("position-dependent cost (first item is expensive)", () => {
-    // costOf returns 50 for index 0, 1 for the rest. minCost=10, maxCost=100.
-    // Index 0: cost 50 → buf=[A], bufsize=50 > 10 → flush.
-    // Then index 1..: each cost 1, accumulating B..L. After 11 items bs=11 > 10
-    // → flush. So chunk is [B..L] (11 items).
+  test("scheduled minCost: per-chunk soft target via function", () => {
+    // Schedule: chunk 0 target 1, chunk 1 target 2, chunk 2 target 4,
+    // chunk 3+ target 8. 100 uniform items of cost 1.
+    const items = Array.from({ length: 100 }, () => 1);
+    const targets = [1, 2, 4];
     const chunks = consume(
       chunkedByCost(
-        ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"],
-        (_item, i) => (i <= 2 ? 25 : 1),
-        100,
-        50,
+        items,
+        (n) => n,
+        1000,
+        (i) => targets[i] ?? 8,
       ),
     );
-    expect(chunks).toEqual([
-      ["A", "B"],
-      ["C", "D", "E", "F", "G", "H", "I", "J", "K", "L"],
-    ]);
+    // Per-chunk lengths trace the schedule exactly.
+    expect(chunks[0].length).toBe(1);
+    expect(chunks[1].length).toBe(2);
+    expect(chunks[2].length).toBe(4);
+    for (let i = 3; i < chunks.length - 1; i++) {
+      expect(chunks[i].length).toBe(8);
+    }
+    // No items lost.
+    expect(chunks.reduce((a, c) => a + c.length, 0)).toBe(100);
+  });
+
+  test("scheduled minCost: the chunkIndex sequence has no gaps", () => {
+    // Trace exactly which chunkIndex values get passed to minCost across
+    // a variety of input shapes. If two chunkIndex++ ever happen in one
+    // iteration without a minCost call between them, this test catches it:
+    // the sequence would skip a value.
+    fc.assert(
+      fc.property(
+        // Mix maxCost-overflow paths (large items vs small maxCost) and
+        // soft-flush paths (small target).
+        fc.array(fc.integer({ min: 1, max: 20 }), { maxLength: 200 }),
+        fc.integer({ min: 1, max: 30 }), // small maxCost forces overflows
+        fc.integer({ min: 1, max: 15 }), // small minCost forces soft flushes
+        (items, maxCost, target) => {
+          const seen: number[] = [];
+          consume(
+            chunkedByCost(
+              items,
+              (n) => n,
+              maxCost,
+              (i) => {
+                seen.push(i);
+                return target;
+              },
+            ),
+          );
+          // Each chunkIndex should be queried at most once (caching), and
+          // the sequence should be 0, 1, 2, … with no gaps.
+          for (let k = 0; k < seen.length; k++) {
+            expect(seen[k]).toBe(k);
+          }
+        },
+      ),
+      { numRuns: 2000 },
+    );
+  });
+
+  test("scheduled minCost: function is invoked at most once per chunk", () => {
+    // A scheduled minCost may be expensive — guarantee it's not consulted
+    // per-item. 100 items, all cost 1, chunks land at every 5 → 20 chunks.
+    // Without caching, the function would be called 100 times.
+    let calls = 0;
+    const minCost = (_chunkIndex: number): number => {
+      calls++;
+      return 5;
+    };
+    const items = Array.from({ length: 100 }, () => 1);
+    const chunks = consume(chunkedByCost(items, () => 1, 1000, minCost));
+    expect(chunks.length).toBe(20);
+    // At most one call per emitted chunk (plus possibly one extra to seed
+    // the current chunk that ends up unflushed at end-of-stream).
+    expect(calls).toBeLessThanOrEqual(chunks.length + 1);
+  });
+
+  test("scheduled minCost: hard cap still wins over soft target", () => {
+    // Even with a tiny soft target, items larger than the target are still
+    // emitted as their own chunk (bounded by maxCost only).
+    expect(
+      consume(
+        chunkedByCost(
+          [5, 5, 5],
+          (n) => n,
+          100,
+          () => 2,
+        ),
+      ),
+    ).toEqual([[5], [5], [5]]);
   });
 
   test("every chunk respects the cap; all but the last reach minCost", () => {

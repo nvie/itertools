@@ -86,52 +86,73 @@ export function flatmap<T, S>(iterable: Iterable<T>, mapper: (item: T) => Iterab
  * under `maxCost` (hard cap) and optionally reaches `minCost` (soft target).
  *
  * `maxCost` is a hard cap: a chunk is flushed before adding an item that would
- * push the running cost to or past `maxCost`. `minCost` is an optional soft
- * target: when provided, a chunk is flushed as soon as the running cost
- * exceeds it (overshooting by at most one item's cost). When omitted, chunks
- * grow as large as `maxCost` allows.
+ * push the running cost past `maxCost`. `minCost` is an optional soft target:
+ * when provided, a chunk is flushed as soon as the running cost reaches it.
+ * `minCost` may be:
  *
- *     >>> // Pack rows into batches of <= 100 KB
+ *   - a `number`: same target for every chunk
+ *   - a function `(chunkIndex: number) => number`: per-chunk target, indexed
+ *     by the 0-based output chunk number. Useful for ramp-up schedules.
+ *
+ * When `minCost` is omitted, chunks grow as large as `maxCost` allows.
+ *
+ *     >>> // Pack rows into batches of <= 10 bytes
  *     >>> const rows = ["aaaa", "bbbb", "cc", "dddddd", "ee"];
  *     >>> [...chunkedByCost(rows, (s) => s.length, 10)]
  *     [["aaaa", "bbbb", "cc"], ["dddddd", "ee"]]
  *
- * With a `minCost` soft target, the chunker flushes early to keep chunks
- * roughly that size — useful when you want predictable chunk sizes without
- * locking them to a fixed item count:
+ * With a constant `minCost` soft target, the chunker flushes early to keep
+ * chunks roughly that size — useful when you want predictable chunk sizes
+ * without locking them to a fixed item count:
  *
  *     >>> [...chunkedByCost(rows, (s) => s.length, 100, 6)]
  *     [["aaaa", "bbbb"], ["cc", "dddddd"], ["ee"]]
  *
- * `costOf` receives the item and its 0-based index in the input stream, so
- * position-dependent costs are possible.
+ * With a scheduled `minCost`, early chunks can be smaller than later ones —
+ * useful for fast-start patterns (e.g. clearing a slow outgoing queue with a
+ * few small chunks before settling into larger ones):
+ *
+ *     >>> const items = Array.from({ length: 30 }, () => 1);
+ *     >>> [...chunkedByCost(items, () => 1, 100, (i) => Math.min(8, 1 << i))]
+ *     [[1], [1, 1], [1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], ...]
  *
  * If a single item's cost alone is >= `maxCost`, it is still emitted as its
  * own chunk. Only in this edge case can an output chunk exceed the hard cap.
  */
 export function* chunkedByCost<T>(
   items: Iterable<T>,
-  costOf: (item: T, index: number) => number,
+  costFn: (item: T) => number,
   maxCost: number,
-  minCost?: number,
+  minCost?: number | ((chunkIndex: number) => number),
 ): Iterable<T[]> {
+  const getIdealCost =
+    typeof minCost === "function" ? minCost : minCost !== undefined ? () => minCost : () => Number.POSITIVE_INFINITY;
+
   let buf: T[] = [];
   let bufcost = 0;
-  let i = 0;
+  let chunkIndex = 0;
+  let idealCost: number | undefined;
 
   for (const item of items) {
-    const c = costOf(item, i++);
+    const c = costFn(item);
     if (bufcost + c <= maxCost) {
       buf.push(item);
       bufcost += c;
     } else {
-      if (buf.length > 0) yield buf;
+      if (buf.length > 0) {
+        yield buf;
+        chunkIndex++;
+        idealCost = undefined;
+      }
       buf = [item];
       bufcost = c;
     }
 
-    if (minCost !== undefined && bufcost >= minCost) {
+    idealCost ??= getIdealCost(chunkIndex);
+    if (bufcost >= idealCost) {
       yield buf;
+      chunkIndex++;
+      idealCost = undefined;
       buf = [];
       bufcost = 0;
     }

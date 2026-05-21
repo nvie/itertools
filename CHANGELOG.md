@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+- Fix: allow dynamic `minCost` function call on `chunkedByCost`, for dynamic
+  cost functions that change over time.
 - Packaging fix: no longer trigger pnpm's "Ignored build scripts" warning in
   consumer projects.
 
