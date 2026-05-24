@@ -23,6 +23,7 @@ export { chunkedByCost, compact, compactObject, first, flatmap, icompact } from 
 export {
   chain,
   compress,
+  combinations,
   count,
   cycle,
   dropwhile,

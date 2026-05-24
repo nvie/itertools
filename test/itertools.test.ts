@@ -4,6 +4,7 @@ import {
   all,
   chain,
   compress,
+  combinations,
   count,
   cycle,
   dropwhile,
@@ -62,6 +63,37 @@ describe("compress", () => {
     expect(compress("abc", [false, false, false])).toEqual([]);
     expect(compress("abc", [true, false, true])).toEqual(["a", "c"]);
   });
+});
+
+describe("combinations", () => {
+  it("combinations on empty list", () => {
+    expect(Array.from(combinations([]))).toEqual([[]]);
+  });
+
+  it("combinations of unique values", () => {
+    expect(Array.from(combinations([1, 2]))).toEqual([
+      [1, 2],
+    ]);
+
+    expect(Array.from(combinations([1, 2, 3]))).toEqual([
+      [1, 2, 3],
+    ]);
+
+    expect(Array.from(combinations([2, 2, 3]))).toEqual([
+      [2, 2, 3],
+    ]);
+  });
+
+  it("combinations with r param", () => {
+    // r too big
+    expect(Array.from(combinations([1, 2], 5))).toEqual([]);
+
+    // prettier-ignore
+    expect(Array.from(combinations(range(4), 2))).toEqual([
+            [0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3],
+        ]);
+  });
+
 });
 
 describe("count", () => {
