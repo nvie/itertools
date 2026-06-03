@@ -21,7 +21,7 @@ importers:
         version: 9.39.4
       '@release-it/keep-a-changelog':
         specifier: ^7.0.1
-        version: 7.0.1(release-it@19.2.4(magicast@0.5.3))
+        version: 7.1.0(release-it@19.2.4(magicast@0.5.3))
       '@typescript-eslint/parser':
         specifier: ^8.59.4
         version: 8.59.4(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3)
@@ -624,11 +624,11 @@ packages:
     resolution: {integrity: sha512-HDVTWq3H0uTXiU0eeSQntcVUTPP3GamzeXI41+x7uU9J65JgWQh3qWZHblR1i0npXfFtF+mxBiU2nJH8znxWnQ==}
     engines: {node: '>=18'}
 
-  '@release-it/keep-a-changelog@7.0.1':
-    resolution: {integrity: sha512-5K0Z9QynUb77/c9wsLNo05/vOm4Jed10Mo7ZMSEWQtC6v8hAnLSRh9VmvbQaPT27EB4mLd4hQX8sW3yv4uK4qg==}
+  '@release-it/keep-a-changelog@7.1.0':
+    resolution: {integrity: sha512-WJlUHdeRGADe0zNAWmB6cF+yvSG8MnME6QX7RExFemnVk1CKyhppVpGXeAFCeFYuD69PnwGnmUMaBpeCD5O2pw==}
     engines: {node: ^20.9.0 || >=22.0.0}
     peerDependencies:
-      release-it: ^18.0.0 || ^19.0.0
+      release-it: ^18.0.0 || ^19.0.0 || ^20.0.0
 
   '@rolldown/binding-android-arm64@1.0.2':
     resolution: {integrity: sha512-ZS4D1JPGn/MYQN/SYDWftIE/nVsM8j/AFOYEzAoOE2O3NktQOZru+/vYXGbR/qtdLdIfGCP0lcoJiYVzsEz+iQ==}
@@ -2720,6 +2720,11 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  semver@7.8.1:
+    resolution: {integrity: sha512-rkVq3IXh+4FDGch+KwzX3aV9W3kO54GyEgpvBzSyctDA6Xtd7RJQV1xmXbeQp5v7+VzLOfVqiutSE6GICgPFvg==}
+    engines: {node: '>=10'}
+    hasBin: true
+
   set-function-length@1.2.2:
     resolution: {integrity: sha512-pgRc4hJ4/sNjWCSS9AmnS40x3bNMDTknHgL5UaMBTMyJnU90EgWh1Rz+MC9eFu4BuN/UwZjKQuY/1v3rM7HMfg==}
     engines: {node: '>= 0.4'}
@@ -2957,6 +2962,10 @@ packages:
 
   tinyglobby@0.2.16:
     resolution: {integrity: sha512-pn99VhoACYR8nFHhxqix+uvsbXineAasWm5ojXoN8xEwK5Kd3/TrhNn1wByuD52UxWRLy8pu+kRMniEi6Eq9Zg==}
+    engines: {node: '>=12.0.0'}
+
+  tinyglobby@0.2.17:
+    resolution: {integrity: sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==}
     engines: {node: '>=12.0.0'}
 
   tinyrainbow@3.1.0:
@@ -3781,11 +3790,11 @@ snapshots:
 
   '@publint/pack@0.1.4': {}
 
-  '@release-it/keep-a-changelog@7.0.1(release-it@19.2.4(magicast@0.5.3))':
+  '@release-it/keep-a-changelog@7.1.0(release-it@19.2.4(magicast@0.5.3))':
     dependencies:
       detect-newline: 4.0.1
       release-it: 19.2.4(magicast@0.5.3)
-      semver: 7.8.0
+      semver: 7.8.1
       string-template: 1.0.0
 
   '@rolldown/binding-android-arm64@1.0.2':
@@ -4027,7 +4036,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 8.59.4
       debug: 4.4.3
       minimatch: 10.2.5
-      semver: 7.8.0
+      semver: 7.8.1
       tinyglobby: 0.2.16
       ts-api-utils: 2.5.0(typescript@6.0.3)
       typescript: 6.0.3
@@ -5351,7 +5360,7 @@ snapshots:
 
   make-dir@4.0.0:
     dependencies:
-      semver: 7.8.0
+      semver: 7.8.1
 
   map-obj@1.0.1: {}
 
@@ -5482,7 +5491,7 @@ snapshots:
     dependencies:
       hosted-git-info: 4.1.0
       is-core-module: 2.16.2
-      semver: 7.8.0
+      semver: 7.8.1
       validate-npm-package-license: 3.0.4
 
   npm-run-path@5.3.0:
@@ -5956,6 +5965,8 @@ snapshots:
 
   semver@7.8.0: {}
 
+  semver@7.8.1: {}
+
   set-function-length@1.2.2:
     dependencies:
       define-data-property: 1.1.4
@@ -6208,6 +6219,11 @@ snapshots:
       fdir: 6.5.0(picomatch@4.0.4)
       picomatch: 4.0.4
 
+  tinyglobby@0.2.17:
+    dependencies:
+      fdir: 6.5.0(picomatch@4.0.4)
+      picomatch: 4.0.4
+
   tinyrainbow@3.1.0: {}
 
   to-regex-range@5.0.1:
@@ -6373,7 +6389,7 @@ snapshots:
       picomatch: 4.0.4
       postcss: 8.5.15
       rolldown: 1.0.2
-      tinyglobby: 0.2.16
+      tinyglobby: 0.2.17
     optionalDependencies:
       esbuild: 0.27.7
       fsevents: 2.3.3
